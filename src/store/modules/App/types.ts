@@ -4,7 +4,7 @@ import { TypeNames } from './enums';
 
 export type PayloadTypes = {
   [TypeNames.HANDLE_CHANGE_THEME_PROPERTYIES]: {
-    themePropertyies:ThemeOptions
+    themePropertyies: ThemeOptions;
   };
 };
 
@@ -15,7 +15,8 @@ export type ActionsValueTypes = {
   };
 };
 export type AppActionTypes = $Values<ActionsValueTypes>;
-
+export type SkillsType = { title: string; href: string }[];
 export type AppInitialStateType = {
-  themePropertyies:ThemeOptions;
-} 
+  themePropertyies: ThemeOptions;
+  skills: SkillsType;
+};

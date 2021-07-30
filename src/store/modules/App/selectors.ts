@@ -6,3 +6,7 @@ export const getThemePropertyies = createSelector(
   [(state: RootStoreType) => state.app.themePropertyies],
   themePropertyies => themePropertyies
 );
+export const getSkills = createSelector(
+  [(state: RootStoreType) => state.app.skills],
+  skills => skills
+);

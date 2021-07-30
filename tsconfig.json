@@ -15,6 +15,6 @@
     "esModuleInterop": true,
     "jsx": "preserve"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/_app.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/_app.tsx", "src/utils/sphere.js"],
   "exclude": ["node_modules"]
 }

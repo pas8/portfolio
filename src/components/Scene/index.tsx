@@ -87,8 +87,8 @@ export default function PerspectiveCameraScene() {
         castShadow
       /> */}
         <Gradient />
-        <H />
-        <Y />
+        {/* <H /> */}
+        {/* <Y /> */}
         <Box />
       </Suspense>
       <OrbitControls />

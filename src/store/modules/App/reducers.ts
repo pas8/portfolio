@@ -19,7 +19,29 @@ export const initialState: AppInitialStateType = {
         default: '#202020'
       }
     }
-  }
+  },
+  skills: [
+    { href: '#git_', title: 'Git' },
+    { href: '#json_', title: 'JSON' },
+    { href: '#html_', title: 'HTML' },
+    { href: '#react_', title: 'React' },
+    { href: '#npm_', title: 'npm' },
+    { href: '#css_', title: 'CSS' },
+    { href: '#js_', title: 'JavaScript' },
+    { href: '#node.js_', title: 'Node_js' },
+    { href: '#Inskspace_', title: 'Inskspace' },
+    { href: '#Typescript_', title: 'Typescript' },
+    { href: '#Next js_', title: 'Next_js' },
+    { href: '#Redux_', title: 'Redux' },
+    { href: '#JSS_', title: 'JSS' },
+    { href: '#SCSS_', title: 'SCSS' },
+    { href: '#MaterialUi_', title: 'Material ui' },
+    { href: '#Lodash_', title: 'Lodash' },
+    { href: '#Mongo_', title: 'Mongo' },
+    { href: '#Express_', title: 'Express' },
+    { href: '#Three_js_', title: 'Three_js' },
+    { href: '#Bem_', title: 'BEM' }
+  ]
 };
 
 export const AppReducer = (state = initialState, action: AppActionTypes): AppInitialStateType => {
