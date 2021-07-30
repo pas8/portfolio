@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import { makeStyles, Grid } from '@material-ui/core';
 import Sphere from './components/Sphere';
-
+import Greeting from './components/Greeting/index';
 const useStyles = makeStyles(({ palette: { background } }) => ({
   container: {
     position: 'fixed',
@@ -17,7 +17,9 @@ const Main: FC = () => {
 
   return (
     <>
-      <Grid container className={classes.container} justify={'center'} alignItems={'center'}> 
+      <Grid container className={classes.container} justify={'center'} alignItems={'center'}>
+        <Greeting />
+
         <Sphere />
       </Grid>
     </>

@@ -9,9 +9,15 @@ const Sphere: FC = () => {
   useEffect(() => {
     const options = {
       textColour: '#fff',
-      textHeight: 20,
-      // height:
-      depth: 0.99
+      textHeight: 29,
+      clickToFront:600,
+      depth: 0.99,
+      zoomMin:1,
+      zoomMax:1,
+      outlineOffset:20,
+      // interval:42,
+      // padding:100,
+
     };
 
     //@ts-ignore
@@ -45,7 +51,7 @@ const Sphere: FC = () => {
 
   return (
     <Grid id={'myCanvasContainer'}>
-      <canvas id={'myCanvas'}>
+      <canvas id={'myCanvas'} width="1000" height="500">
         <ul>
           {skills.map(skill => (
             <li key={skill.title}>
