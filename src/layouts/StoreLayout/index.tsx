@@ -1,9 +1,8 @@
-import { LayoutChildrenType } from 'models/types';
-import PropTypes from 'prop-types';
+import { FC } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import store from 'store';
 
-const StoreLayout = ({ children }: LayoutChildrenType) => {
+const StoreLayout:FC = ({ children }) => {
   return <ReduxProvider store={store}>{children}</ReduxProvider>;
 };
 

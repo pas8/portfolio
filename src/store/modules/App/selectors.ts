@@ -10,3 +10,9 @@ export const getSkills = createSelector(
   [(state: RootStoreType) => state.app.skills],
   skills => skills
 );
+
+
+export const getCursorColor = createSelector(
+  [(state: RootStoreType) => state.app.cursorColor],
+  cursorColor => cursorColor
+);
