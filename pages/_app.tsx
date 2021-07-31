@@ -1,10 +1,12 @@
 import { FC } from 'react';
-import ThemeLayout from 'layouts/ThemeLayout';
-import StoreLayout from 'layouts/StoreLayout';
 import { useUploadThemeSsr } from 'hooks/useUploadThemeSsr.hook';
 import { AppProps } from 'next/dist/next-server/lib/router/router';
-import CursorLayout from 'layouts/CursorLayout';
+import dynamic from 'next/dynamic';
 import { ComposeLayouts } from 'layouts';
+
+const StoreLayout = dynamic(() => import('../src/layouts/StoreLayout'));
+const ThemeLayout = dynamic(() => import('../src/layouts/ThemeLayout'));
+const CursorLayout = dynamic(() => import('../src/layouts/CursorLayout'), { ssr: false });
 
 const Index: FC<AppProps> = ({ Component, pageProps }) => {
   useUploadThemeSsr();
