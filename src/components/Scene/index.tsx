@@ -12,6 +12,7 @@ import {
   SpotLight,
   Polyhedron,
   Stars,
+  Billboard,
   shaderMaterial,
   useTexture
 } from '@react-three/drei';
@@ -73,11 +74,11 @@ export default function PerspectiveCameraScene() {
   return (
     <Canvas className={classes.canvas}>
       <Suspense fallback={null}>
-        <PerspectiveCamera makeDefault position={[0, 0, 10]} zoom={10} />
+        <PerspectiveCamera makeDefault position={[0, 0, 10]} zoom={1} />
         <Stars />
 
         {/* <DepthBuffer ref={setDepth} /> */}
-
+<Projects/>
         {/* <SpotLight
         penumbra={1.5}
         depthBuffer={depthBuffer}
@@ -134,6 +135,33 @@ const Y = () => {
         <sphereBufferGeometry args={[1, 100, 100]} />
         <meshStandardMaterial displacementScale={0.2} map={normalMap} />
       </mesh>
+    </>
+  );
+};
+
+const Projects = () => {
+
+  const normalMap = useTexture('moon.jpeg');
+
+  return (
+    <>
+     <ambientLight intensity={0.2} />
+      <directionalLight />
+      <Billboard
+        position={[-20, -2, 0]}
+        args={[3, 2]}
+        // material-color="red"
+        follow={true}
+        lockX={false}
+
+        lockY={false}
+        lockZ={false}
+      >
+        <meshStandardMaterial displacementScale={0.2} map={normalMap} />
+
+
+
+      </Billboard>
     </>
   );
 };

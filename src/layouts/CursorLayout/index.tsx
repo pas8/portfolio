@@ -11,86 +11,6 @@ import { useAnimateCursor } from 'hooks/useAnimateCursor.hook';
 const useStyles = makeStyles(({ palette: { background ,primary,secondary} }) => ({
   '@global': {
     '*': { cursor: 'none' },
-    // '@keyframes rotate': {
-    //   '0%': {
-    //     transform: 'scale(1) translate(-50%,-50%)'
-    //   },
-
-    //   '5%': {
-    //     transform: 'rotate(60deg) translate(-50%,-50%)'
-    //   },
-
-    //   '10%': {
-    //     transform: 'rotate(0deg) translate(-50%,-50%)'
-    //   },
-    //   '15%': {
-    //     transform: 'rotate(120deg) translate(-50%,-50%)'
-    //   },
-    //   '20%': {
-    //     transform: 'rotate(0deg) translate(-50%,-50%)'
-    //   },
-    //   '25%': {
-    //     transform: 'rotate(180deg) translate(-50%,-50%)'
-    //   },
-
-    //   '30%': {
-    //     transform: 'rotate(0deg) translate(-50%,-50%)'
-    //   },
-    //   '35%': {
-    //     transform: 'rotate(240deg) translate(-50%,-50%)'
-    //   },
-
-    //   '40%': {
-    //     transform: 'rotate(0deg) translate(-50%,-50%)'
-    //   },
-
-    //   '45%': {
-    //     transform: 'rotate(300deg) translate(-50%,-50%)'
-    //   },
-    //   '50%': {
-    //     transform: 'rotate(0deg) translate(-50%,-50%)'
-    //   },
-
-    //   '55%': {
-    //     transform: 'rotate(-60deg) translate(-50%,-50%)'
-    //   },
-
-    //   '60%': {
-    //     transform: 'rotate(0deg) translate(-50%,-50%)'
-    //   },
-    //   '65%': {
-    //     transform: 'rotate(-120deg) translate(-50%,-50%)'
-    //   },
-    //   '70%': {
-    //     transform: 'rotate(0deg) translate(-50%,-50%)'
-    //   },
-    //   '75%': {
-    //     transform: 'rotate(-180deg) translate(-50%,-50%)'
-    //   },
-
-    //   '80%': {
-    //     transform: 'rotate(0deg) translate(-50%,-50%)'
-    //   },
-    //   '85%': {
-    //     transform: 'rotate(-240deg) translate(-50%,-50%)'
-    //   },
-
-    //   '90%': {
-    //     transform: 'rotate(0deg) translate(-50%,-50%)'
-    //   },
-
-    //   '95%': {
-    //     transform: 'rotate(-300deg) translate(-50%,-50%)'
-    //   },
-
-    //   '100%': {
-    //     transform: 'scale(1) translate(-50%,-50%)'
-    //   }
-    // },
-    // ' .animateCursor': {
-    //   animation: '42s rotate  infinite'
-    // }
-
     '@keyframes RotationRight': {
       '0%': {
         transform: 'rotate(0deg)'
@@ -138,7 +58,7 @@ const CursorLayout: FC = ({ children }) => {
     <>
       <Grid ref={dotOutline} className={clsx(cursorDotOutlinedContainer, dotContainer)}>
         <Grid>
-          <svg width={"42"} height={"42"} viewBox={"0 0 37 36"} xmlns="http://www.w3.org/2000/svg">
+          <svg width={"42"} height={"42"} viewBox={"0 0 37 36"} xmlns={"http://www.w3.org/2000/svg"}>
             <path
               stroke={cursorColor}
               stroke-width={'1.5'}
