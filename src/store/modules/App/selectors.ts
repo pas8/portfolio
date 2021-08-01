@@ -16,3 +16,11 @@ export const getCursorColor = createSelector(
   [(state: RootStoreType) => state.app.cursorColor],
   cursorColor => cursorColor
 );
+
+
+
+export const getIsRandomColorChangingDisabled = createSelector(
+  [(state: RootStoreType) => state.app.statuses.isRandomColorChangingDisabled],
+  isRandomColorChangingDisabled => isRandomColorChangingDisabled
+);
+

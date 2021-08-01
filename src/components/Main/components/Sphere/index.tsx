@@ -1,62 +1,60 @@
-import { FC, useEffect } from 'react';
-import { makeStyles, Grid } from '@material-ui/core';
-import { useSelector } from 'react-redux';
-import { getSkills } from 'store/modules/App/selectors';
+import { FC, useEffect, useRef } from 'react';
+import { makeStyles, Grid, Typography } from '@material-ui/core';
+import clsx from 'clsx';
+import { useWindowScroll, useWindowSize } from 'react-use';
+
+import { useSelector, useDispatch } from 'react-redux';
+
+import { getCursorColor, getSkills } from 'store/modules/App/selectors';
+import { toChangeStatuses } from 'store/modules/App/actions';
+
+const useStyles = makeStyles(({ palette: { background } }) => ({}));
 
 const Sphere: FC = () => {
+  const {} = useStyles();
+  const { y } = useWindowScroll();
+  const { height } = useWindowSize();
+
+  const ref = useRef<HTMLDivElement>();
+  const dispatch = useDispatch();
   const skills = useSelector(getSkills);
+  const cursorColor = useSelector(getCursorColor);
+
+  const options = {
+    textColour: cursorColor,
+    textHeight: 29,
+    clickToFront: 600,
+    depth: 0.99,
+    zoomMin: 1,
+    zoomMax: 1,
+    outlineOffset: 20
+    // interval:42,
+    // padding:100,
+  };
+
+  // const isUserSeeTheSphere = (y + height) > (!ref?.current?.offsetTop ? y + height + 100 :   ref?.current?.offsetTop)
+  // console.log(isUserSeeTheSphere)
+  //   useEffect(() => {
+  //     // console.log(isUserSeeTheSphere)
+  // dispatch(toChangeStatuses({newStatuses:{isRandomColorChangingDisabled:isUserSeeTheSphere}}))
+  // }  ,[isUserSeeTheSphere])
 
   useEffect(() => {
-    const options = {
-      textColour: '#fff',
-      textHeight: 29,
-      clickToFront:600,
-      depth: 0.99,
-      zoomMin:1,
-      zoomMax:1,
-      outlineOffset:20,
-      // interval:42,
-      // padding:100,
-
-    };
-
     //@ts-ignore
     TagCanvas.Start('myCanvas', '', options);
-    // TagCanvas.wheelZoom = false;
-    // TagCanvas.textFont = 'Raleway, sans-serif';
-    // TagCanvas.textColour = 'white';
-    // TagCanvas.textHeight = 26;
-    // TagCanvas.outlineMethod = 'size';
-    // TagCanvas.outlineIncrease = 10;
-    // TagCanvas.maxSpeed = 0.09;
-    // TagCanvas.minBrightness = 0.2;
-    // TagCanvas.depth = 0.92;
-    // TagCanvas.pulsateTo = 0.6;
-    // TagCanvas.initial = [0.1, -0.1];
-    // TagCanvas.decel = 0.98;
-    // TagCanvas.reverse = true;
-    // TagCanvas.hideTags = false;
-    // TagCanvas.shadow = false;
-    // TagCanvas.shadowBlur = 3;
-    // TagCanvas.weight = false;
-    // TagCanvas.imageScale = null;
-    // TagCanvas.fadeIn = 1000;
-    // TagCanvas.clickToFront = 600;
-    // TagCanvas.w
-    try {
-    } catch (e) {
-      // document.getElementById('myCanvasContainer').style.display = 'none';
-    }
-  }, []);
+  }, [options]);
 
   return (
-    <Grid id={'myCanvasContainer'}>
-      <canvas id={'myCanvas'} width="1000" height="500">
+    <Grid
+      id={'myCanvasContainer'}
+      //  ref={ref}
+    >
+      <canvas id={'myCanvas'} width="800" height="500">
         <ul>
           {skills.map(skill => (
-            <li key={skill.title}>
-              <a href={skill.href}>{skill.title}</a>
-            </li>
+            <Typography key={skill.title}>
+              <a>{skill.title}</a>
+            </Typography>
           ))}
         </ul>
       </canvas>

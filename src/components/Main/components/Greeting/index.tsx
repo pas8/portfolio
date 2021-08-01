@@ -3,11 +3,25 @@ import { FC } from 'react';
 import clsx from 'clsx';
 import { padStart } from 'lodash';
 
-const useStyles = makeStyles(({ palette: { background } }) => ({
+export const useStyles = makeStyles(({ palette: { background } }) => ({
   '@global': {
     body: {
       background: background.default,
       overflowX: 'hidden'
+    },
+
+
+    '.svgContainer': {
+      '&:hover': {
+        animation: 'racket 1s '
+
+        // transform:'scaleY(0.4)'
+      },
+      '& path': {
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeDasharray: 1500
+      }
     },
 
     '@keyframes racket': {
@@ -55,22 +69,9 @@ const useStyles = makeStyles(({ palette: { background } }) => ({
     }
   },
   container: {
-    padding: 42,
     width: '100vw',
     height: '100vh',
 
-    '& .pasSvgContainer': {
-      '&:hover': {
-        animation: 'racket 1s '
-
-        // transform:'scaleY(0.4)'
-      },
-      '& path': {
-        fill: 'none',
-        strokeLinecap: 'round',
-        strokeDasharray: 1500
-      }
-    }
   },
   dashOffset2000Dasharray500: {
     strokeDashoffset: 2000,
@@ -402,7 +403,7 @@ const Greeting: FC = () => {
   return (
     <Grid container className={container}>
       <Grid container className={containerOfHI}>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1114.4309 724.17267" className={'pasSvgContainer'}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1114.4309 724.17267" className={'svgContainer'}>
           <path
             className={clsx(red2VioletColor, dashOffset2000Dasharray500, delay3Sec)}
             d="M375.06292037 646.52433916l-53.46291837-.8568189-.42018898-145.17237324-.42019654-145.17238456H231.9468067v286.23225381H.0000019V1.64501286H231.9468067V228.6567781h263.74113545l-1.0920567 96.50426183c-.60064253 53.07734986-1.0920567 147.45993986-1.0920567 209.73914684v113.23483587l-32.48897044-.3768189c-17.86896397-.20749607-56.5473266-.7624819-85.95193794-1.2337512zM625.10486324 419.47828945V197.4015324h200.69151713v444.15348387H625.10486324zM623.45982385 79.78312483V0h202.33655652V159.56623498H623.45982385zM950.0861077 684.62231752c-21.00461125-21.75273094-38.13675632-40.14240043-38.07159726-40.86602879.06462992-.72355276 27.2680066-29.08316252 60.45070932-63.02127942l60.33225892-61.70573925 40.81670595 40.98493273 40.81674375 40.98497052-61.53664319 61.58672193c-33.84514052 33.87276887-62.22995972 61.58679751-63.07729202 61.58679751-.84748347 0-18.72627422-17.79764428-39.73088547-39.55037523z"
@@ -426,7 +427,7 @@ const Greeting: FC = () => {
       </Grid>
       <Grid container>
         <Grid className={containerOfIM}>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 800" className={'pasSvgContainer'}>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 800" className={'svgContainer'}>
             <path
               className={clsx(blueLightVioletColor, dashOffset2050Dasharray250, delay2Sec)}
               d="M0 240.5009c82.6667 0 134.3379 48.3026 248 0-48.797 184.3856-22.9816 355.5967 0 540.63l-115.5223-25.2471L0 781.1309c45.9884-80.2283 0-360.42 0-540.63zM0 7.1505c82.6667 0 149.3281 21.3063 248 0-69.9681 124.3349 0 123.7651 0 185.6477-135.0273-38.9149-165.3333 0-248 0C60.5444 140.0056 0 69.0331 0 7.1505zM709.1504 9.161c60.5328.4466 36.6566 54.568 183.7051 0-56.6097 270.3599 0 514.6466 0 771.97H709.1504c-48.898-284.0002 0-514.6467 0-771.97zM974.0027 217.6534c-44.0229-77.4142 0-137.0779 0-205.6168h174c-.1644 69.659-49.931 126.7878-.4936 208.9773l-86.9428 81.2807-86.5636-84.6412z"
@@ -457,7 +458,7 @@ const Greeting: FC = () => {
           </svg>
         </Grid>
         <Grid className={containerOfPAS}>
-          <svg xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 900 500'} className={'pasSvgContainer'}>
+          <svg xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 900 500'} className={'svgContainer'}>
             {pasPathsArr.map((props, idx) => (
               <path key={idx} {...props} />
             ))}
@@ -466,7 +467,7 @@ const Greeting: FC = () => {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox={'0 0 280 280'}
-          className={clsx(comaContainer, 'pasSvgContainer')}
+          className={clsx(comaContainer, 'svgContainer')}
         >
           <path
             className={clsx(freeSpeechBlueColor, dashOffset1000Dasharray1000, delay1Sec)}
@@ -486,7 +487,7 @@ const Greeting: FC = () => {
       </Grid>
       <Grid container wrap={'nowrap'}>
         {/* <Grid className={containerOfAS}>
-          <svg xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 900 500'} className={'pasSvgContainer'}>
+          <svg xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 900 500'} className={'svgContainer'}>
             {asPartsArr.map((props, idx) => (
               <path key={idx} {...props} />
             ))}
@@ -494,7 +495,7 @@ const Greeting: FC = () => {
         </Grid> */}
 
         <Grid className={containerOfWEBDEV}>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox={'0 0 4696 754'} className={'pasSvgContainer'}>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox={'0 0 4696 754'} className={'svgContainer'}>
             <path
               className={clsx(lime2TurquoiseColor, dashOffset1500Dasharray6000, delay2Sec)}
               d="M167.6792 737.9767C152.4214 684.0084 0 27.0312 0 15.2344 0 2.5902 7.8148 1.476 82.4824 3.4747l82.4824 2.2078 45.4337 111.3399c24.9886 61.237 47.0412 112.8834 49.006 114.7699 1.9646 1.8865 35.0997-23.165 73.6336-55.67 38.5338-32.505 73.4753-59.1 77.6476-59.1 4.1725 0 40.228 26.0556 80.1233 57.9012 39.8956 31.8456 74.3113 56.3958 76.4796 54.556 2.1683-1.8399 23.1526-52.9468 46.6316-113.5711l42.6893-110.226 84.6569-2.2214 84.6568-2.2214-5.8957 40.6145c-9.2088 63.4376-160.7182 692.5212-168.5243 699.7311-3.8314 3.5388-57.3075-43.715-118.8357-105.0084-61.5282-61.2934-114.535-110.8364-117.793-110.0955-4.3057.9793-162.8767 151.3662-239.1978 226.8527-1.5713 1.5541-5.1701-5.3566-7.9975-15.3573zM928.5595 93.9866V1.8432h509.3684v184.2867H928.5595zM928.5595 378.0954V285.952h509.3684v184.2869H928.5595zM928.5595 662.2042v-92.1434h509.3684v184.2868H928.5595zM1627.4562 378.0954V1.8432H2191.5373l-22.8886 21.8734c-12.5881 12.0304-103.2256 95.3331-201.4156 185.1171-98.1885 89.784-178.526 165.8125-178.526 168.9521 0 3.1396 88.112 87.6998 195.8028 187.9116 107.6925 100.2118 195.8047 183.6537 195.8047 185.4267 0 1.7729-124.3935 3.2235-276.4297 3.2235h-276.4287z"

@@ -20,6 +20,10 @@ export const initialState: AppInitialStateType = {
       }
     }
   },
+
+  statuses: {
+    isRandomColorChangingDisabled: false
+  },
   cursorColor: '#ecaf25',
   skills: [
     { href: '#git_', title: 'Git' },
@@ -49,6 +53,11 @@ export const AppReducer = (state = initialState, action: AppActionTypes): AppIni
   switch (action.type) {
     case TypeNames.HANDLE_CHANGE_THEME_PROPERTYIES: {
       return { ...state, themePropertyies: { ...state.themePropertyies, ...action.payload.themePropertyies } };
+    }
+
+    case TypeNames.HANDLE_CHANGE_STATUSES: {
+      console.log(action.payload.newStatuses)
+      return { ...state, statuses: { ...state.statuses, ...action.payload.newStatuses } };
     }
 
     case TypeNames.HANDLE_CHANGE_CURSOR_COLOR: {

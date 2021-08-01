@@ -21,6 +21,7 @@ import { TorusBufferGeometry } from 'three';
 import { useMemo, useRef, useState, Suspense, useEffect } from 'react';
 import { TextureLoader } from 'three/src/loaders/TextureLoader';
 import { Color } from 'three';
+import { useWindowScroll } from 'react-use';
 
 const useStyles = makeStyles(({ palette: { background } }) => ({
   '@global': {
@@ -33,12 +34,13 @@ const useStyles = makeStyles(({ palette: { background } }) => ({
     }
   },
   canvas: {
-    inset: 0,
     minHeight: '100vh',
     minWidth: '100vw',
     bottom: 0,
-    position: 'fixed',
     '& canvas': {
+    position: 'fixed',
+    inset: 0,
+
       height: '100% !important'
     }
   }
@@ -71,38 +73,27 @@ export default function PerspectiveCameraScene() {
   }, []);
   const [depthBuffer, setDepth] = useState();
 
+const{y} = useWindowScroll()
+
+
+
   return (
-    <Canvas className={classes.canvas}>
+    <Canvas className={classes.canvas} >
       <Suspense fallback={null}>
         <PerspectiveCamera makeDefault position={[0, 0, 10]} zoom={1} />
         <Stars />
 
-        {/* <DepthBuffer ref={setDepth} /> */}
-<Projects/>
-        {/* <SpotLight
-        penumbra={1.5}
-        depthBuffer={depthBuffer}
-        position={[10, 4, 2]}
-        angle={0.5}
-        color="#ff005b"
-        castShadow
-      /> */}
-        <Gradient />
-        {/* <H /> */}
-        {/* <Y /> */}
-        <Box />
+        <Container />
       </Suspense>
       <OrbitControls />
     </Canvas>
   );
 }
-// const L = () => {
-
-// }
 const H = () => {
   const torusRef = useRef();
-  const { size, camera } = useThree(); // This will just crash
-  console.log(camera);
+
+    
+
   useFrame(() => {
     torusRef.current.rotation.x += 0.01;
     torusRef.current.rotation.y += 0.01;
@@ -118,34 +109,38 @@ const H = () => {
   );
 };
 
-const Y = () => {
+const Container = () => {
   const normalMap = useTexture('moon.jpeg');
+
+  const { size, camera } = useThree(); // This will just crash
+  const handleMoveCamera = () => {
+  
+  
+  const t = document.body.getBoundingClientRect().top
+  
+  camera.position.z = t * -0.01
+  camera.position.x = t * -0.002
+  camera.position.y = t * -0.0002
+  
+  
+  
+  }
+
+  document.body.onscroll = handleMoveCamera
+
+
+  // const normalMap = useTexture('ava2.jpg');
   const ref = useRef();
 
   useFrame(() => {
     ref.current.rotation.x += 0.01;
-    ref.current.rotation.y += 0.01;
-    ref.current.rotation.z += 0.01;
+    // ref.current.rotation.y += 0.01;
+    // ref.current.rotation.z += 0.01;
   });
+
   return (
     <>
       <ambientLight intensity={0.2} />
-      <directionalLight />
-      <mesh position={[10, 10, 10]} ref={ref}>
-        <sphereBufferGeometry args={[1, 100, 100]} />
-        <meshStandardMaterial displacementScale={0.2} map={normalMap} />
-      </mesh>
-    </>
-  );
-};
-
-const Projects = () => {
-
-  const normalMap = useTexture('moon.jpeg');
-
-  return (
-    <>
-     <ambientLight intensity={0.2} />
       <directionalLight />
       <Billboard
         position={[-20, -2, 0]}
@@ -153,55 +148,16 @@ const Projects = () => {
         // material-color="red"
         follow={true}
         lockX={false}
-
         lockY={false}
         lockZ={false}
       >
         <meshStandardMaterial displacementScale={0.2} map={normalMap} />
-
-
-
       </Billboard>
-    </>
-  );
-};
 
-const Box = () => {
-  const normalMap = useTexture('ava2.jpg');
-  const ref = useRef();
-
-  useFrame(() => {
-    ref.current.rotation.x += 0.01;
-    // ref.current.rotation.y += 0.01;
-    // ref.current.rotation.z += 0.01;
-  });
-  return (
-    <>
-      {/* <ambientLight intensity={0.1} /> */}
-      {/* <directionalLight /> */}
       <mesh position={[-10, 10, 10]} ref={ref}>
         <boxGeometry args={[3, 3, 3]} />
         <meshStandardMaterial map={normalMap} />
       </mesh>
-    </>
-  );
-};
-
-const Gradient = () => {
-  const normalMap = useTexture('ava2.jpg');
-  const ref = useRef();
-
-  useFrame(() => {
-    ref.current.rotation.x += 0.01;
-    // ref.current.rotation.y += 0.01;
-    // ref.current.rotation.z += 0.01;
-  });
-
-  return (
-    <>
-      <Octahedron args={[6, 2]} ref={ref} position={[-10, -10, -10]}>
-        <meshNormalMaterial attach="material" flatShading color="hotpink" />
-      </Octahedron>
     </>
   );
 };

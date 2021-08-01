@@ -13,3 +13,13 @@ export const toChangeCursorColor = (
   type: TypeNames.HANDLE_CHANGE_CURSOR_COLOR,
   payload
 });
+
+
+
+export const toChangeStatuses = (
+  payload: PayloadTypes[TypeNames.HANDLE_CHANGE_STATUSES]
+): AppActionTypes => ({
+  type: TypeNames.HANDLE_CHANGE_STATUSES,
+  payload
+});
+

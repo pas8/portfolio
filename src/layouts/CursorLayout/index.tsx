@@ -36,7 +36,6 @@ const useStyles = makeStyles(({ palette: { background ,primary,secondary} }) => 
     background:secondary.main
   },
   cursorDotOutlinedContainer: {
-
     '& div': {
       animation: 'RotationRight 8s linear infinite'
     }
