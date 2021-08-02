@@ -164,7 +164,7 @@ export const useStyles = makeStyles(({ palette: { background, secondary },breakp
     stroke: 'rgb(106, 9, 249)'
   },
   delayOSec: {
-    animation: 'lines 4s infinite'
+    animation: 'lines 8s infinite'
   },
   delay1Sec: {
     animation: 'lines 8s infinite 2s'
@@ -178,6 +178,22 @@ export const useStyles = makeStyles(({ palette: { background, secondary },breakp
   },
   delay4Sec: {
     animation: 'lines 8s infinite 8s'
+  },
+
+  duration16Sec: {
+    animation: 'lines 16s infinite'
+  },
+
+  duration24Sec: {
+    animation: 'lines 24s infinite'
+  },
+
+  duration32Sec: {
+    animation: 'lines 32s infinite'
+  },
+
+  duration42Sec: {
+    animation: 'lines 42s infinite'
   },
 
   containerOfHI: {
