@@ -38,7 +38,6 @@ const WhoIAm: FC = () => {
     delay2Sec,
     delay3Sec,
     delay4Sec,
-    containerOfAS,
     containerOfHI,
     containerOfIM,
     comaContainer,
