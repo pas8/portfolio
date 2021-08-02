@@ -38,8 +38,8 @@ const useStyles = makeStyles(({ palette: { background } }) => ({
     minWidth: '100vw',
     bottom: 0,
     '& canvas': {
-    position: 'fixed',
-    inset: 0,
+      position: 'fixed',
+      inset: 0,
 
       height: '100% !important'
     }
@@ -73,14 +73,10 @@ export default function PerspectiveCameraScene() {
   }, []);
   const [depthBuffer, setDepth] = useState();
 
-const{y} = useWindowScroll()
-
-
-
   return (
-    <Canvas className={classes.canvas} >
+    <Canvas className={classes.canvas}>
       <Suspense fallback={null}>
-        <PerspectiveCamera makeDefault position={[0, 0, 10]} zoom={1} />
+        <PerspectiveCamera makeDefault position={[0, 0, 0]} zoom={2} />
         <Stars />
 
         <Container />
@@ -91,8 +87,6 @@ const{y} = useWindowScroll()
 }
 const H = () => {
   const torusRef = useRef();
-
-    
 
   useFrame(() => {
     torusRef.current.rotation.x += 0.01;
@@ -110,33 +104,29 @@ const H = () => {
 };
 
 const Container = () => {
-  const normalMap = useTexture('moon.jpeg');
+  const { size, camera } = useThree();
+  const marsRef = useRef();
+  const randomItemRef = useRef();
 
-  const { size, camera } = useThree(); // This will just crash
   const handleMoveCamera = () => {
-  
-  
-  const t = document.body.getBoundingClientRect().top
-  
-  camera.position.z = t * -0.01
-  camera.position.x = t * -0.002
-  camera.position.y = t * -0.0002
-  
-  
-  
-  }
+    const t = document.body.getBoundingClientRect().top;
+    camera.position.z = t * -0.01;
+    marsRef.current.position.x = 1 + t * 0.001;
+    marsRef.current.position.y = 1 + t * 0.004;
+  };
 
-  document.body.onscroll = handleMoveCamera
-
-
-  // const normalMap = useTexture('ava2.jpg');
-  const ref = useRef();
+  document.body.onscroll = handleMoveCamera;
 
   useFrame(() => {
-    ref.current.rotation.x += 0.01;
-    // ref.current.rotation.y += 0.01;
-    // ref.current.rotation.z += 0.01;
+    marsRef.current.rotation.x += 0.004;
+    marsRef.current.rotation.y += 0.004;
+    marsRef.current.rotation.z += 0.004;
   });
+
+  const normalMars = useTexture('normalMars.png');
+  const mars = useTexture('mars.jpeg');
+
+  const gradientMap = useTexture('gradient.jpeg');
 
   return (
     <>
@@ -151,12 +141,17 @@ const Container = () => {
         lockY={false}
         lockZ={false}
       >
-        <meshStandardMaterial displacementScale={0.2} map={normalMap} />
+        <meshStandardMaterial displacementScale={0.2} map={mars} />
       </Billboard>
 
-      <mesh position={[-10, 10, 10]} ref={ref}>
-        <boxGeometry args={[3, 3, 3]} />
-        <meshStandardMaterial map={normalMap} />
+      {/* <mesh position={[0, 0, 0]} ref={randomItemRef}>
+        <torusKnotGeometry args={[8, 0.2, 32, 16]} />
+        <meshNormalMaterial gradientMap={gradientMap} />
+      </mesh> */}
+
+      <mesh position={[1, -1, -1]} ref={marsRef}>
+        <sphereGeometry args={[0.4, 32, 16 ]} />
+        <meshStandardMaterial map={mars} normalMap={normalMars} />
       </mesh>
     </>
   );

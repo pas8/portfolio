@@ -5,8 +5,23 @@ import { makeStyles, Grid } from '@material-ui/core';
 import MySkills from './components/MySkills';
 import WhoIAm from './components/WhoIAm';
 import Greeting from './components/Greeting/index';
-const useStyles = makeStyles(({ palette: { background } }) => ({
+
+
+
+const useStyles = makeStyles(({ palette: { background },breakpoints }) => ({
   container: {
+[breakpoints.down('xl')]:{
+
+  left: 320,
+  right: 320,
+},
+
+[breakpoints.down('lg')]:{
+
+  left: 200,
+  right: 200,
+},
+
     position: 'absolute',
     top: 0,
     padding: 42,
@@ -22,7 +37,7 @@ const Main: FC = () => {
 
   return (
     <>
-      <Grid container className={classes.container} justify={'center'} alignItems={'center'}  >
+      <Grid  className={classes.container} >
         <Greeting />
         <WhoIAm/>
         <MySkills />

@@ -6,14 +6,23 @@ import dynamic from 'next/dynamic';
 
 import { getCursorColor } from 'store/modules/App/selectors';
 import { useStyles } from '../Greeting';
+import { colord } from 'colord';
 
-const CanvasWithPas = dynamic(() => import('./components/Canvas'), { ssr: false });
-
-const useLocalStyles = makeStyles(({ palette: { background } }) => ({
+const useLocalStyles = makeStyles(({ palette: { background, primary, secondary }, shape: { borderRadius } }) => ({
+  container: {
+    borderRadius,
+    backdropFilter: 'blur(10px)',
+    background: colord(primary.main).alpha(0.16).toHex(),
+    padding: 32
+  },
+  textContainer: {
+    userSelect: 'none',
+    '& h4:hover': {
+      color: secondary.main
+    },
+    width: 'calc(100vw - 860px)'
+  },
   containerOfWHOIAM: {
-    // marginTop: 96,
-
-    // marginLeft: 16,
     width: 660,
     '& path': {
       strokeWidth: '4px'
@@ -23,7 +32,6 @@ const useLocalStyles = makeStyles(({ palette: { background } }) => ({
 
 const WhoIAm: FC = () => {
   const {
-    container,
     red3Color,
     delayOSec,
     delay1Sec,
@@ -56,11 +64,14 @@ const WhoIAm: FC = () => {
     dashOffset1500Dasharray1500
   } = useStyles();
 
-  const { containerOfWHOIAM } = useLocalStyles();
+  const { containerOfWHOIAM, textContainer, container } = useLocalStyles();
   const cursorColor = useSelector(getCursorColor);
 
+  const text =
+    'I am Anatolii Ponocheniuk,self educated by realizing studying projects and also acquire new info by reading  official documentations. And about my soft skills, I improved them in mba school and gdansk business week of course all communication was an english. Exactly want evolve as react-ts developer and of course be fond of coding and right react with typescript. So, I have default hobbies. Certainly motivated enough to work in new company.';
+
   return (
-    <Grid container >
+    <Grid container className={container}>
       <Grid className={containerOfWHOIAM}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox={'0 0 550 420'} className={'svgContainer'}>
           <path
@@ -92,13 +103,15 @@ const WhoIAm: FC = () => {
           />
         </svg>
       </Grid>
-      <Grid>
-        <Typography variant={'h5'} color={'textSecondary'}>
-          I am Anatolii Ponocheniuk,self educated by realizing studying projects and also acquire new info by reading
-          official documentations. And about my soft skills, I improved them in mba school and gdansk business week of
-          course all communication was an english. Exactly want evolve as react-ts developer and of course be fond of
-          coding and right react with typescript. So, I have default hobbies. Certainly motivated enough to work in new
-          company.
+      <Grid className={textContainer}>
+        <Typography variant={'h4'} color={'textSecondary'}>
+          {text}
+          {/* {Array.from(text).map((letter, idx) => {
+            return (
+            <div key={`text_${letter}_${idx}`} className={letter !== ' ' ? 'racketTextAnimated' : 'placeholderWithMarginRight'}>
+              {letter }
+            </div>
+        )})} */}
         </Typography>
       </Grid>
     </Grid>
