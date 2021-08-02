@@ -6,25 +6,28 @@ import MySkills from './components/MySkills';
 import WhoIAm from './components/WhoIAm';
 import Greeting from './components/Greeting/index';
 
-
-
-const useStyles = makeStyles(({ palette: { background },breakpoints }) => ({
+const useStyles = makeStyles(({ palette: { background }, breakpoints }) => ({
   container: {
-[breakpoints.down('xl')]:{
+    [breakpoints.down('xl')]: {
+      left: 280 + 142,
+      right: 280
+    },
 
-  left: 320,
-  right: 320,
-},
-
-[breakpoints.down('lg')]:{
-
-  left: 200,
-  right: 200,
-},
+    [breakpoints.down('lg')]: {
+      left: 240,
+      right: 100
+    },
+    [breakpoints.down('md')]: {
+      left: 42,
+      right: 42
+    },
+    [breakpoints.down('sm')]: {
+      left: 16,
+      right: 16
+    },
 
     position: 'absolute',
     top: 0,
-    padding: 42,
     left: 0,
     right: 0,
     zIndex: 2
@@ -34,12 +37,11 @@ const useStyles = makeStyles(({ palette: { background },breakpoints }) => ({
 const Main: FC = () => {
   const classes = useStyles();
 
-
   return (
     <>
-      <Grid  className={classes.container} >
+      <Grid className={classes.container}>
         <Greeting />
-        <WhoIAm/>
+        <WhoIAm />
         <MySkills />
       </Grid>
     </>

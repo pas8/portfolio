@@ -11,11 +11,11 @@ import {
 } from '@material-ui/core';
 import { colord } from 'colord';
 import clsx from 'clsx';
-import { FC } from 'react';
-import { useStyles } from 'components/Main/components/Greeting';
-import { Fragment } from 'react';
+import { FC ,useState,Fragment} from 'react';
 import { useRouter } from 'next/dist/client/router';
-import { useState } from 'react';
+
+import { useStyles } from 'components/Main/components/Greeting';
+import VideoButton from 'components/VideoButton';
 
 const useLocalStyles = makeStyles(
   ({ palette: { background, secondary, text, primary }, breakpoints, shape: { borderRadius } }) => ({
@@ -30,28 +30,12 @@ const useLocalStyles = makeStyles(
       top: 12,
       right: 12,
       zIndex: 11,
-      '& button': {
-        overflow:'hidden',
-        padding: 12,
-        width:58,
-        height:58,
-        position: 'relative',
-        borderRadius,
-        '&:hover':{
-          '& .content': {
-            
-            background:secondary.main
-          }
 
+    '& button':{
 
-        },
-        // background: colord(secondary.main).alpha(0.08).toHex(),
-
-        '& .content': {
-          position: 'absolute',
-          inset: 0
-        }
-      }
+      width: 68,
+      height: 68,
+    }
     },
 
     navContainer: {
@@ -191,10 +175,7 @@ const NavLayout: FC<WithWidthProps> = ({ children, width }) => {
     <Grid className={container}>
       <Grid className={menuButton}>
         {isMenuHaveDialogView && (
-          <ButtonBase onClick={handleChangeMenuOpenStatus}>
-            <video class="button__bg" src="https://cdn.lost.show/mf/video/button-gradient.mp4" muted loop autoplay playsinline></video>
-
-            <Grid container justifyContent={'center'} alignItems={'center'} className={'content'}>
+          <VideoButton onClick={handleChangeMenuOpenStatus}>
 
               <SvgIcon viewBox={'0 0 24 24'}>
                 <path
@@ -205,8 +186,7 @@ const NavLayout: FC<WithWidthProps> = ({ children, width }) => {
                   }
                 />
               </SvgIcon>
-            </Grid>
-          </ButtonBase>
+          </VideoButton>
         )}
       </Grid>
       {(isMenuOpen || !isMenuHaveDialogView) && (
