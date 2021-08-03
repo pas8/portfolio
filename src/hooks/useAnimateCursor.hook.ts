@@ -1,4 +1,5 @@
 import { MouseEventHandler, useEffect, useRef } from 'react';
+import { ACTIVE_CURSOR, HIDDEN } from 'models/denotation';
 
 export const useAnimateCursor = ({ dot, dotOutline }: { [Property in 'dot' | 'dotOutline']: any }) => {
   const cursorVisible = useRef(true);
@@ -43,11 +44,11 @@ export const useAnimateCursor = ({ dot, dotOutline }: { [Property in 'dot' | 'do
 
   const toggleCursorSize = () => {
     if (cursorEnlarged.current) {
-      dot.current.style.transform = 'translate(-50%, -50%) scale(0.75)';
-      return (dotOutline.current.style.transform = 'translate(-50%, -50%) scale(1.5)');
+      dotOutline.current.classList.add(ACTIVE_CURSOR);
+      return dotOutline.current.classList.add(HIDDEN);
     }
-    dot.current.style.transform = 'translate(-50%, -50%) scale(1)';
-    dotOutline.current.style.transform = 'translate(-50%, -50%) scale(1)';
+    dotOutline.current.classList.remove(ACTIVE_CURSOR);
+    return dotOutline.current.classList.remove(HIDDEN);
   };
 
   const mouseOverEvent = () => {
@@ -87,7 +88,7 @@ export const useAnimateCursor = ({ dot, dotOutline }: { [Property in 'dot' | 'do
     dotOutline.current.style.left = _x.current + 'px';
 
     requestRef.current = requestAnimationFrame(animateDotOutline);
- 
-
   };
+
+  return {mouseOverEvent,mouseOutEvent}
 };

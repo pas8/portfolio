@@ -22,7 +22,7 @@ import { useMemo, useRef, useState, Suspense, useEffect } from 'react';
 import { TextureLoader } from 'three/src/loaders/TextureLoader';
 import * as THREE from 'three';
 import { useWindowScroll } from 'react-use';
-import {usePermission} from 'react-use';
+import { usePermission } from 'react-use';
 
 const useStyles = makeStyles(({ palette: { background } }) => ({
   '@global': {
@@ -56,9 +56,6 @@ interface Positions {
 
 export default function PerspectiveCameraScene() {
   const classes = useStyles();
-
-
-  
 
   const positions = useMemo(() => {
     const pos: Positions[] = [];
@@ -112,13 +109,16 @@ const Container = () => {
   const marsRef: any = useRef();
   const randomItemRef: any = useRef();
   const avaBoxRef: any = useRef();
-const spotLightRef:any = useRef()
+  const spotLightRef: any = useRef();
+  const darkMateriaRef: any = useRef();
 
   const handleMoveCamera = () => {
     const t = document.body.getBoundingClientRect().top;
     camera.position.z = t * -0.01;
     marsRef.current.position.x = 1 + t * 0.001;
     marsRef.current.position.y = 1 + t * 0.004;
+
+    // darkMateriaRef.current.position.z -= t * 4;
   };
 
   document.body.onscroll = handleMoveCamera;
@@ -126,11 +126,11 @@ const spotLightRef:any = useRef()
   useFrame(() => {
     avaBoxRef.current.rotation.x += 0.004;
     avaBoxRef.current.rotation.y += 0.004;
-    
 
-    spotLightRef.current.rotation.x += 0.04;
+    darkMateriaRef.current.rotation.x += 0.004;
+    darkMateriaRef.current.rotation.y += 0.004;
 
-
+    // spotLightRef.current.rotation.x += 0.04;
 
     marsRef.current.rotation.x += 0.004;
     marsRef.current.rotation.y += 0.004;
@@ -141,6 +141,7 @@ const spotLightRef:any = useRef()
   const mars = useTexture('mars.jpeg');
 
   const gradientMap = useTexture('gradient.jpeg');
+  const darkMormalMap = useTexture('darkMormalMap.jpg');
 
   // var videoTexture= new THREEx.VideoTexture('videos/sintel.ogv')
   // updateFcts.push(function(delta, now){
@@ -163,7 +164,7 @@ const spotLightRef:any = useRef()
   // texture.format = THREE.RGBFormat;
 
   const avaMap = useTexture('ava3.jpg');
-  const [depthBuffer, setDepth] = useState()
+  const [depthBuffer, setDepth] = useState();
 
   return (
     <>
@@ -180,12 +181,18 @@ const spotLightRef:any = useRef()
       >
         <meshStandardMaterial displacementScale={0.2} map={mars} />
       </Billboard>
+      <pointLight args={[0xffffff, 0.1]} position={[1, 0.8, -4]} />
+      <pointLight args={[0xff0000, 2]} position={[1, 0.8, -4]} />
+      <mesh position={[1, 0.6, -4]} ref={darkMateriaRef}>
+        <sphereGeometry args={[0.2, 32, 16]} />
+        <meshStandardMaterial normalMap={darkMormalMap} metalness={0.7} roughness={0.2} color={0x292929} />
+      </mesh>
 
       {/* <mesh position={[1, 1, 1]} ref={randomItemRef}>
         <boxGeometry args={[1, 1, 1]} />
         <meshBasicMaterial {...{ map: texture, side: THREE.FrontSide, toneMapped: false }} />
       </mesh> */}
-       <SpotLight
+      {/* <SpotLight
        ref={spotLightRef}
         depthBuffer={depthBuffer}
         position={[2,0.2,0.2]}
@@ -193,8 +200,8 @@ const spotLightRef:any = useRef()
         angle={0.2}
         color="#ff3b6b"
         castShadow
-      />
-       <mesh position={[1, 1, 1]} ref={avaBoxRef}>
+      /> */}
+      <mesh position={[1, 1, 1]} ref={avaBoxRef}>
         <boxGeometry args={[1, 1, 1]} />
         <meshBasicMaterial map={avaMap} />
       </mesh>

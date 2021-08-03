@@ -6,12 +6,11 @@ import clsx from 'clsx';
 import dynamic from 'next/dynamic';
 
 import { getCursorColor } from 'store/modules/App/selectors';
-import VideoButton from 'components/VideoButton';
+import CursorButton from 'components/CursorButton';
 import SectionContainer from 'components/SectionContainer';
 import { useStyles } from '../Greeting';
 
-const ResumeDialog = dynamic(() => import('./components/ResumeDialog'),{ssr:false});
-
+const ResumeDialog = dynamic(() => import('./components/ResumeDialog'), { ssr: false });
 
 const useLocalStyles = makeStyles(
   ({ palette: { background, primary, secondary }, shape: { borderRadius }, breakpoints }) => ({
@@ -22,10 +21,10 @@ const useLocalStyles = makeStyles(
       background: colord(secondary.main).alpha(0.04).toHex(),
       padding: 32,
       '& .readMoreButtonContainer': {
-        marginTop:24,
+        marginTop: 24,
         '& button': {
-          height: 42,
-          width: 200
+          // height: 42,
+          // width: 200
         }
       }
     },
@@ -111,7 +110,7 @@ const WhoIAm: FC = () => {
 
   return (
     <>
-      <SectionContainer  className={container} >
+      <SectionContainer className={container}>
         <Grid className={containerOfWHOIAM}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox={'0 0 550 420'} className={'svgContainer'}>
             <path
@@ -148,15 +147,12 @@ const WhoIAm: FC = () => {
             {text}
           </Typography>
           <Grid className={'readMoreButtonContainer'}>
-            <VideoButton onClick={handleOpenResumeDialog}>
-              <Typography variant={'button'} color={'textPrimary'}>
-                Read more!
-              </Typography>
-            </VideoButton>
+            <CursorButton onClick={handleOpenResumeDialog} title={'Read more!'} />
           </Grid>
         </Grid>
       </SectionContainer>
-     <ResumeDialog open={isResumeDialogOpen} onClose={handleCloseResumeDialog}/>
+
+      <ResumeDialog open={isResumeDialogOpen} onClose={handleCloseResumeDialog} />
     </>
   );
 };

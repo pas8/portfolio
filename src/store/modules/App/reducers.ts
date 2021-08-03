@@ -22,7 +22,8 @@ export const initialState: AppInitialStateType = {
   },
 
   statuses: {
-    isRandomColorChangingDisabled: false
+    isRandomColorChangingDisabled: false,
+    isMain3dSceneHidden: false
   },
   cursorColor: '#ecaf25',
   skills: [
@@ -56,7 +57,7 @@ export const AppReducer = (state = initialState, action: AppActionTypes): AppIni
     }
 
     case TypeNames.HANDLE_CHANGE_STATUSES: {
-      console.log(action.payload.newStatuses)
+      console.log(action.payload.newStatuses);
       return { ...state, statuses: { ...state.statuses, ...action.payload.newStatuses } };
     }
 

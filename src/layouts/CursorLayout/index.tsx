@@ -1,5 +1,5 @@
-import { makeStyles, Grid } from '@material-ui/core';
-import { FC, useRef } from 'react';
+import { makeStyles, Grid, Typography } from '@material-ui/core';
+import { createContext, FC, useRef } from 'react';
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';
 import { getCursorColor } from 'store/modules/App/selectors';
@@ -7,8 +7,11 @@ import { useWindowSize } from 'react-use';
 import { useState } from 'react';
 import { MouseEventHandler } from 'react';
 import { useAnimateCursor } from 'hooks/useAnimateCursor.hook';
+import { HIDDEN, ACTIVE_CURSOR } from 'models/denotation';
 
-const useStyles = makeStyles(({ palette: { background ,primary,secondary} }) => ({
+export const CursorContext = createContext({ mouseOverEvent: () => {}, mouseOutEvent: () => {} });
+
+const useStyles = makeStyles(({ palette: { background, primary, secondary } }) => ({
   '@global': {
     '*': { cursor: 'none' },
     '@keyframes RotationRight': {
@@ -18,6 +21,33 @@ const useStyles = makeStyles(({ palette: { background ,primary,secondary} }) => 
 
       '100%': {
         transform: 'rotate(1turn)'
+      }
+    },
+
+    '@keyframes cursorActiveAnimation': {
+      '0%': {
+        backgroundPosition: '0 0'
+      },
+
+      '100%': {
+        backgroundPosition: '100% 0'
+      }
+    },
+
+    [HIDDEN]: {
+      display: 'none !important'
+    },
+    [ACTIVE_CURSOR]: {
+      width: 48,
+      borderRadius: '0',
+      height: 48,
+      '& .content': {
+        display: 'block !important',
+        backgroundImage: 'url(https://about.mav.farm/sprites/cursor-sphere-sprite.png)',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: '0 0',
+        backgroundSize: '6100% 100%',
+        animation: 'cursorActiveAnimation 2s linear infinite'
       }
     }
   },
@@ -33,13 +63,12 @@ const useStyles = makeStyles(({ palette: { background ,primary,secondary} }) => 
     width: 8,
     borderRadius: '50%',
     height: 8,
-    background:secondary.main
+    background: secondary.main
   },
   cursorDotOutlinedContainer: {
     '& div': {
       animation: 'RotationRight 8s linear infinite'
     }
-
   }
 }));
 
@@ -51,13 +80,13 @@ const CursorLayout: FC = ({ children }) => {
 
   const dot = useRef<HTMLDivElement>(null)!;
   const dotOutline = useRef<HTMLDivElement>(null)!;
-  useAnimateCursor({ dot, dotOutline });
+  const cursorContextValue = useAnimateCursor({ dot, dotOutline });
 
   return (
-    <>
+    <CursorContext.Provider value={cursorContextValue}>
       <Grid ref={dotOutline} className={clsx(cursorDotOutlinedContainer, dotContainer)}>
         <Grid>
-          <svg width={"42"} height={"42"} viewBox={"0 0 37 36"} xmlns={"http://www.w3.org/2000/svg"}>
+          <svg width={'42'} height={'42'} viewBox={'0 0 37 36'} xmlns={'http://www.w3.org/2000/svg'}>
             <path
               stroke={cursorColor}
               stroke-width={'1.5'}
@@ -70,8 +99,15 @@ const CursorLayout: FC = ({ children }) => {
           </svg>
         </Grid>
       </Grid>
-      <Grid ref={dot} className={clsx(cursorDotContainer, dotContainer)} /> {children}
-    </>
+      <Grid ref={dot} className={clsx(cursorDotContainer, dotContainer)}>
+        <Grid className={'content'}>
+          <Typography variant={'button'} color={'textPrimary'}>
+            Open
+          </Typography>
+        </Grid>
+      </Grid>
+      {children}
+    </CursorContext.Provider>
   );
 };
 

@@ -17,6 +17,12 @@ export const getCursorColor = createSelector(
   cursorColor => cursorColor
 );
 
+export const getIsMain3dSceneHidden = createSelector(
+  [(state: RootStoreType) => state.app.statuses.isMain3dSceneHidden],
+  isMain3dSceneHidden => isMain3dSceneHidden
+);
+
+
 
 
 export const getIsRandomColorChangingDisabled = createSelector(
