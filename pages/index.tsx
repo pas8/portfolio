@@ -8,7 +8,6 @@ const Main = dynamic(() => import('components/Main'));
 const Index: FC = () => {
   return (
     <>
-      {/* <Scene /> */}
       <Main />
     </>
   );

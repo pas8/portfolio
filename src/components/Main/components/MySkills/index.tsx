@@ -1,9 +1,10 @@
-import { FC, useEffect } from 'react';
-import { makeStyles, Grid, Typography } from '@material-ui/core';
+import { FC} from 'react';
+import { makeStyles, Grid } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 
-import { getCursorColor, getSkills } from 'store/modules/App/selectors';
+import { getCursorColor, } from 'store/modules/App/selectors';
+import SectionContainer from 'components/SectionContainer';
 import { useStyles } from '../Greeting';
 import Sphere from '../Sphere/index';
 
@@ -14,7 +15,11 @@ const useLocalStyles = makeStyles(({ palette: { background } }) => ({
       strokeWidth: '4px'
     }
   },
-  container:{}
+  container:{
+marginTop:100,
+marginBottom:100,
+
+  }
 }));
 
 const MySkills: FC = () => {
@@ -54,7 +59,7 @@ const MySkills: FC = () => {
   const cursorColor = useSelector(getCursorColor);
 
   return (
-    <Grid container className={container} wrap={'nowrap'}>
+    <SectionContainer  className={container} >
       <Grid className={containerOfWHOIAM}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 742 420" className={'svgContainer'}>
           <path
@@ -126,7 +131,7 @@ const MySkills: FC = () => {
         </svg>
       </Grid>
       <Sphere />
-    </Grid>
+    </SectionContainer>
   );
 };
 

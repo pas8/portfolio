@@ -1,12 +1,14 @@
 import { FC, useState } from 'react';
 import { makeStyles, Grid, Typography, Dialog } from '@material-ui/core';
 import { useSelector } from 'react-redux';
+import { colord } from 'colord';
 import clsx from 'clsx';
 import dynamic from 'next/dynamic';
+
 import { getCursorColor } from 'store/modules/App/selectors';
-import { useStyles } from '../Greeting';
-import { colord } from 'colord';
 import VideoButton from 'components/VideoButton';
+import SectionContainer from 'components/SectionContainer';
+import { useStyles } from '../Greeting';
 
 const ResumeDialog = dynamic(() => import('./components/ResumeDialog'),{ssr:false});
 
@@ -109,7 +111,7 @@ const WhoIAm: FC = () => {
 
   return (
     <>
-      <Grid container className={container} wrap={'nowrap'}>
+      <SectionContainer  className={container} >
         <Grid className={containerOfWHOIAM}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox={'0 0 550 420'} className={'svgContainer'}>
             <path
@@ -153,8 +155,8 @@ const WhoIAm: FC = () => {
             </VideoButton>
           </Grid>
         </Grid>
-      </Grid>
-     <ResumeDialog open={handleCloseResumeDialog} onClose={handleCloseResumeDialog}/>
+      </SectionContainer>
+     <ResumeDialog open={isResumeDialogOpen} onClose={handleCloseResumeDialog}/>
     </>
   );
 };

@@ -20,8 +20,9 @@ import { makeStyles } from '@material-ui/core';
 import { TorusBufferGeometry } from 'three';
 import { useMemo, useRef, useState, Suspense, useEffect } from 'react';
 import { TextureLoader } from 'three/src/loaders/TextureLoader';
-import { Color } from 'three';
+import * as THREE from 'three';
 import { useWindowScroll } from 'react-use';
+import {usePermission} from 'react-use';
 
 const useStyles = makeStyles(({ palette: { background } }) => ({
   '@global': {
@@ -56,6 +57,9 @@ interface Positions {
 export default function PerspectiveCameraScene() {
   const classes = useStyles();
 
+
+  
+
   const positions = useMemo(() => {
     const pos: Positions[] = [];
     const half = (NUM - 1) / 2;
@@ -81,18 +85,18 @@ export default function PerspectiveCameraScene() {
 
         <Container />
       </Suspense>
-      <OrbitControls />
+      {/* <OrbitControls /> */}
     </Canvas>
   );
 }
 const H = () => {
   const torusRef = useRef();
 
-  useFrame(() => {
-    torusRef.current.rotation.x += 0.01;
-    torusRef.current.rotation.y += 0.01;
-    torusRef.current.rotation.z += 0.01;
-  });
+  // useFrame(() => {
+  //   torusRef.current.rotation.x += 0.01;
+  //   torusRef.current.rotation.y += 0.01;
+  //   torusRef.current.rotation.z += 0.01;
+  // });
 
   return (
     <>
@@ -105,8 +109,10 @@ const H = () => {
 
 const Container = () => {
   const { size, camera } = useThree();
-  const marsRef = useRef();
-  const randomItemRef = useRef();
+  const marsRef: any = useRef();
+  const randomItemRef: any = useRef();
+  const avaBoxRef: any = useRef();
+const spotLightRef:any = useRef()
 
   const handleMoveCamera = () => {
     const t = document.body.getBoundingClientRect().top;
@@ -118,6 +124,14 @@ const Container = () => {
   document.body.onscroll = handleMoveCamera;
 
   useFrame(() => {
+    avaBoxRef.current.rotation.x += 0.004;
+    avaBoxRef.current.rotation.y += 0.004;
+    
+
+    spotLightRef.current.rotation.x += 0.04;
+
+
+
     marsRef.current.rotation.x += 0.004;
     marsRef.current.rotation.y += 0.004;
     marsRef.current.rotation.z += 0.004;
@@ -127,6 +141,29 @@ const Container = () => {
   const mars = useTexture('mars.jpeg');
 
   const gradientMap = useTexture('gradient.jpeg');
+
+  // var videoTexture= new THREEx.VideoTexture('videos/sintel.ogv')
+  // updateFcts.push(function(delta, now){
+  //     // to update the texture are every frame
+  //     videoTexture.update(delta, now)
+  // })
+
+  // const videoRef = useRef<HTMLVideoElement>();
+
+  // var video = document.createElement('video');
+  // video.loop = true;
+  // video.crossOrigin = 'anonymous';
+  // video.preload = 'auto';
+  // video.src = 'https://cdn.lost.show/mf/video/button-gradient.mp4';
+  // video.play();
+
+  // var texture = new THREE.VideoTexture(video);
+  // texture.minFilter = THREE.NearestFilter;
+  // texture.magFilter = THREE.LinearFilter;
+  // texture.format = THREE.RGBFormat;
+
+  const avaMap = useTexture('ava3.jpg');
+  const [depthBuffer, setDepth] = useState()
 
   return (
     <>
@@ -144,13 +181,31 @@ const Container = () => {
         <meshStandardMaterial displacementScale={0.2} map={mars} />
       </Billboard>
 
+      {/* <mesh position={[1, 1, 1]} ref={randomItemRef}>
+        <boxGeometry args={[1, 1, 1]} />
+        <meshBasicMaterial {...{ map: texture, side: THREE.FrontSide, toneMapped: false }} />
+      </mesh> */}
+       <SpotLight
+       ref={spotLightRef}
+        depthBuffer={depthBuffer}
+        position={[2,0.2,0.2]}
+        intensity={0.5}
+        angle={0.2}
+        color="#ff3b6b"
+        castShadow
+      />
+       <mesh position={[1, 1, 1]} ref={avaBoxRef}>
+        <boxGeometry args={[1, 1, 1]} />
+        <meshBasicMaterial map={avaMap} />
+      </mesh>
+
       {/* <mesh position={[0, 0, 0]} ref={randomItemRef}>
         <torusKnotGeometry args={[8, 0.2, 32, 16]} />
         <meshNormalMaterial gradientMap={gradientMap} />
       </mesh> */}
 
       <mesh position={[1, -1, -1]} ref={marsRef}>
-        <sphereGeometry args={[0.4, 32, 16 ]} />
+        <sphereGeometry args={[0.4, 32, 16]} />
         <meshStandardMaterial map={mars} normalMap={normalMars} />
       </mesh>
     </>

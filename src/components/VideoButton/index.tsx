@@ -29,7 +29,8 @@ const VideoButton: FC<{ onClick: () => void }> = ({ onClick, children }) => {
 
   return (
     <ButtonBase onClick={onClick} className={button}>
-      <video src="https://cdn.lost.show/mf/video/button-gradient.mp4" muted="" loop autoplay="" playsinline=""></video>
+      {//@ts-ignore
+      <video src="https://cdn.lost.show/mf/video/button-gradient.mp4" muted="" loop autoplay="" playsinline=""></video>}
 
       <Grid container justifyContent={'center'} alignItems={'center'} className={'content'}>
         {children}

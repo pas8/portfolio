@@ -14,7 +14,7 @@ const CursorLayout = dynamic(() => import('../src/layouts/CursorLayout'), { ssr:
 const Index: FC<AppProps> = ({ Component, pageProps }) => {
   useUploadThemeSsr();
 
-  const layouts = [StoreLayout, ThemeLayout, ColorLayout,  NavLayout];
+  const layouts = [StoreLayout, ThemeLayout, ColorLayout,SceneLayout,  NavLayout];
 
   return (
     <ComposeLayouts layouts={layouts} pageProps={pageProps}>
