@@ -67,7 +67,7 @@ const useStyles = makeStyles(({ palette: { background, primary, secondary } }) =
   dotContainer: {
     pointerEvents: 'none',
     position: 'absolute',
-    zIndex: 1000,
+    zIndex: 100000,
     top: '50%',
     left: '50%',
     transform: 'translate(-50%,-50%)'
