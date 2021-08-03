@@ -43,12 +43,14 @@ export const useAnimateCursor = ({ dot, dotOutline }: { [Property in 'dot' | 'do
   };
 
   const toggleCursorSize = () => {
+
     if (cursorEnlarged.current) {
-      dotOutline.current.classList.add(ACTIVE_CURSOR);
-      return dotOutline.current.classList.add(HIDDEN);
+      dot.current.className = `${dot.current.className} ${ACTIVE_CURSOR}`;
+      return (dotOutline.current.className = `${dotOutline.current.className} ${HIDDEN}`);
     }
-    dotOutline.current.classList.remove(ACTIVE_CURSOR);
-    return dotOutline.current.classList.remove(HIDDEN);
+
+    dot.current.className = dot.current.className.replace(ACTIVE_CURSOR, '');
+    return (dotOutline.current.className = dotOutline.current.className.replace(HIDDEN, ''));
   };
 
   const mouseOverEvent = () => {
@@ -90,5 +92,5 @@ export const useAnimateCursor = ({ dot, dotOutline }: { [Property in 'dot' | 'do
     requestRef.current = requestAnimationFrame(animateDotOutline);
   };
 
-  return {mouseOverEvent,mouseOutEvent}
+  return { mouseOverEvent, mouseOutEvent };
 };
