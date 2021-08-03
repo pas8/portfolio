@@ -37,7 +37,6 @@ const useLocalStyles = makeStyles(
 );
 const CursorButton: FC<{ title: string; onClick: (e?: any) => void }> = ({ title, onClick }) => {
   const { button } = useLocalStyles();
-
   return (
     <CursorContext.Consumer>
       {({ mouseOutEvent, mouseOverEvent }) => (

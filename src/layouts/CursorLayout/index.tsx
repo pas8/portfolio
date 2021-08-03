@@ -1,5 +1,5 @@
 import { makeStyles, Grid, Typography } from '@material-ui/core';
-import { createContext, FC, useRef } from 'react';
+import { createContext, FC, useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';
 import { getCursorColor } from 'store/modules/App/selectors';
@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { MouseEventHandler } from 'react';
 import { useAnimateCursor } from 'hooks/useAnimateCursor.hook';
 import { HIDDEN, ACTIVE_CURSOR } from 'models/denotation';
+import { useMapKeys } from 'hooks/useMapKeys.hook';
 
 export const CursorContext = createContext({ mouseOverEvent: () => {}, mouseOutEvent: () => {} });
 
@@ -24,30 +25,42 @@ const useStyles = makeStyles(({ palette: { background, primary, secondary } }) =
       }
     },
 
-    '@keyframes cursorActiveAnimation': {
-      '0%': {
-        backgroundPosition: '0 0'
-      },
+    // '@keyframes cursorActiveAnimation': {
+    //   ...Object.entries(Array(8).fill('%')).reduce((acc, [key, value]: any) => {
+    //     const DEFAULR_VALUE = (key * (100 / 8));
 
-      '100%': {
-        backgroundPosition: '100% 0'
-      }
-    },
+    //     const PERCENT = DEFAULR_VALUE + value;
+    //     const PERCENT_NEXT = DEFAULR_VALUE * 2 + value;
+    //     return {
+    //       ...acc,
+    //       [PERCENT]: {
+    //         backgroundPosition: `${PERCENT} 0`
+    //       },
+    //       [`${PERCENT + 0.01}%`]: {
+    //         backgroundPosition: `${PERCENT_NEXT} 0`
+    //       }
+    //     };
+    //   }, {})
+    // },
 
-    [HIDDEN]: {
+    [`.${HIDDEN}`]: {
       display: 'none !important'
     },
-    [ACTIVE_CURSOR]: {
-      width: 48,
+    [`.${ACTIVE_CURSOR}`]: {
+      // width: 48,
       borderRadius: '0',
-      height: 48,
+      // height: 48,
+      padding: 12,
       '& .content': {
-        display: 'block !important',
+        height: 96,
+        width: 96,
+        marginTop: -40,
+        marginLeft: -40,
+        display: 'flex !important',
         backgroundImage: 'url(https://about.mav.farm/sprites/cursor-sphere-sprite.png)',
         backgroundRepeat: 'no-repeat',
-        backgroundPosition: '0 0',
-        backgroundSize: '6100% 100%',
-        animation: 'cursorActiveAnimation 2s linear infinite'
+        backgroundSize: '6100% 100%'
+        // animation: 'cursorActiveAnimation 10s infinite'
       }
     }
   },
@@ -61,6 +74,9 @@ const useStyles = makeStyles(({ palette: { background, primary, secondary } }) =
   },
   cursorDotContainer: {
     width: 8,
+    '& .content': {
+      display: 'none '
+    },
     borderRadius: '50%',
     height: 8,
     background: secondary.main
@@ -75,12 +91,23 @@ const useStyles = makeStyles(({ palette: { background, primary, secondary } }) =
 const CursorLayout: FC = ({ children }) => {
   const { height, width } = useWindowSize();
 
+  const VALUE_TO_ADD = 100 / 60;
+  const [number, setNumber] = useState(0);
+
   const cursorColor = useSelector(getCursorColor);
   const { cursorDotOutlinedContainer, cursorDotContainer, dotContainer } = useStyles();
 
   const dot = useRef<HTMLDivElement>(null)!;
-  const dotOutline = useRef<HTMLDivElement>(null)!;
+  const dotOutline = useRef<HTMLDivElement>(null);
   const cursorContextValue = useAnimateCursor({ dot, dotOutline });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      !!dot?.current?.className?.search(ACTIVE_CURSOR) &&
+        setNumber(prev => (prev + VALUE_TO_ADD > 100 ? 0 : prev + VALUE_TO_ADD));
+    }, 42);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <CursorContext.Provider value={cursorContextValue}>
@@ -100,7 +127,7 @@ const CursorLayout: FC = ({ children }) => {
         </Grid>
       </Grid>
       <Grid ref={dot} className={clsx(cursorDotContainer, dotContainer)}>
-        <Grid className={'content'}>
+        <Grid className={'content'} style={{ backgroundPosition: `${number}% 0` }} justifyContent={'center'} alignItems={'center'} container>
           <Typography variant={'button'} color={'textPrimary'}>
             Open
           </Typography>
