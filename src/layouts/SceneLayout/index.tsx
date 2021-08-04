@@ -11,7 +11,7 @@ const isMain3dSceneHidden = useSelector(getIsMain3dSceneHidden)
   return (
     <>
       {children}
-   {isMain3dSceneHidden &&    <Scene />}
+   {!isMain3dSceneHidden &&    <Scene />}
     </>
   );
 };

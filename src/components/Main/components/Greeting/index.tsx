@@ -15,6 +15,15 @@ export const useStyles = makeStyles(({ palette: { background, secondary, primary
       display: 'inline-block',
       marginLeft: '4px',
       textTransform: 'uppercase',
+   [breakpoints.down('sm')]: {
+
+fontSize:'22px'
+     },
+
+        [breakpoints.down('xs')]: {
+      marginLeft: '2.6px',
+fontSize:' calc(6vw - 11px)'
+     },
       '&:hover': {
         animation: 'racket 1s ',
         color: primary.main
@@ -200,19 +209,23 @@ export const useStyles = makeStyles(({ palette: { background, secondary, primary
 
   containerOfHI: {
     [breakpoints.down('xl')]: {
-      width: 342
+      marginBottom:-42,
+      width: 360
     },
 
     [breakpoints.down('lg')]: {
+      marginBottom:-36,
       width: 320
     },
 
     [breakpoints.down('md')]: {
-      width: 260
+      marginBottom:-10,
+      width: 280
     },
 
-    [breakpoints.down('sm')]: {
-      width: 200
+
+    [breakpoints.down('xs')]: {
+      width:' calc(100vw - 42px)'
     },
 
     '& path': {
@@ -221,28 +234,27 @@ export const useStyles = makeStyles(({ palette: { background, secondary, primary
   },
   containerOfPAS: {
     [breakpoints.down('xl')]: {
-      width: 616,
+      width: 642,
 
-      marginTop: -116
+      marginTop: -132
     },
 
     [breakpoints.down('lg')]: {
-      width: 580,
+      width: 568,
 
-      marginTop: -90
+      marginTop: -132
     },
 
     [breakpoints.down('md')]: {
-      marginTop: -80,
+      marginTop: -102,
 
-      width: 480
+      width: 496
     },
+       [breakpoints.down('xs')]: {
+      marginTop: ' calc(-28vw + 80px)',
 
-    [breakpoints.down('sm')]: {
-      width: 380
+      width:' calc(64vw - 60px)'
     },
-
-    width: 320,
 
     // marginLeft: -96,
 
@@ -262,17 +274,15 @@ export const useStyles = makeStyles(({ palette: { background, secondary, primary
     },
 
     [breakpoints.down('md')]: {
-      width: 320,
-      marginTop: 20
+      width: 316,
+      marginTop: 24
     },
 
-    [breakpoints.down('sm')]: {
-      width: 260,
-      marginTop: 16
+       [breakpoints.down('xs')]: {
+      width:' calc(46vw - 60px)'
     },
 
-    width: 200,
-    marginTop: 12,
+
 
     // marginRight: 92,
 
@@ -285,23 +295,24 @@ export const useStyles = makeStyles(({ palette: { background, secondary, primary
     // width:,
 
     [breakpoints.down('xl')]: {
+    marginTop: -16,
       width: 1200
     },
 
     [breakpoints.down('lg')]: {
-      width: 1116
+    marginTop: -20,
+      width: 1042
     },
 
     [breakpoints.down('md')]: {
-      width: 1000
-    },
+    marginTop: 4,
 
-    [breakpoints.down('sm')]: {
-      width: 800
+      width: 920
     },
-    width: 642,
+  [breakpoints.down('xs')]: {
+        width: 'calc(100vw - 42px)',},
 
-    marginTop: -6,
+
     '& path': {
       strokeWidth: '18px'
     }
@@ -317,9 +328,31 @@ export const useStyles = makeStyles(({ palette: { background, secondary, primary
   //   }
   // },
   comaContainer: {
-    marginTop: 96,
+    marginTop: 192,
     marginLeft: 16,
+
+    [breakpoints.down('xl')]: {
     width: 80,
+    marginTop: 192,
+      
+    },
+
+    [breakpoints.down('lg')]: {
+    width: 68,
+    marginTop: 192,
+      
+    },
+
+    [breakpoints.down('md')]: {
+      width: 58,
+    marginTop: 160,
+
+    },
+  [breakpoints.down('xs')]: {
+    marginTop: 'calc(20vw)',
+    marginLeft:0,
+        width: 'calc(20vw - 60px)',},
+
     '& path': {
       strokeWidth: '16px'
     }
@@ -328,19 +361,78 @@ export const useStyles = makeStyles(({ palette: { background, secondary, primary
     marginTop: 68,
     gap: 28,
     height: 'min-content',
+'&  .title':{
+
+   [breakpoints.down('xs')]: {
+        width: 'calc(100vw - 60px)',
+justifyContent:'center',
+textAlign:'center',
+    
+
+      },
+},
+          [breakpoints.down('sm')]: {
+         transform:' translate(0%,-142%)'
+          },
+   [breakpoints.down('xs')]: {
+         transform:' translate(0%,0%)'
+
+   
+    
+        // textTransform: 'uppercase'
+
+      },
+
     '& .contactMeButton': {
       '& button': {
         width: 256,
-        height: 56
+        height: 56,
+
+
+          [breakpoints.down('xs')]: {
+        width: 'calc(100vw - 60px)',
+
+    
+        // textTransform: 'uppercase'
+
       },
-      '& p': {
-        textTransform: 'uppercase'
+   
+
         // padding:20,
       }
     }
   },
   containerOfSvgs: {
+
+    [breakpoints.down('xl')]: {
     gap: 68
+      
+    },
+
+    [breakpoints.down('lg')]: {
+    gap: 58
+      
+    },
+
+    [breakpoints.down('md')]: {
+    gap: 42
+      
+    },
+
+    [breakpoints.down('sm')]: {
+    transform:'scale(0.62) translate(-30%,-10%)'
+      
+    },
+
+    [breakpoints.down('xs')]: {
+    transform:'scale(1) translate(0%)',
+    gap: '2vw'
+
+      
+    },
+
+
+
   }
 }));
 
@@ -523,7 +615,7 @@ const Greeting: FC = () => {
                 />
               </svg>
             </Grid>
-            <Grid className={containerOfPAS}>
+            <Grid className={containerOfPAS} container>
               <svg xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 900 500'} className={'svgContainer'}>
                 {pasPathsArr.map((props, idx) => (
                   <path key={idx} {...props} />
@@ -595,7 +687,7 @@ const Greeting: FC = () => {
         </Grid>
 
         <Grid container className={containerOfCaption}>
-          <Grid container>
+          <Grid container className={'title'}>
             <Typography variant={'h4'} color={'textSecondary'}>
               {Array.from('react_typescript_web_developer').map((letter, idx) => {
                 return (

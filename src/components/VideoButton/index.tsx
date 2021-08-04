@@ -8,6 +8,10 @@ const useLocalStyles = makeStyles(
       overflow: 'hidden',
       position: 'relative',
       borderRadius,
+      '& video':{
+
+        width:'100%'
+      },
       color: text.primary,
 
       '&:hover': {
@@ -24,7 +28,7 @@ const useLocalStyles = makeStyles(
     }
   })
 );
-const VideoButton: FC<{ onClick: () => void }> = ({ onClick, children }) => {
+const VideoButton: FC<{ onClick: any }> = ({ onClick, children }) => {
   const { button } = useLocalStyles();
 
   return (

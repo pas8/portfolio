@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef } from 'react';
-import { makeStyles, Grid, Typography } from '@material-ui/core';
+import { makeStyles, Grid, Typography, useTheme, useMediaQuery } from '@material-ui/core';
 import clsx from 'clsx';
 import { useWindowScroll, useWindowSize } from 'react-use';
 
@@ -11,6 +11,12 @@ import { toChangeStatuses } from 'store/modules/App/actions';
 const useStyles = makeStyles(({ palette: { background } }) => ({}));
 
 const Sphere: FC = () => {
+  const { breakpoints, palette } = useTheme();
+  const isSizeIsMd = useMediaQuery(breakpoints.only('md'));
+  const isSizeIsLg = useMediaQuery(breakpoints.only('lg'));
+  const isSizeIsXl = useMediaQuery(breakpoints.only('xl'));
+  const isSizeIsSm = useMediaQuery(breakpoints.only('sm'));
+
   const {} = useStyles();
   const { y } = useWindowScroll();
   const { height } = useWindowSize();
@@ -21,8 +27,9 @@ const Sphere: FC = () => {
   const cursorColor = useSelector(getCursorColor);
 
   const options = {
-    textColour: cursorColor,
-    textHeight: 29,
+    textColour: palette.text.secondary,
+    textHeight: isSizeIsXl ? 30 : isSizeIsLg ? 28 : isSizeIsMd ? 24 : isSizeIsSm ? 20 : 16,
+    outlineColour: 'transparent',
     clickToFront: 600,
     depth: 0.99,
     zoomMin: 1,
@@ -45,15 +52,16 @@ const Sphere: FC = () => {
   }, [options]);
 
   return (
-    <Grid
-      id={'myCanvasContainer'}
-      //  ref={ref}
-    >
-      <canvas id={'myCanvas'} width="800" height="500">
+    <Grid id={'myCanvasContainer'} container justifyContent={'center'}>
+      <canvas
+        id={'myCanvas'}
+        width={isSizeIsXl ? '742' : isSizeIsLg ? '516' : isSizeIsMd ? '480' : isSizeIsSm ? '360' : '500'}
+        height={isSizeIsXl ? '700' : isSizeIsLg ? '460' : isSizeIsMd ? '400' : isSizeIsSm ? '300' : '460'}
+      >
         <ul>
           {skills.map(skill => (
             <Typography key={skill.title}>
-              <a>{skill.title}</a>
+              <a href={skill.href}>{skill.title}</a>
             </Typography>
           ))}
         </ul>

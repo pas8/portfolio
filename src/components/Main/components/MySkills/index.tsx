@@ -15,8 +15,12 @@ const MoreSkillsDialog = dynamic(() => import('./components/MoreSkillsDialog/ind
 
 
 const useLocalStyles = makeStyles(({ palette: { background } }) => ({
-  containerOfWHOIAM: {
-    width: 920,
+  containerOfMYSKILLS: {
+    // width: '50%',  
+    '& svg':{
+
+// width: 960,
+    },
     '& path': {
       strokeWidth: '4px'
     }
@@ -24,6 +28,10 @@ const useLocalStyles = makeStyles(({ palette: { background } }) => ({
   container: {
     marginTop: 100,
     marginBottom: 100
+  },
+  sphereContainer:{
+
+    marginLeft:42,
   }
 }));
 
@@ -60,7 +68,7 @@ const MySkills: FC = () => {
     dashOffset1500Dasharray1500
   } = useStyles();
 
-  const { containerOfWHOIAM, container } = useLocalStyles();
+  const { containerOfMYSKILLS, container ,sphereContainer} = useLocalStyles();
   const cursorColor = useSelector(getCursorColor);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -74,8 +82,8 @@ const MySkills: FC = () => {
 
   return (
     <>
-      <SectionContainer className={container}>
-        <Grid className={containerOfWHOIAM}>
+      <SectionContainer className={container} container> 
+        <Grid className={containerOfMYSKILLS} container>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 742 420" className={'svgContainer'}>
             <path
               className={clsx(red2VioletColor, dashOffset2000Dasharray500, delay3Sec)}
@@ -145,9 +153,11 @@ const MySkills: FC = () => {
             />
           </svg>
         </Grid>
-        <Grid container direction={'column'}>
+        <Grid container direction={'column'} className={sphereContainer}>
           <Sphere />
+          <Grid container justifyContent={'center'}>
           <CursorButton onClick={handleOpenDialog} title={' Read more!'} />
+        </Grid>
         </Grid>
       </SectionContainer>
       <MoreSkillsDialog open={isDialogOpen} onClose={handleCloseDialog} />

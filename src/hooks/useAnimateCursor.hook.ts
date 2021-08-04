@@ -14,8 +14,8 @@ export const useAnimateCursor = ({ dot, dotOutline }: { [Property in 'dot' | 'do
   const requestRef = useRef(0);
 
   useEffect(() => {
-    document.addEventListener('mousedown', mouseOverEvent);
-    document.addEventListener('mouseup', mouseOutEvent);
+    // document.addEventListener('mousedown', mouseOverEvent);
+    // document.addEventListener('mouseup', mouseOutEvent);
     document.addEventListener('mousemove', mouseMoveEvent);
     document.addEventListener('mouseenter', mouseEnterEvent);
     document.addEventListener('mouseleave', mouseLeaveEvent);
@@ -23,8 +23,8 @@ export const useAnimateCursor = ({ dot, dotOutline }: { [Property in 'dot' | 'do
     animateDotOutline();
 
     return () => {
-      document.removeEventListener('mousedown', mouseOverEvent);
-      document.removeEventListener('mouseup', mouseOutEvent);
+      // document.removeEventListener('mousedown', mouseOverEvent);
+      // document.removeEventListener('mouseup', mouseOutEvent);
       document.removeEventListener('mousemove', mouseMoveEvent);
       document.removeEventListener('mouseenter', mouseEnterEvent);
       document.removeEventListener('mouseleave', mouseLeaveEvent);

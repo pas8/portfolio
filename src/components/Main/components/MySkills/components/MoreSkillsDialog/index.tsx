@@ -1,13 +1,14 @@
-import { Dialog, DialogProps, useMediaQuery, useTheme,SvgIcon ,makeStyles,Grid} from '@material-ui/core';
+import { Dialog, DialogProps, useMediaQuery, useTheme, SvgIcon, makeStyles, Grid } from '@material-ui/core';
 import * as THREE from 'three';
-import { Suspense, useMemo, FC } from 'react';
-import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import { Suspense, FC } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { Physics, useBox, usePlane, useSphere } from '@react-three/cannon';
 import { useTexture } from '@react-three/drei';
 import { Texture } from 'three';
+
 import VideoButton from 'components/VideoButton';
 
-const Plane = ({ color, ...props }) => {
+const Plane: FC<any> = ({ color, ...props }) => {
   const [ref] = usePlane(() => ({ ...props }));
   return (
     <mesh ref={ref} receiveShadow>
@@ -34,9 +35,8 @@ const Box = () => {
   );
 };
 
-const SkillBoxesContainer = () => {
+const SkillBoxesContainer: FC = () => {
   const textureArr = useTexture([
-    
     'next.png',
     '_lodash.png',
     'firebase.png',
@@ -49,13 +49,18 @@ const SkillBoxesContainer = () => {
     'redux.png',
     'scss.png',
     'ts.png'
-  ]) 
+  ]);
 
-  return textureArr.map((map, idx) => <InstancedSpheres key={idx} map={map} />);
+  return (
+    <>
+      {textureArr.map((map, idx) => (
+        <InstancedSpheres key={idx} map={map} />
+      ))}
+    </>
+  );
 };
 
 const InstancedSpheres: FC<{ map: Texture }> = ({ map }) => {
-  // const map = useLoader(THREE.TextureLoader, '/carbon_normal.jpg');
   const [ref] = useSphere(index => ({
     mass: 1,
     position: [Math.random() - 0.5, Math.random() - 0.5, index * 2],
@@ -73,45 +78,39 @@ const InstancedSpheres: FC<{ map: Texture }> = ({ map }) => {
 };
 
 const useStyles = makeStyles(({ palette: { background, secondary, primary }, breakpoints }) => ({
+  closeButton: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    zIndex: 1000000000000000,
+    '& button': {
+      width: 42,
+      height: 42
+    }
+  },
 
-closeButton:{
-position:'absolute',
-top:8,
-right:8,
-zIndex:1000000000000000,
-'& button':{
-
-width:42,
-height:42,
-
-}
-
-}
-}))
-
+}));
 
 const MoreSkillsDialog: FC<DialogProps> = ({ open, onClose }) => {
   const { breakpoints } = useTheme();
   const fullScreen = useMediaQuery(breakpoints.down('md'));
-const {closeButton}= useStyles()
+  const { closeButton,  } = useStyles();
 
   return (
     <Dialog fullScreen={fullScreen} fullWidth maxWidth={'lg'} open={open} onClose={onClose}>
       <Grid className={closeButton}>
-      <VideoButton onClick={onClose} >
-      <SvgIcon viewBox={'0 0 24 24'}>
-                <path
-                  d={
-                       'M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z'
-                  }
-                />
-              </SvgIcon>
-
-      </VideoButton>
+        <VideoButton onClick={onClose}>
+          <SvgIcon viewBox={'0 0 24 24'}>
+            <path
+              d={
+                'M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z'
+              }
+            />
+          </SvgIcon>
+        </VideoButton>
       </Grid>
-      <Canvas gl={{ alpha: false }} camera={{ position: [0, -8, 16] }} style={{ height: '80vh' }}>
+      <Canvas gl={{ alpha: false }} camera={{ position: [0, -8, 16] }}  style={{height:fullScreen ? '100vh' : '80vh'}}>
         <Suspense fallback={null}>
-
           <hemisphereLight intensity={0.42} />
           <spotLight
             color={'rgb(244, 17, 103)'}

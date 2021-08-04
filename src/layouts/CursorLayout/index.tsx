@@ -14,7 +14,7 @@ export const CursorContext = createContext({ mouseOverEvent: () => {}, mouseOutE
 
 const useStyles = makeStyles(({ palette: { background, primary, secondary } }) => ({
   '@global': {
-    '*': { cursor: 'none' },
+    '*': { cursor: 'none !important' },
     '@keyframes RotationRight': {
       '0%': {
         transform: 'rotate(0deg)'
