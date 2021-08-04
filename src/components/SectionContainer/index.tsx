@@ -15,11 +15,11 @@ const useLocalStyles = makeStyles(
   })
 );
 
-const SectionContainer: FC<{className:any}> = ({ children,className }) => {
+const SectionContainer: FC<{className?:any}> = ({ children,className }) => {
   const { container } = useLocalStyles();
 
   return (
-    <Grid component={'section'} className={clsx(container,className)} wrap={'nowrap'} container>
+    <Grid component={'section'} className={clsx(container,className)}  container>
       {children}
     </Grid>
   );

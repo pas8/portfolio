@@ -1,8 +1,10 @@
 import { Grid, makeStyles, Typography, ButtonBase } from '@material-ui/core';
 import { FC } from 'react';
+import { colord } from 'colord';
 import clsx from 'clsx';
 import { padStart } from 'lodash';
 import VideoButton from 'components/VideoButton';
+import SectionContainer from 'components/SectionContainer';
 
 export const useStyles = makeStyles(({ palette: { background, secondary, primary }, breakpoints }) => ({
   '@global': {
@@ -93,6 +95,8 @@ fontSize:' calc(6vw - 11px)'
     }
   },
   container: {
+
+    
     // [breakpoints.down('xl')]:{
 
     //   width: '100vw',
@@ -103,7 +107,7 @@ fontSize:' calc(6vw - 11px)'
     // transform:'scale(0.8)'
     //     },
 
-    width: '100vw',
+    // width: '100vw',
     height: '100vh'
   },
   dashOffset2000Dasharray500: {
@@ -215,7 +219,7 @@ fontSize:' calc(6vw - 11px)'
 
     [breakpoints.down('lg')]: {
       marginBottom:-36,
-      width: 320
+      width: 308
     },
 
     [breakpoints.down('md')]: {
@@ -240,15 +244,15 @@ fontSize:' calc(6vw - 11px)'
     },
 
     [breakpoints.down('lg')]: {
-      width: 568,
-
-      marginTop: -132
+      width: 480,
+marginLeft:-16,
+      marginTop: -142 
     },
 
     [breakpoints.down('md')]: {
-      marginTop: -102,
+      marginTop: -108,
 
-      width: 496
+      width: 468
     },
        [breakpoints.down('xs')]: {
       marginTop: ' calc(-28vw + 80px)',
@@ -269,12 +273,12 @@ fontSize:' calc(6vw - 11px)'
     },
 
     [breakpoints.down('lg')]: {
-      width: 360,
+      width: 308,
       marginTop: 24
     },
 
     [breakpoints.down('md')]: {
-      width: 316,
+      width: 300,
       marginTop: 24
     },
 
@@ -339,7 +343,8 @@ fontSize:' calc(6vw - 11px)'
 
     [breakpoints.down('lg')]: {
     width: 68,
-    marginTop: 192,
+    // marginLeft:-16,
+    marginTop: 180,
       
     },
 
@@ -558,7 +563,7 @@ const Greeting: FC = () => {
 
   return (
     <Grid container className={container} alignItems={'center'}>
-      <Grid>
+      <SectionContainer>
         <Grid container className={containerOfSvgs}>
           <Grid container className={containerOfHI}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1114.4309 724.17267" className={'svgContainer'}>
@@ -704,7 +709,7 @@ const Greeting: FC = () => {
             </VideoButton>
           </Grid>
         </Grid>
-      </Grid>
+      </SectionContainer>
     </Grid>
   );
 };

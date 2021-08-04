@@ -25,7 +25,6 @@ import * as THREE from 'three';
 import { useWindowScroll } from 'react-use';
 import { usePermission, useWindowSize } from 'react-use';
 import { Vector3 } from '@react-three/fiber';
-import { Texture } from 'three';
 
 const useStyles = makeStyles(({ palette: { background } }) => ({
   '@global': {
@@ -56,32 +55,32 @@ const Scene = () => {
   // console.log(k)
   return (
     <Canvas className={classes.canvas}>
+      <PerspectiveCamera makeDefault position={[0, 0, 0]} />
+
       <Suspense fallback={null}>
-        <PerspectiveCamera makeDefault position={[0, 0, 0]} zoom={1} />
-        {/* <Stars /> */}
+        <Stars />
 
         <Container />
       </Suspense>
-      <OrbitControls />
     </Canvas>
   );
 };
 
 const Container = () => {
-  const { size, camera } = useThree();
+  const { size, camera ,} = useThree();
 
-  // const handleMoveCameraOnMouseMove = (e: any) => {
-  //   camera.position.x = e.clientX * 0.0001;
-  //   camera.position.z = e.clientX * 0.0004;
-  // };
+  const handleMoveCameraOnMouseMove = (e: any) => {
+    camera.position.x = e.clientX * 0.0001;
+    camera.position.z = e.clientX * 0.0004;
+  };
 
-  // useEffect(() => {
-  //   document.addEventListener('mousemove', handleMoveCameraOnMouseMove);
+  useEffect(() => {
+    document.addEventListener('mousemove', handleMoveCameraOnMouseMove);
 
-  //   return () => {
-  //     document.removeEventListener('mousemove', handleMoveCameraOnMouseMove);
-  //   };
-  // }, []);
+    return () => {
+      document.removeEventListener('mousemove', handleMoveCameraOnMouseMove);
+    };
+  }, []);
 
   const START_Y_OF_MARS_POSITION = -1;
   const START_X_OF_MARS_POSITION = 1;
@@ -99,9 +98,11 @@ const Container = () => {
   const marsRef: any = useRef();
   const sunRef: any = useRef();
   const mercuryRef: any = useRef();
+  const venusRef: any = useRef();
   const darkMateriaRef: any = useRef();
   const neptunRef: any = useRef();
   const jupiterRef: any = useRef();
+  const earthRef: any = useRef();
 
   const [
     sunNormalMap,
@@ -169,16 +170,34 @@ const Container = () => {
 
   const groupRef: any = useRef();
 
-  var r = 0.1;
+  var r = 0.5;
   var theta = 0;
   var dTheta = (2 * Math.PI) / 1000;
-  useFrame(() => {
-    // mercuryRef.current.rotation.y += 0.0005;
-    // // groupRef.current.rotation.y += .0005;
 
-    // theta += dTheta;
-    // mercuryRef.current.position.x = r * Math.cos(theta);
-    // mercuryRef.current.position.z = r * Math.sin(theta);
+  const orbitSpeed = {
+    MERCURY: 0.622   ,
+    VENUS: 0.850,
+    EARTH: 1,
+    MARS: 0.802,
+    JUPITER: 0.434,
+    SATURN: 0.323,
+    URANUS: 0.228,
+    NEPTUNE: 0.182
+  };
+
+  useFrame(() => {
+    theta += dTheta;
+    mercuryRef.current.rotation.x += 0.004;
+    mercuryRef.current.rotation.y += 0.004;
+
+    mercuryRef.current.position.x = orbitSpeed.MERCURY * Math.cos(theta );
+    mercuryRef.current.position.z = -1.07 + r * Math.sin(theta);
+
+    venusRef.current.position.x = orbitSpeed.VENUS * Math.cos(theta);
+    venusRef.current.position.z = -1.06 + r * Math.sin(theta);
+
+    earthRef.current.position.x = orbitSpeed.EARTH * Math.cos(theta);
+    earthRef.current.position.z = -1.05 + 0.5 * Math.sin(theta);
 
     // darkMateriaRef.current.rotation.x += 0.004;
     // darkMateriaRef.current.rotation.y += 0.004;
@@ -215,14 +234,24 @@ const Container = () => {
 
       <pointLight args={[0xcf3626, 0.2]} position={[0, 0.4, -2]} />
 
-      <mesh ref={sunRef} position={[0, 0, -1]}>
-        <sphereGeometry args={[0.08, 32,16 ]} />
+      <mesh ref={sunRef} position={[0, 0, -0.96]}>
+        <sphereGeometry args={[0.16, 32, 16]} />
         <meshStandardMaterial map={sunMap} normalMap={sunNormalMap} />
       </mesh>
 
-      <mesh position={[0.1, 0.1, -1]} ref={mercuryRef}>
+      <mesh position={[0, 0, -1]} ref={mercuryRef}>
         <sphereGeometry args={[0.04, 32, 16]} />
         <meshStandardMaterial map={mercuryMap} normalMap={mercuryNormalMap} />
+      </mesh>
+
+      <mesh position={[0, 0, -1.01]} ref={venusRef}>
+        <sphereGeometry args={[0.02, 32, 16]} />
+        <meshStandardMaterial map={venusMap} normalMap={venusNormalMap} />
+      </mesh>
+
+      <mesh position={[0, 0, -1.2]} ref={earthRef}>
+        <sphereGeometry args={[0.08, 32, 16]} />
+        <meshStandardMaterial map={earthMap} normalMap={earthNormalMap} />
       </mesh>
 
       {/* <mesh position={[START_X_OF_MARS_POSITION, START_Y_OF_MARS_POSITION, -4]} ref={marsRef}>
