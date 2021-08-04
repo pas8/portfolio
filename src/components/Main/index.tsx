@@ -4,6 +4,7 @@ import { useWindowScroll } from 'react-use';
 import { makeStyles, Grid } from '@material-ui/core';
 import MySkills from './components/MySkills';
 import WhoIAm from './components/WhoIAm';
+import Experience from './components/Experience';
 import Greeting from './components/Greeting/index';
 
 const useStyles = makeStyles(({ palette: { background }, breakpoints }) => ({
@@ -43,6 +44,7 @@ const Main: FC = () => {
         <Greeting />
         <WhoIAm />
         <MySkills />
+        <Experience/>
       </Grid>
     </>
   );

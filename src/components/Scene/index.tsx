@@ -190,6 +190,16 @@ const Container = () => {
     mercuryRef.current.rotation.x += 0.004;
     mercuryRef.current.rotation.y += 0.004;
 
+
+    venusRef.current.rotation.x += 0.004;
+    venusRef.current.rotation.y += 0.004;
+
+    sunRef.current.rotation.x += 0.004;
+    sunRef.current.rotation.y += 0.004;
+    
+    earthRef.current.rotation.x += 0.004;
+    earthRef.current.rotation.y += 0.004;
+
     mercuryRef.current.position.x = orbitSpeed.MERCURY * Math.cos(theta );
     mercuryRef.current.position.z = -1.07 + r * Math.sin(theta);
 
