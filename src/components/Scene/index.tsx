@@ -11,6 +11,7 @@ import {
   Octahedron,
   SpotLight,
   Polyhedron,
+  useProgress,
   Stars,
   Billboard,
   shaderMaterial,
@@ -18,11 +19,13 @@ import {
 } from '@react-three/drei';
 import { makeStyles } from '@material-ui/core';
 import { TorusBufferGeometry } from 'three';
-import { useMemo, useRef, useState, Suspense, useEffect } from 'react';
+import { useMemo, useRef, useState, Suspense, useEffect, MouseEvent } from 'react';
 import { TextureLoader } from 'three/src/loaders/TextureLoader';
 import * as THREE from 'three';
 import { useWindowScroll } from 'react-use';
-import { usePermission } from 'react-use';
+import { usePermission, useWindowSize } from 'react-use';
+import { Vector3 } from '@react-three/fiber';
+import { Texture } from 'three';
 
 const useStyles = makeStyles(({ palette: { background } }) => ({
   '@global': {
@@ -47,124 +50,145 @@ const useStyles = makeStyles(({ palette: { background } }) => ({
   }
 }));
 
-const NUM = 3;
-
-interface Positions {
-  id: string;
-  position: [number, number, number];
-}
-
-export default function PerspectiveCameraScene() {
+const Scene = () => {
   const classes = useStyles();
-
-  const positions = useMemo(() => {
-    const pos: Positions[] = [];
-    const half = (NUM - 1) / 2;
-
-    for (let x = 0; x < NUM; x++) {
-      for (let y = 0; y < NUM; y++) {
-        pos.push({
-          id: `${x}-${y}`,
-          position: [(x - half) * 4, (y - half) * 4, 0]
-        });
-      }
-    }
-
-    return pos;
-  }, []);
-  const [depthBuffer, setDepth] = useState();
-
+  const k = useProgress();
+  // console.log(k)
   return (
     <Canvas className={classes.canvas}>
       <Suspense fallback={null}>
-        <PerspectiveCamera makeDefault position={[0, 0, 0]} zoom={2} />
-        <Stars />
+        <PerspectiveCamera makeDefault position={[0, 0, 0]} zoom={1} />
+        {/* <Stars /> */}
 
         <Container />
       </Suspense>
-      {/* <OrbitControls /> */}
+      <OrbitControls />
     </Canvas>
-  );
-}
-const H = () => {
-  const torusRef = useRef();
-
-  // useFrame(() => {
-  //   torusRef.current.rotation.x += 0.01;
-  //   torusRef.current.rotation.y += 0.01;
-  //   torusRef.current.rotation.z += 0.01;
-  // });
-
-  return (
-    <>
-      <Octahedron args={[1, 1]} geometry={new TorusBufferGeometry(2, 1, 16, 42)} ref={torusRef}>
-        <meshBasicMaterial color={'#f2d230'} wireframe />
-      </Octahedron>
-    </>
   );
 };
 
 const Container = () => {
   const { size, camera } = useThree();
-  const marsRef: any = useRef();
-  const randomItemRef: any = useRef();
-  const avaBoxRef: any = useRef();
-  const spotLightRef: any = useRef();
-  const darkMateriaRef: any = useRef();
+
+  // const handleMoveCameraOnMouseMove = (e: any) => {
+  //   camera.position.x = e.clientX * 0.0001;
+  //   camera.position.z = e.clientX * 0.0004;
+  // };
+
+  // useEffect(() => {
+  //   document.addEventListener('mousemove', handleMoveCameraOnMouseMove);
+
+  //   return () => {
+  //     document.removeEventListener('mousemove', handleMoveCameraOnMouseMove);
+  //   };
+  // }, []);
+
+  const START_Y_OF_MARS_POSITION = -1;
+  const START_X_OF_MARS_POSITION = 1;
 
   const handleMoveCamera = () => {
     const t = document.body.getBoundingClientRect().top;
-    camera.position.z = t * -0.01;
-    marsRef.current.position.x = 1 + t * 0.001;
-    marsRef.current.position.y = 1 + t * 0.004;
-
-    // darkMateriaRef.current.position.z -= t * 4;
+    // camera.position.y = t * -0.004;
+    // marsRef.current.position.x = START_X_OF_MARS_POSITION + t * 0.0028;
+    // marsRef.current.position.y = START_Y_OF_MARS_POSITION - t * 0.004;
+    // marsRef.current.position.y = 1 + t * 0.004;
   };
 
   document.body.onscroll = handleMoveCamera;
 
+  const marsRef: any = useRef();
+  const sunRef: any = useRef();
+  const mercuryRef: any = useRef();
+  const darkMateriaRef: any = useRef();
+  const neptunRef: any = useRef();
+  const jupiterRef: any = useRef();
+
+  const [
+    sunNormalMap,
+    sunMap,
+    mercuryNormalMap,
+    mercuryMap,
+    venusNormalMap,
+    venusMap,
+    earthNormalMap,
+    earthMap,
+    marsNormalMap,
+    marsMap,
+    jupiterNormalMap,
+    jupiterMap,
+    saturnNormalMap,
+    saturnMap,
+    uranusNormalMap,
+    uranusMap,
+    neptunNormalMap,
+    neptunMap
+  ] = useTexture([
+    'sunNormalMap.png',
+    'sunMap.jpeg',
+    'mercuryNormalMap.png',
+    'mercuryMap.jpeg',
+    'venusNormalMap.png',
+    'venusMap.jpeg',
+    'earthNormalMap.png',
+    'earthMap.jpeg',
+    'marsNormalMap.png',
+    'marsMap.png',
+    'jupiterNormalMap.png',
+    'jupiterMap.jpg',
+    'saturnNormalMap.png',
+    'saturnMap.jpeg',
+    'uranusNormalMap.png',
+    'uranusMap.jpeg',
+    'neptunNormalMap.png',
+    'neptunMap.jpeg'
+  ]);
+  // const planetsArr = [
+  //   {
+  //     map: sunMap,
+  //     normalMap: sunNormalMap,
+  //     size:0.2,
+  //     ref:sunRef,
+  //     position: [ 35,0,0]
+  //   },
+
+  //   {
+  //     map: mercuryMap,
+  //     ref:mercuryRef,
+  //     normalMap: mercuryNormalMap,
+  //     size:0.1,
+  //     position: [ 35,0,0]
+  //   },
+
+  // ] as {
+  //   size:number;
+  //   ref:any;
+  //   map: Texture;
+  //   position: Vector3;
+  //   normalMap: Texture;
+  // }[];
+
+  const groupRef: any = useRef();
+
+  var r = 0.1;
+  var theta = 0;
+  var dTheta = (2 * Math.PI) / 1000;
   useFrame(() => {
-    avaBoxRef.current.rotation.x += 0.004;
-    avaBoxRef.current.rotation.y += 0.004;
+    // mercuryRef.current.rotation.y += 0.0005;
+    // // groupRef.current.rotation.y += .0005;
 
-    darkMateriaRef.current.rotation.x += 0.004;
-    darkMateriaRef.current.rotation.y += 0.004;
+    // theta += dTheta;
+    // mercuryRef.current.position.x = r * Math.cos(theta);
+    // mercuryRef.current.position.z = r * Math.sin(theta);
 
-    // spotLightRef.current.rotation.x += 0.04;
+    // darkMateriaRef.current.rotation.x += 0.004;
+    // darkMateriaRef.current.rotation.y += 0.004;
+    // neptunRef.current.rotation.x += 0.004;
+    // neptunRef.current.rotation.y += 0.004;
 
-    marsRef.current.rotation.x += 0.004;
-    marsRef.current.rotation.y += 0.004;
-    marsRef.current.rotation.z += 0.004;
+    // marsRef.current.rotation.x += 0.004;
+    // marsRef.current.rotation.y += 0.004;
+    // marsRef.current.rotation.z += 0.004;
   });
-
-  const normalMars = useTexture('normalMars.png');
-  const mars = useTexture('mars.jpeg');
-
-  const gradientMap = useTexture('gradient.jpeg');
-  const darkMormalMap = useTexture('darkMormalMap.jpg');
-
-  // var videoTexture= new THREEx.VideoTexture('videos/sintel.ogv')
-  // updateFcts.push(function(delta, now){
-  //     // to update the texture are every frame
-  //     videoTexture.update(delta, now)
-  // })
-
-  // const videoRef = useRef<HTMLVideoElement>();
-
-  // var video = document.createElement('video');
-  // video.loop = true;
-  // video.crossOrigin = 'anonymous';
-  // video.preload = 'auto';
-  // video.src = 'https://cdn.lost.show/mf/video/button-gradient.mp4';
-  // video.play();
-
-  // var texture = new THREE.VideoTexture(video);
-  // texture.minFilter = THREE.NearestFilter;
-  // texture.magFilter = THREE.LinearFilter;
-  // texture.format = THREE.RGBFormat;
-
-  const avaMap = useTexture('ava3.jpg');
-  const [depthBuffer, setDepth] = useState();
 
   return (
     <>
@@ -179,42 +203,62 @@ const Container = () => {
         lockY={false}
         lockZ={false}
       >
-        <meshStandardMaterial displacementScale={0.2} map={mars} />
+        {/* <meshStandardMaterial displacementScale={0.2} map={mars} /> */}
       </Billboard>
-      <pointLight args={[0xffffff, 0.1]} position={[1, 0.8, -4]} />
-      <pointLight args={[0xff0000, 2]} position={[1, 0.8, -4]} />
-      <mesh position={[1, 0.6, -4]} ref={darkMateriaRef}>
+      <pointLight args={[0x6549b8, 2]} position={[2, 0.8, -4]} />
+      <pointLight args={[0x30b47f, 2]} position={[2, 0.4, -2]} />
+      <pointLight args={[0x401d2a, 4]} position={[0.2, 0.8, -4]} />
+      {/* <mesh position={[1, 0.6, -4]} ref={darkMateriaRef}>
         <sphereGeometry args={[0.2, 32, 16]} />
-        <meshStandardMaterial normalMap={darkMormalMap} metalness={0.7} roughness={0.2} color={0x292929} />
-      </mesh>
-
-      {/* <mesh position={[1, 1, 1]} ref={randomItemRef}>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshBasicMaterial {...{ map: texture, side: THREE.FrontSide, toneMapped: false }} />
-      </mesh> */}
-      {/* <SpotLight
-       ref={spotLightRef}
-        depthBuffer={depthBuffer}
-        position={[2,0.2,0.2]}
-        intensity={0.5}
-        angle={0.2}
-        color="#ff3b6b"
-        castShadow
-      /> */}
-      <mesh position={[1, 1, 1]} ref={avaBoxRef}>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshBasicMaterial map={avaMap} />
-      </mesh>
-
-      {/* <mesh position={[0, 0, 0]} ref={randomItemRef}>
-        <torusKnotGeometry args={[8, 0.2, 32, 16]} />
-        <meshNormalMaterial gradientMap={gradientMap} />
+        <meshStandardMaterial normalMap={darkMateriaNormalMap} metalness={0.6} roughness={0.4} color={0x292929} />
       </mesh> */}
 
-      <mesh position={[1, -1, -1]} ref={marsRef}>
-        <sphereGeometry args={[0.4, 32, 16]} />
-        <meshStandardMaterial map={mars} normalMap={normalMars} />
+      <pointLight args={[0xcf3626, 0.2]} position={[0, 0.4, -2]} />
+
+      <mesh ref={sunRef} position={[0, 0, -1]}>
+        <sphereGeometry args={[0.08, 32,16 ]} />
+        <meshStandardMaterial map={sunMap} normalMap={sunNormalMap} />
       </mesh>
+
+      <mesh position={[0.1, 0.1, -1]} ref={mercuryRef}>
+        <sphereGeometry args={[0.04, 32, 16]} />
+        <meshStandardMaterial map={mercuryMap} normalMap={mercuryNormalMap} />
+      </mesh>
+
+      {/* <mesh position={[START_X_OF_MARS_POSITION, START_Y_OF_MARS_POSITION, -4]} ref={marsRef}>
+        <sphereGeometry args={[0.2, 32, 16]} />
+        <meshStandardMaterial map={marsMap} normalMap={normalMarsMap} />
+      </mesh> */}
+      {/* <mesh position={[0, 0, -5]} ref={neptunRef}>
+        <sphereGeometry args={[0.2, 32, 16]} />
+        <meshStandardMaterial map={neptunMap} normalMap={neptunNormalMap} />
+      </mesh>
+      <mesh position={[0.5, 0, -3]} ref={jupiterRef}>
+        <sphereGeometry args={[0.2, 32, 16]} />
+        <meshStandardMaterial map={jupiterMap} normalMap={jupiterNormalMap} />
+      </mesh> */}
     </>
   );
 };
+
+// var videoTexture= new THREEx.VideoTexture('videos/sintel.ogv')
+// updateFcts.push(function(delta, now){
+//     // to update the texture are every frame
+//     videoTexture.update(delta, now)
+// })
+
+// const videoRef = useRef<HTMLVideoElement>();
+
+// var video = document.createElement('video');
+// video.loop = true;
+// video.crossOrigin = 'anonymous';
+// video.preload = 'auto';
+// video.src = 'https://cdn.lost.show/mf/video/button-gradient.mp4';
+// video.play();
+
+// var texture = new THREE.VideoTexture(video);
+// texture.minFilter = THREE.NearestFilter;
+// texture.magFilter = THREE.LinearFilter;
+// texture.format = THREE.RGBFormat;
+
+export default Scene;
