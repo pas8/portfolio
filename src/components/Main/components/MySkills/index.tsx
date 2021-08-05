@@ -24,8 +24,6 @@ const useLocalStyles = makeStyles(({ palette: { background } }) => ({
     }
   },
   container: {
-    marginTop: 100,
-    marginBottom: 100
   },
   sphereContainer: {
     marginLeft: 42
@@ -41,9 +39,6 @@ const MySkills: FC = () => {
     delay3Sec,
     delay4Sec,
     containerOfHI,
-    containerOfIM,
-    comaContainer,
-    containerOfPAS,
     deepPink2Color,
     dashOffset1000,
     goldenRodColor,
