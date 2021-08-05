@@ -1,48 +1,36 @@
-import { FC, useRef,Suspense } from 'react';
-import {
-  Icosahedron,
-  PerspectiveCamera,
-  OrthographicCamera,
-  OrbitControls,
-  useSimplification,
-  // Box,
-  DepthBuffer,
-  Plane,
-  Octahedron,
-  SpotLight,
-  Polyhedron,
-  Stars,
-  Billboard,
-  shaderMaterial,
-  useTexture
-} from '@react-three/drei';
-
+import { FC, useRef, Suspense } from 'react';
+import { Icosahedron, useTexture } from '@react-three/drei';
 import { Canvas, extend, useFrame, useLoader, useThree } from '@react-three/fiber';
-import { makeStyles } from '@material-ui/core';
-
-const useLocalStyles = makeStyles(({ palette: { background } }) => ({
-  canvasContainer: {
-    inset: 0,
-    height: 400,
-    position: 'fixed',
-    '& canvas': {
-      height: '100% !important',
-      width:'100% !important'
-    },
-    width: 400
-  }
-}));
+import { useBreakpointNames } from 'hooks/useBreakpointNames.hook';
 
 const CanvasWithPas: FC = () => {
-  const { canvasContainer } = useLocalStyles();
+  const { isSizeIsLg, isSizeIsMd, isSizeIsSm, isSizeIsXl, isSizeIsXs } = useBreakpointNames();
+  const width = isSizeIsXl
+    ? 'calc(25vw)'
+    : isSizeIsLg
+    ? 'calc(25vw)'
+    : isSizeIsMd
+    ? 'calc(40vw)'
+    : isSizeIsSm
+    ? 'calc(48vw)'
+    : 'calc(100vw - 42px)';
 
   return (
-    <Canvas className={canvasContainer}>
+    <Canvas style={{ width, height: width,  marginLeft:isSizeIsXs ? '-8%' :  '-10%' }}>
       <Suspense fallback={null}>
-
-      <Box />
+        <hemisphereLight intensity={0.42} />
+        <spotLight
+            color={'#a409ff'}
+            position={[42, 0, 92]}
+            angle={0.8}
+            penumbra={1}
+            intensity={2}
+            castShadow
+            shadow-mapSize-width={256}
+            shadow-mapSize-height={256}
+          />
+        <Box />
       </Suspense>
-
     </Canvas>
   );
 };
@@ -50,21 +38,17 @@ const CanvasWithPas: FC = () => {
 export default CanvasWithPas;
 
 const Box = () => {
-  const normalMap = useTexture('ava2.jpg');
-  const ref = useRef();
-  // useFrame(() => {
-  //   ref.current.rotation.x += 0.01;
-  //   // ref.current.rotation.y += 0.01;
-  //   // ref.current.rotation.z += 0.01;
-  // });
+  const avaMap = useTexture('ava3.jpg');
+
+  const avaRef: any = useRef();
+  useFrame(() => {
+    avaRef.current.rotation.y += 0.004;
+  });
+
   return (
-    <>
-      {/* <ambientLight intensity={0.1} /> */}
-      {/* <directionalLight /> */}
-      <mesh position={[-10, 10, 10]} ref={ref}>
-        <boxGeometry args={[3, 3, 3]} />
-        <meshStandardMaterial map={normalMap} />
-      </mesh>
-    </>
+    <mesh ref={avaRef}>
+      <boxBufferGeometry attach="geometry" args={[3.7, 3.7, 3.7]} />
+      <meshLambertMaterial map={avaMap} />
+    </mesh>
   );
 };

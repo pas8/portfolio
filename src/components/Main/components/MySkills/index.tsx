@@ -9,29 +9,23 @@ import SectionContainer from 'components/SectionContainer';
 import CursorButton from 'components/CursorButton';
 import { useStyles } from '../Greeting';
 import MainSkillsGrafic from './components/MainSkillsGrafic';
-// import Sphere from '../Sphere/index';
 
 const MoreSkillsDialog = dynamic(() => import('./components/MoreSkillsDialog/index'), { ssr: false });
 const Sphere = dynamic(() => import('../Sphere/index'), { ssr: false });
 
 const useLocalStyles = makeStyles(({ palette: { background } }) => ({
   containerOfMYSKILLS: {
-    // width: '50%',
-    '& svg': {
-      // width: 960,
-    },
+    '& svg': {},
     '& path': {
       strokeWidth: '4px'
     }
   },
-  container: {
-
-    
-  },
+  container: {},
   contentContainer: {
-marginTop:42,
-
-
+    marginTop: 42,
+    '& .mainPart': {
+      marginBottom: 16
+    }
   }
 }));
 
@@ -77,10 +71,10 @@ const MySkills: FC = () => {
     setIsDialogOpen(false);
   };
 
-  return (  
+  return (
     <>
-      <SectionContainer className={container} >
-        <Grid className={containerOfMYSKILLS} container  id={'containerOfMYSKILLS'}>
+      <SectionContainer className={container}>
+        <Grid className={containerOfMYSKILLS} container id={'containerOfMYSKILLS'}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1208.5153 182.9396" className={'svgContainer'}>
             <defs />
             <path
@@ -130,12 +124,11 @@ const MySkills: FC = () => {
           </svg>
         </Grid>
         <Grid container direction={'column'} className={contentContainer}>
-          <Grid container justifyContent={'space-between'}>
-          <MainSkillsGrafic/>
-          <Sphere  />
-
+          <Grid container justifyContent={'space-between'} className={'mainPart'}>
+            <MainSkillsGrafic />
+            <Sphere />
           </Grid>
-          <Grid container >
+          <Grid container>
             <CursorButton onClick={handleOpenDialog} title={' Read more!'} />
           </Grid>
         </Grid>

@@ -1,16 +1,21 @@
-import { FC, useState } from 'react';
+import { FC, useState,useRef } from 'react';
 import { makeStyles, Grid, Typography, Dialog } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { colord } from 'colord';
 import clsx from 'clsx';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { useTexture } from '@react-three/drei';import { useRouter } from 'next/router'
+
 import dynamic from 'next/dynamic';
 
 import { getCursorColor } from 'store/modules/App/selectors';
 import CursorButton from 'components/CursorButton';
+import { useBreakpointNames } from 'hooks/useBreakpointNames.hook';
 import SectionContainer from 'components/SectionContainer';
 import { useStyles } from '../Greeting';
 
-const ResumeDialog = dynamic(() => import('./components/ResumeDialog'), { ssr: false });
+// const ResumeDialog = dynamic(() => import('./components/ResumeDialog'), { ssr: false });
+const CanvasWithPas = dynamic(() => import('./components/Canvas'), { ssr: false });
 
 const useLocalStyles = makeStyles(
   ({ palette: { background, primary, secondary }, shape: { borderRadius }, breakpoints }) => ({
@@ -28,32 +33,59 @@ const useLocalStyles = makeStyles(
         }
       }
     },
-    textContainer: {
+    contentContainer: {
       marginTop: 42,
+       [breakpoints.down('xs')]: {
+      marginTop: 8,
+
+       },
       userSelect: 'none',
       '& h4:hover': {
         color: secondary.main
-      }
-      // width: 'calc(100vw - 860px)'
+      },
+
+'& p':{
+
+   [breakpoints.down('xl')]: {
+fontSize:30,
+  marginLeft:'0%'
+      
+    },
+
+    [breakpoints.down('lg')]: {
+  marginLeft:'-3%',
+fontSize:28,
+      
+    },
+
+    [breakpoints.down('md')]: {
+  marginLeft:'-6%',
+
+fontSize:22,
+      
+    },
+
+    [breakpoints.down('sm')]: {
+  marginLeft:'-9%',
+
+fontSize:20,
+      
+    },
+
+       [breakpoints.down('xs')]: {
+  marginLeft:'0%',
+
+
+fontSize:16,
+      
+    },
+
+},
+
     },
     containerOfWHOIAM: {
       width: 2400,
-      // [breakpoints.down('xl')]: {
-      //   width: 3000
-      // },
 
-      // [breakpoints.down('lg')]: {
-      //   width: 3600
-      // },
-
-      // [breakpoints.down('md')]: {
-      //   width: 2800
-      // },
-
-      // [breakpoints.down('sm')]: {
-      //   width: 2000
-      // },
-      // width: 1800,
       '& path': {
         strokeWidth: '4px'
       }
@@ -91,16 +123,17 @@ const WhoIAm: FC = () => {
     dashOffset1500Dasharray1500
   } = useStyles();
 
-  const { containerOfWHOIAM, textContainer, container } = useLocalStyles();
+  const { containerOfWHOIAM, contentContainer, container } = useLocalStyles();
   const cursorColor = useSelector(getCursorColor);
-  const [isResumeDialogOpen, setIsResumeDialogOpen] = useState(false);
-  const handleOpenResumeDialog = () => {
-    setIsResumeDialogOpen(true);
+  const { isSizeIsXs } = useBreakpointNames();
+const {push} =useRouter()
+
+const RESUME_URL = 'https://www.canva.com/design/DAElBAtPJsU/e1h5ij6rvoMIkN4dNWIrkA/view?utm_content=DAElBAtPJsU&utm_campaign=designshare&utm_medium=link&utm_source=sharebutton'
+  const handlePushToDetails = () => {
+  push(  RESUME_URL)
   };
 
-  const handleCloseResumeDialog = (e?: any) => {
-    setIsResumeDialogOpen(false);
-  };
+
 
   const text =
     'I am Anatolii Ponocheniuk,self educated by realizing studying projects and also acquire new info by reading  official documentations. And about my soft skills, I improved them in mba school and gdansk business week of course all communication was an english. Exactly want evolve as react-ts developer and of course be fond of coding and right react with typescript. So, I have default hobbies. Certainly motivated enough to work in new company.';
@@ -160,19 +193,27 @@ const WhoIAm: FC = () => {
             />
           </svg>
         </Grid>
-        <Grid className={textContainer}>
-          <Typography variant={'subtitle1'} color={'textSecondary'}>
+        <Grid className={contentContainer} container wrap={isSizeIsXs ? '' :  'nowrap'} alignItems={'center'}>
+<Grid>
+        <CanvasWithPas/>
+        </Grid>
+<Grid>
+
+          <Typography  color={'textSecondary'}>
             {text}
           </Typography>
-          <Grid className={'readMoreButtonContainer'}>
-            <CursorButton onClick={handleOpenResumeDialog} title={'Read more!'} />
-          </Grid>
         </Grid>
+
+        
+        </Grid>
+          <Grid className={'readMoreButtonContainer'}>
+            <CursorButton onClick={handlePushToDetails} title={'Details'} />
+          </Grid>
       </SectionContainer>
 
-      <ResumeDialog open={isResumeDialogOpen} onClose={handleCloseResumeDialog} />
     </>
   );
 };
 
 export default WhoIAm;
+

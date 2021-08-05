@@ -1,65 +1,80 @@
 import clsx from 'clsx';
 import { ChangeEventHandler, FC, useState } from 'react';
 import Image from 'next/image';
-
-import { Grid, makeStyles, Typography, ButtonBase, TextField } from '@material-ui/core';
+import { Grid, makeStyles, Typography, ButtonBase, TextField, withStyles } from '@material-ui/core';
 import SectionContainer from 'components/SectionContainer';
 import VideoButton from 'components/VideoButton';
-
 import { useStyles } from '../Greeting';
 import locationSrc from '../../../../../public/location2.png';
 
+const InputByPas = withStyles(({ palette: { background, secondary, primary, text } }) => ({
+  root: {
+    '& .MuiOutlinedInput-root': {
+      '&:hover fieldset': {
+        borderColor: secondary.main
+      }
+    },
+
+  }
+}))(TextField);
+
 const useLocalStyles = makeStyles(
-  ({ palette: { background, secondary, primary,text }, breakpoints, shape: { borderRadius } }) => ({
+  ({ palette: { background, secondary, primary, text }, breakpoints, shape: { borderRadius } }) => ({
     container: {
       '& path': {
         strokeWidth: '0.6px'
       }
     },
     contentContainer: {
-      marginTop:42,
-      gap:20,
-      '& .formContainer':{
-        display:'flex',
-        flexDirection:'column',
-        gap:16,
-        
-width:'calc(50% - 10px)',
-'& .topSitePart':{
-  '& .MuiFormControl-root':{
-  width:'calc(50% - 8px)',
+      '& .MuiOutlinedInput-input fieldset': {
+        '&:hover': {
+          border: '1px solid red'
+        }
+      },
 
+      marginTop: 42,
+      gap: 20,
+      '& .formContainer': {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 16,
 
-  }
+        width: 'calc(50% - 10px)',
 
-},
-'& .submitButtonContainer':{
+        [breakpoints.down('sm')]: {
+          width: '100%'
+        },
 
-'& button':{
-height:42,
-width:'100%'
-
-}
-}
+        '& .topSitePart': {
+          '& .MuiFormControl-root': {
+            width: 'calc(50% - 8px)'
+          }
+        },
+        '& .submitButtonContainer': {
+          '& button': {
+            height: 48,
+            width: '100%'
+          }
+        }
       },
       '& .locationImgContainer': {
-        width: '48%',
-        position:'relative',
-        '& img':{
-          borderRadius,
-          // positiom:'absolute',
-// inset:0,
+        [breakpoints.down('sm')]: {
+          width: '100%'
         },
-        '& .caption':{
-position:'absolute',
-zIndex:1000000000000,
-background:'#302d40cc',
-padding:8,
-borderRadius,
-color:text.secondary,
-left:8,
-top:8
-
+        width: '48%',
+        position: 'relative',
+        '& img': {
+          borderRadius
+        },
+        '& .caption': {
+          position: 'absolute',
+          zIndex: 1000000000000,
+          background: '#302d40cc',
+          padding: 8,
+          borderRadius,
+          color: text.secondary,
+          left: 8,
+          top: 8
         }
       }
     }
@@ -106,6 +121,7 @@ const Contact: FC = () => {
     TITLE: 'title',
     MESSAGE: 'message'
   };
+  const [isEmailValid, setIsEmailValid] = useState(false)
 
   const [formState, setFormState] = useState({
     [inputNames.EMAIL]: '',
@@ -118,11 +134,34 @@ const Contact: FC = () => {
     setFormState(state => ({ ...state, [name]: value }));
   };
 
-const handleSubmit = () => {
-console.log(formState)
+    const onEmailChange: ChangeEventHandler<HTMLInputElement> = ({ target: { name, value } }) => {
 
+const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+ const isEmailValid =  re.test(email)
+setIsEmailValid(isEmailValid)
+    setFormState(state => ({ ...state, [name]: value }));
+  };
 
-}
+  const handleSubmit = () => {
+    
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then((res) => {
+        console.log('Response received')
+        if (res.status === 200) {
+            console.log('Response succeeded!')
+            setSubmitted(true) 
+            setName('')
+            setEmail('')
+            setMessage('')
+        }
+    })
+  };
 
   return (
     <Grid container className={container} alignItems={'center'}>
@@ -152,79 +191,73 @@ console.log(formState)
           </svg>
         </Grid>
         <Grid container className={contentContainer}>
-        <Grid className={'formContainer'} >
-          <Grid container className={'topSitePart'} justify={'space-between'}>
-            <TextField
-              name={inputNames.NAME}
-              label={inputNames.NAME.toUpperCase()}
-              onChange={onChange}
-              value={formState[inputNames.NAME]}
-              variant={'outlined'}
-              color={'primary'}
-            />
-            <TextField
+          <Grid className={'formContainer'}>
+            <Grid container className={'topSitePart'} justify={'space-between'}>
+              <InputByPas
+                name={inputNames.NAME}
+                label={inputNames.NAME.toUpperCase()}
+                onChange={onChange}
+                value={formState[inputNames.NAME]}
+                variant={'outlined'}
+                color={'primary'}
+              />
+              <InputByPas
+                name={inputNames.EMAIL}
+                error={!isEmailValid}
+                onChange={onEmailChange}
+                value={formState[inputNames.EMAIL]}
+                label={inputNames.EMAIL.toUpperCase()}
+                variant={'outlined'}
+                color={'primary'}
+              />
+            </Grid>
 
-              name={inputNames.EMAIL}
-              onChange={onChange}
-              value={formState[inputNames.EMAIL]}
-              label={inputNames.EMAIL.toUpperCase()}
-              variant={'outlined'}
-              color={'primary'}
-            />
+            <Grid container>
+              <InputByPas
+                fullWidth
+                name={inputNames.TITLE}
+                onChange={onChange}
+                value={formState[inputNames.TITLE]}
+                label={inputNames.TITLE.toUpperCase()}
+                variant={'outlined'}
+                color={'primary'}
+              />
+            </Grid>
+            <Grid container>
+              <InputByPas
+                fullWidth
+                multiline
+                maxRows={16}
+                rows={4}
+                name={inputNames.MESSAGE}
+                onChange={onChange}
+                value={formState[inputNames.MESSAGE]}
+                label={inputNames.MESSAGE.toUpperCase()}
+                variant={'outlined'}
+                color={'primary'}
+              />
+            </Grid>
+
+            <Grid container className={'submitButtonContainer'}>
+              <VideoButton onClick={handleSubmit}>
+                <Typography color={'textPrimary'} variant={'button'}>
+                  Send message{' '}
+                </Typography>
+              </VideoButton>
+            </Grid>
           </Grid>
 
-          <Grid container>
-
-   <TextField
-   fullWidth
-              name={inputNames.TITLE}
-              onChange={onChange}
-              value={formState[inputNames.TITLE]}
-              label={inputNames.TITLE.toUpperCase()}
-              variant={'outlined'}
-              color={'primary'}
-            />
-
+          <Grid className={'locationImgContainer'}>
+            <Grid className={'caption'}>
+              <Typography>ANATOLII PONOCHENIUK </Typography>
+              <Typography>Ukraine / Kyiv </Typography>
+              <Typography>+380951194092 </Typography>
+              <Typography>whyiampas@gmail.com </Typography>
+            </Grid>
+            <Image src={locationSrc} alt={'Kyiv location'} layout={'responsive'} />
           </Grid>
-          <Grid container >
-
-<TextField
-fullWidth
-multiline
-maxRows={16}
-rows={4}
-           name={inputNames.MESSAGE}
-           onChange={onChange}
-           value={formState[inputNames.MESSAGE]}
-           label={inputNames.MESSAGE.toUpperCase()}
-           variant={'outlined'}
-           color={'primary'}
-         />
-
-       </Grid>
-         
-       <Grid container className={'submitButtonContainer'}>
-         <VideoButton onClick={handleSubmit}>
-<Typography color={'textPrimary'} variant={'button'}>Send message </Typography>
-           
-           </VideoButton>
-       </Grid >
-
-
         </Grid>
-
-        <Grid className={'locationImgContainer'}>
-          <Grid className={'caption'}>
-<Typography>ANATOLII PONOCHENIUK </Typography>
-<Typography>Ukraine / Kyiv </Typography>
-<Typography>+380951194092 </Typography>
-<Typography>whyiampas@gmail.com </Typography>
-          </Grid>
-          <Image src={locationSrc} alt={'Kyiv location'} layout={'responsive'} />
-        </Grid>
-      </Grid>
       </SectionContainer>
-    
     </Grid>
   );
 };

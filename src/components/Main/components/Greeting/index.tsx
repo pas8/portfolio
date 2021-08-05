@@ -21,9 +21,9 @@ export const useStyles = makeStyles(({ palette: { background, secondary, primary
         fontSize: '22px'
       },
 
-      [breakpoints.down('xs')]: {
+      [breakpoints.down('sm')]: {
         marginLeft: '2.6px',
-        fontSize: ' calc(6vw - 11px)'
+        fontSize: ' calc(5.6vw - 12px)'
       },
       '&:hover': {
         animation: 'racket 1s ',
@@ -94,18 +94,12 @@ export const useStyles = makeStyles(({ palette: { background, secondary, primary
     }
   },
   container: {
-    // [breakpoints.down('xl')]:{
+    height: '100vh',
+        [breakpoints.down('sm')]:{
+          marginTop:16,
+          height:'auto',
+        },
 
-    //   width: '100vw',
-    //   height: '100vh'
-    // },
-
-    //     [breakpoints.down('lg')]:{
-    // transform:'scale(0.8)'
-    //     },
-
-    // width: '100vw',
-    height: '100vh'
   },
   dashOffset2000Dasharray500: {
     strokeDashoffset: 2000,
@@ -224,8 +218,15 @@ export const useStyles = makeStyles(({ palette: { background, secondary, primary
       width: 280
     },
 
+    [breakpoints.down('sm')]: {
+      marginBottom: 0,
+      width: '33%'
+    },
+
+
     [breakpoints.down('xs')]: {
-      width: ' calc(100vw - 42px)'
+      width: '100%'
+
     },
 
     '& path': {
@@ -244,12 +245,13 @@ export const useStyles = makeStyles(({ palette: { background, secondary, primary
       width: 920
     },
 
-    [breakpoints.down('sm')]: {
-      width: 600
-    },
+    // [breakpoints.down('sm')]: {
+    //   width: 600
+    // },
 
-    [breakpoints.down('xs')]: {
-      width: 'calc(100vw - 42px)'
+    [breakpoints.down('sm')]: {
+      width: '100%'
+
     },
 
     '& path': {
@@ -269,12 +271,10 @@ export const useStyles = makeStyles(({ palette: { background, secondary, primary
     },
 
     [breakpoints.down('sm')]: {
-      width: 600
+      width: '100%'
     },
 
-    [breakpoints.down('xs')]: {
-      width: 'calc(100vw - 42px)'
-    },
+
 
     '& path': {
       strokeWidth: '18px'
@@ -284,28 +284,33 @@ export const useStyles = makeStyles(({ palette: { background, secondary, primary
   containerOfCaption: {
     marginTop: 68,
     gap: 28,
+
+    [breakpoints.down('sm')]: {
+      marginTop:42,
+      gap: 16,
+    
+    },
+
+    [breakpoints.down('xs')]: {
+      marginTop: 16,
+      gap: 16,
+    
+    },
     height: 'min-content',
     '&  .title': {
       [breakpoints.down('xs')]: {
-        width: 'calc(100vw - 60px)',
+
         justifyContent: 'center',
         textAlign: 'center'
       }
     },
-    [breakpoints.down('sm')]: {
-      transform: ' translate(0%,-142%)'
-    },
-    [breakpoints.down('xs')]: {
-      transform: ' translate(0%,0%)'
-    },
-
     '& .contactMeButton': {
       '& button': {
         width: 256,
         height: 56,
 
         [breakpoints.down('xs')]: {
-          width: 'calc(100vw - 60px)'
+          width: 'calc(100%)'
         }
       }
     }
@@ -328,7 +333,7 @@ export const useStyles = makeStyles(({ palette: { background, secondary, primary
     },
 
     [breakpoints.down('xs')]: {
-      gap: '2vw'
+      gap: 20
     }
   }
 }));
@@ -470,7 +475,6 @@ const Greeting: FC = () => {
               </svg>
             </Grid>
           </Grid>
-          <Grid>
             <Grid className={containerOfWEBDEV}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox={'0 0 4696 754'} className={'svgContainer'}>
                 <path
@@ -502,7 +506,6 @@ const Greeting: FC = () => {
                 />
               </svg>
             </Grid>
-          </Grid>
         </Grid>
 
         <Grid container className={containerOfCaption}>

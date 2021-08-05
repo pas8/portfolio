@@ -11,7 +11,10 @@ const useStyles = makeStyles(({ palette: { background, secondary }, shape: { bor
       marginBottom:16,
     },
     '& .graficContentContainer': {
-      gap: 16
+      height:'100%',
+        [breakpoints.down('sm')]: {
+      gap:20,
+    },
     },
 
     '& .graficItemContainer': {
@@ -67,7 +70,7 @@ const MainSkillsGrafic: FC = () => {
 
   return (
     <Grid className={container}>
-      <Grid container className={'graficContentContainer'}>
+      <Grid container className={'graficContentContainer'} direction={'column'} justifyContent={'space-around'}>
         {graficsItemsArr.map(({ title, color, percent }, idx) => {
           return (
             <Grid container key={`${title}_${idx}`} className={'graficItemContainer'}>
