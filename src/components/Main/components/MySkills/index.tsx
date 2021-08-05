@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useRef } from 'react';
 import { makeStyles, Grid } from '@material-ui/core';
 import dynamic from 'next/dynamic';
 import { useSelector } from 'react-redux';
@@ -6,12 +6,13 @@ import clsx from 'clsx';
 
 import { getCursorColor } from 'store/modules/App/selectors';
 import SectionContainer from 'components/SectionContainer';
-
 import CursorButton from 'components/CursorButton';
 import { useStyles } from '../Greeting';
-import Sphere from '../Sphere/index';
+import MainSkillsGrafic from './components/MainSkillsGrafic';
+// import Sphere from '../Sphere/index';
 
 const MoreSkillsDialog = dynamic(() => import('./components/MoreSkillsDialog/index'), { ssr: false });
+const Sphere = dynamic(() => import('../Sphere/index'), { ssr: false });
 
 const useLocalStyles = makeStyles(({ palette: { background } }) => ({
   containerOfMYSKILLS: {
@@ -24,9 +25,13 @@ const useLocalStyles = makeStyles(({ palette: { background } }) => ({
     }
   },
   container: {
+
+    
   },
-  sphereContainer: {
-    marginLeft: 42
+  contentContainer: {
+marginTop:42,
+
+
   }
 }));
 
@@ -60,7 +65,7 @@ const MySkills: FC = () => {
     dashOffset1500Dasharray1500
   } = useStyles();
 
-  const { containerOfMYSKILLS, container, sphereContainer } = useLocalStyles();
+  const { containerOfMYSKILLS, container, contentContainer } = useLocalStyles();
   const cursorColor = useSelector(getCursorColor);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -72,10 +77,10 @@ const MySkills: FC = () => {
     setIsDialogOpen(false);
   };
 
-  return (
+  return (  
     <>
-      <SectionContainer className={container}>
-        <Grid className={containerOfMYSKILLS} container>
+      <SectionContainer className={container} >
+        <Grid className={containerOfMYSKILLS} container  id={'containerOfMYSKILLS'}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1208.5153 182.9396" className={'svgContainer'}>
             <defs />
             <path
@@ -124,9 +129,13 @@ const MySkills: FC = () => {
             />
           </svg>
         </Grid>
-        <Grid container direction={'column'} className={sphereContainer}>
-          <Sphere />
-          <Grid container justifyContent={'center'}>
+        <Grid container direction={'column'} className={contentContainer}>
+          <Grid container justifyContent={'space-between'}>
+          <MainSkillsGrafic/>
+          <Sphere  />
+
+          </Grid>
+          <Grid container >
             <CursorButton onClick={handleOpenDialog} title={' Read more!'} />
           </Grid>
         </Grid>
