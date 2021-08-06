@@ -140,7 +140,7 @@ const LoadingLayout: FC = ({ children }) => {
                 .toHex(),
               marginBottom: 20
             }}
-          >{`${percent}%`}</Typography>
+          >{`${~~percent}%`}</Typography>
         </Grid>
         <Grid className={'percentLineContainer'} container>
           <Grid className={'content'} container>

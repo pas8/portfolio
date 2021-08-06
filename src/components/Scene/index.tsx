@@ -54,11 +54,10 @@ const useStyles = makeStyles(({ palette: { background } }) => ({
 
 const Scene: FC = () => {
   const classes = useStyles();
-  const { active, progress, loaded, ...props } = useProgress();
+  const { active, progress, loaded, total } = useProgress();
   const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch(toChangeLoadingProperyies({ loadingProperyies: { isLoading: active, percent: progress } }));
+    dispatch(toChangeLoadingProperyies({ loadingProperyies: { isLoading: active && total !== 0, percent: progress } }));
   }, [active, progress]);
 
   return (
@@ -90,19 +89,6 @@ const Container: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
     };
   }, []);
 
-  const START_Y_OF_MARS_POSITION = -1;
-  const START_X_OF_MARS_POSITION = 1;
-
-  const handleMoveCamera = () => {
-    const t = document.body.getBoundingClientRect().top;
-    // camera.position.y = t * -0.004;
-    // marsRef.current.position.x = START_X_OF_MARS_POSITION + t * 0.0028;
-    // marsRef.current.position.y = START_Y_OF_MARS_POSITION - t * 0.004;
-    // marsRef.current.position.y = 1 + t * 0.004;
-  };
-
-  document.body.onscroll = handleMoveCamera;
-
   const marsRef: any = useRef();
   const sunRef: any = useRef();
   const mercuryRef: any = useRef();
@@ -111,6 +97,10 @@ const Container: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
   const neptunRef: any = useRef();
   const jupiterRef: any = useRef();
   const earthRef: any = useRef();
+  const saturnRef: any = useRef();
+  const uranusRef: any = useRef();
+  
+  
 
   const [
     sunNormalMap,
@@ -201,11 +191,11 @@ const Container: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
 
   useFrame(() => {
     theta += dTheta;
-    mercuryRef.current.rotation.x += 0.004;
-    mercuryRef.current.rotation.y += 0.004;
+    mercuryRef.current.rotation.x += 0.008;
+    mercuryRef.current.rotation.y += 0.008;
 
-    venusRef.current.rotation.x += 0.004;
-    venusRef.current.rotation.y += 0.004;
+    venusRef.current.rotation.x += 0.01;
+    venusRef.current.rotation.y += 0.01;
 
     sunRef.current.rotation.x += 0.004;
     sunRef.current.rotation.y += 0.004;
@@ -213,24 +203,138 @@ const Container: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
     earthRef.current.rotation.x += 0.004;
     earthRef.current.rotation.y += 0.004;
 
-    mercuryRef.current.position.x = orbitSpeed.MERCURY * Math.cos(theta);
-    mercuryRef.current.position.z = -1.07 + r * Math.sin(theta);
+    marsRef.current.rotation.x += 0.004;
+    marsRef.current.rotation.y += 0.004;
+    marsRef.current.rotation.z += 0.004;
 
-    venusRef.current.position.x = orbitSpeed.VENUS * Math.cos(theta);
-    venusRef.current.position.z = -1.06 + r * Math.sin(theta);
+    neptunRef.current.rotation.x += 0.02;
+    neptunRef.current.rotation.y += 0.02;
+    neptunRef.current.rotation.z += 0.02;
 
-    earthRef.current.position.x = orbitSpeed.EARTH * Math.cos(theta);
-    earthRef.current.position.z = -1.05 + 0.5 * Math.sin(theta);
+    jupiterRef.current.rotation.x += 0.003;
+    jupiterRef.current.rotation.y += 0.003;
+    jupiterRef.current.rotation.z += 0.003;
+
+    saturnRef.current.rotation.x += 0.005;
+    saturnRef.current.rotation.y += 0.005;
+    saturnRef.current.rotation.z += 0.005;
+
+
+    uranusRef.current.rotation.x += 0.01;
+    uranusRef.current.rotation.y += 0.01;
+    uranusRef.current.rotation.z += 0.01;    
+    // mercuryRef.current.position.x = orbitSpeed.MERCURY * Math.cos(theta);
+    // mercuryRef.current.position.z = -1.07 + r * Math.sin(theta);
+
+    // venusRef.current.position.x = orbitSpeed.VENUS * Math.cos(theta);
+    // venusRef.current.position.z = -1.06 + r * Math.sin(theta);
+
+    // earthRef.current.position.x = orbitSpeed.EARTH * Math.cos(theta);
+    // earthRef.current.position.z = -1.05 + 0.5 * Math.sin(theta);
 
     // darkMateriaRef.current.rotation.x += 0.004;
     // darkMateriaRef.current.rotation.y += 0.004;
     // neptunRef.current.rotation.x += 0.004;
     // neptunRef.current.rotation.y += 0.004;
-
-    // marsRef.current.rotation.x += 0.004;
-    // marsRef.current.rotation.y += 0.004;
-    // marsRef.current.rotation.z += 0.004;
   });
+
+  const positions = {
+    mars: {
+      X: 1,
+      Y: -0.8
+    },
+    sun: {
+      X: 0.8,
+      Y: 0.4
+    },
+    mercury: {
+      X: -0.82,
+      Y: 0.48
+    },
+
+    venus: {
+      X: -0.4,
+      Y: -0.8
+    },
+    earth: {
+      X: -0.4,
+      Y: -0.6
+    },
+
+
+
+
+    jupiter: {
+      X: 0.8,
+      Y: -2
+    },
+    saturn: {
+      X: -1.6,
+      Y: -2.4
+    },
+    uranus: {
+      X: 1.6,
+      Y: -3.6
+    },
+    neptun: {
+      X: 0.6,
+      Y: 0.2
+    }
+  };
+
+  const handleMoveCamera = (e:any) => {
+    const t = document.body.getBoundingClientRect().top;
+
+   
+    marsRef.current.position.x = (-1800 > t ? 4 : positions.mars.X ) + t * 0.0016;
+    marsRef.current.position.y = (-1800 > t ? -2 : positions.mars.Y )  - t * 0.001;
+    marsRef.current.position.z =  (-1800 > t ? -3 : -1) - t * 0.001;
+
+console.log(marsRef.current.position)
+
+
+    sunRef.current.position.x = (-1800 > t ? 5  :  positions.sun.X) + t * 0.0016;
+    sunRef.current.position.y =   positions.sun.Y + t * 0.0002;
+    sunRef.current.position.z = (-1800 > t ? -2 : -1)  - t * 0.0004;
+
+    mercuryRef.current.position.x = (-2400 > t ? -5 :  positions.mercury.X) - t * 0.0016;
+    mercuryRef.current.position.y = (-2400 > t ? 2.68 :  positions.mercury.Y) + t * 0.0008;
+    mercuryRef.current.position.z = (-2400 > t ? -2 :  -1) - t * 0.0004;
+
+    venusRef.current.position.x =  (-2000 > t ? -2 : positions.venus.X )  - t * 0.0008;
+    venusRef.current.position.y = positions.venus.Y - t * 0.0004;
+    venusRef.current.position.z = -1 - t * 0.0004;
+    earthRef.current.position.y = (-2600 > t ? -1.2 : positions.earth.Y) - t * 0.0004;
+    earthRef.current.position.x =  (-2600 > t ? -1.6  :  positions.earth.X)  - t * 0.0004;
+    earthRef.current.position.z = (-2600 > t ? -1.6  :  -1) - t * 0.0004;
+
+
+    jupiterRef.current.position.x = (-1800 > t ? 3  :  positions.jupiter.X) + t * 0.0008;
+    jupiterRef.current.position.y = (-1800 > t ? -5 :  positions.jupiter.Y) - t * 0.0016;
+    jupiterRef.current.position.z = (-1800 > t ? -2 : -1) - t * 0.0004;
+
+
+
+    saturnRef.current.position.x = positions.saturn.X - t * 0.001;
+    saturnRef.current.position.y = positions.saturn.Y - t * 0.0016;
+    saturnRef.current.position.z = -1 - t * 0.0004;
+
+
+    uranusRef.current.position.x =   positions.uranus.X + t * 0.0006;
+    uranusRef.current.position.y = positions.uranus.Y - t * 0.0014;
+    uranusRef.current.position.z = -1 - t * 0.0004;
+    
+
+    neptunRef.current.position.y = positions.neptun.Y + t * 0.0006;
+    neptunRef.current.position.z = -1 - t * 0.0004;
+
+    // sunRef.current.rotation.x += 0.004;
+    // sunRef.current.rotation.y += 0.004;
+
+    // marsRef.current.position.y = 1 + t * 0.004;
+  };
+
+  document.body.onscroll = handleMoveCamera;
 
   return (
     <>
@@ -257,38 +361,52 @@ const Container: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
 
       <pointLight args={[0xcf3626, 0.2]} position={[0, 0.4, -2]} />
 
-      <mesh ref={sunRef} position={[0, 0, -0.96]}>
+      <mesh ref={sunRef} position={[positions.sun.X, positions.sun.Y - 1]}>
         <sphereGeometry args={[0.16, 32, 16]} />
         <meshStandardMaterial map={sunMap} normalMap={sunNormalMap} />
       </mesh>
 
-      <mesh position={[0, 0, -1]} ref={mercuryRef}>
-        <sphereGeometry args={[0.04, 32, 16]} />
+      <mesh position={[positions.mercury.X, positions.mercury.Y, -1]} ref={mercuryRef}>
+        <sphereGeometry args={[0.1, 32, 16]} />
         <meshStandardMaterial map={mercuryMap} normalMap={mercuryNormalMap} />
       </mesh>
 
-      <mesh position={[0, 0, -1.01]} ref={venusRef}>
-        <sphereGeometry args={[0.02, 32, 16]} />
+      <mesh position={[positions.venus.X, positions.venus.Y, -1]} ref={venusRef}>
+        <sphereGeometry args={[0.1, 32, 16]} />
         <meshStandardMaterial map={venusMap} normalMap={venusNormalMap} />
       </mesh>
 
-      <mesh position={[0, 0, -1.2]} ref={earthRef}>
+      <mesh position={[positions.venus.X, positions.venus.Y, -1]} ref={earthRef}>
         <sphereGeometry args={[0.08, 32, 16]} />
         <meshStandardMaterial map={earthMap} normalMap={earthNormalMap} />
       </mesh>
 
-      {/* <mesh position={[START_X_OF_MARS_POSITION, START_Y_OF_MARS_POSITION, -4]} ref={marsRef}>
-        <sphereGeometry args={[0.2, 32, 16]} />
-        <meshStandardMaterial map={marsMap} normalMap={normalMarsMap} />
-      </mesh> */}
-      {/* <mesh position={[0, 0, -5]} ref={neptunRef}>
-        <sphereGeometry args={[0.2, 32, 16]} />
+      <mesh position={[positions.mars.X, positions.mars.Y, -1]} ref={marsRef}>
+        <sphereGeometry args={[0.08, 32, 16]} />
+        <meshStandardMaterial map={marsMap} normalMap={marsNormalMap} />
+      </mesh>
+     
+      <mesh position={[positions.jupiter.X, positions.jupiter.Y, -1]} ref={jupiterRef}>
+        <sphereGeometry args={[0.1, 32, 16]} />
+        <meshStandardMaterial map={jupiterMap} normalMap={jupiterNormalMap} />
+      </mesh>
+
+
+      <mesh position={[positions.saturn.X, positions.saturn.Y, -1]} ref={saturnRef}>
+        <sphereGeometry args={[0.12, 32, 16]} />
+        <meshStandardMaterial map={saturnMap} normalMap={saturnNormalMap} />
+      </mesh>
+
+
+      <mesh position={[positions.uranus.X, positions.uranus.Y, -1]} ref={uranusRef}>
+        <sphereGeometry args={[0.042, 32, 16]} />
+        <meshStandardMaterial map={uranusMap} normalMap={uranusNormalMap} />
+      </mesh>
+
+      <mesh position={[positions.neptun.X, positions.neptun.Y, -1]} ref={neptunRef}>
+        <sphereGeometry args={[0.036, 32, 16]} />
         <meshStandardMaterial map={neptunMap} normalMap={neptunNormalMap} />
       </mesh>
-      <mesh position={[0.5, 0, -3]} ref={jupiterRef}>
-        <sphereGeometry args={[0.2, 32, 16]} />
-        <meshStandardMaterial map={jupiterMap} normalMap={jupiterNormalMap} />
-      </mesh> */}
     </>
   );
 };

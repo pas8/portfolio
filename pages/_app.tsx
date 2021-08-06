@@ -12,6 +12,7 @@ const SnackBarLayout = dynamic(() => import('../src/layouts/SnackBarLayout'));
 const NavLayout = dynamic(() => import('../src/layouts/NavLayout'));
 const CursorLayout = dynamic(() => import('../src/layouts/CursorLayout'), { ssr: false });
 const LoadingLayout = dynamic(() => import('../src/layouts/LoadingLayout'));
+const ScrollLayout = dynamic(() => import('../src/layouts/ScrollLayout'),{ ssr: false });
 
 const Index: FC<AppProps> = ({ Component, pageProps }) => {
   useUploadThemeSsr();
@@ -19,6 +20,7 @@ const Index: FC<AppProps> = ({ Component, pageProps }) => {
   const layouts = [
     StoreLayout,
     ThemeLayout,
+    ScrollLayout,
     ColorLayout,
     SnackBarLayout,
     SceneLayout,
