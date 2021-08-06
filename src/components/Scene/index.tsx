@@ -19,12 +19,15 @@ import {
 } from '@react-three/drei';
 import { makeStyles } from '@material-ui/core';
 import { TorusBufferGeometry } from 'three';
-import { useMemo, useRef, useState, Suspense, useEffect, MouseEvent } from 'react';
+import { useMemo, useRef, useState, Suspense, useEffect, MouseEvent, Dispatch } from 'react';
 import { TextureLoader } from 'three/src/loaders/TextureLoader';
 import * as THREE from 'three';
 import { useWindowScroll } from 'react-use';
 import { usePermission, useWindowSize } from 'react-use';
 import { Vector3 } from '@react-three/fiber';
+import { useDispatch } from 'react-redux';
+import { toChangeLoadingProperyies, toChangeTextureMaps } from 'store/modules/App/actions';
+import { FC } from 'react';
 
 const useStyles = makeStyles(({ palette: { background } }) => ({
   '@global': {
@@ -49,10 +52,15 @@ const useStyles = makeStyles(({ palette: { background } }) => ({
   }
 }));
 
-const Scene = () => {
+const Scene: FC = () => {
   const classes = useStyles();
-  const k = useProgress();
-  // console.log(k)
+  const { active, progress, loaded, ...props } = useProgress();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(toChangeLoadingProperyies({ loadingProperyies: { isLoading: active, percent: progress } }));
+  }, [active, progress]);
+
   return (
     <Canvas className={classes.canvas}>
       <PerspectiveCamera makeDefault position={[0, 0, 0]} />
@@ -60,14 +68,14 @@ const Scene = () => {
       <Suspense fallback={null}>
         <Stars />
 
-        <Container />
+        <Container dispatch={dispatch} />
       </Suspense>
     </Canvas>
   );
 };
 
-const Container = () => {
-  const { size, camera ,} = useThree();
+const Container: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
+  const { size, camera } = useThree();
 
   const handleMoveCameraOnMouseMove = (e: any) => {
     camera.position.x = e.clientX * 0.0001;
@@ -122,7 +130,8 @@ const Container = () => {
     uranusNormalMap,
     uranusMap,
     neptunNormalMap,
-    neptunMap
+    neptunMap,
+    avaMap
   ] = useTexture([
     'sunNormalMap.png',
     'sunMap.jpeg',
@@ -141,8 +150,13 @@ const Container = () => {
     'uranusNormalMap.png',
     'uranusMap.jpeg',
     'neptunNormalMap.png',
-    'neptunMap.jpeg'
+    'neptunMap.jpeg',
+    'ava3.jpg'
   ]);
+  useEffect(() => {
+    dispatch(toChangeTextureMaps({ textureMaps: { avatar: avaMap } }));
+  }, [avaMap]);
+
   // const planetsArr = [
   //   {
   //     map: sunMap,
@@ -175,8 +189,8 @@ const Container = () => {
   var dTheta = (2 * Math.PI) / 1000;
 
   const orbitSpeed = {
-    MERCURY: 0.622   ,
-    VENUS: 0.850,
+    MERCURY: 0.622,
+    VENUS: 0.85,
     EARTH: 1,
     MARS: 0.802,
     JUPITER: 0.434,
@@ -190,17 +204,16 @@ const Container = () => {
     mercuryRef.current.rotation.x += 0.004;
     mercuryRef.current.rotation.y += 0.004;
 
-
     venusRef.current.rotation.x += 0.004;
     venusRef.current.rotation.y += 0.004;
 
     sunRef.current.rotation.x += 0.004;
     sunRef.current.rotation.y += 0.004;
-    
+
     earthRef.current.rotation.x += 0.004;
     earthRef.current.rotation.y += 0.004;
 
-    mercuryRef.current.position.x = orbitSpeed.MERCURY * Math.cos(theta );
+    mercuryRef.current.position.x = orbitSpeed.MERCURY * Math.cos(theta);
     mercuryRef.current.position.z = -1.07 + r * Math.sin(theta);
 
     venusRef.current.position.x = orbitSpeed.VENUS * Math.cos(theta);

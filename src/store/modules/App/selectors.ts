@@ -6,11 +6,7 @@ export const getThemePropertyies = createSelector(
   [(state: RootStoreType) => state.app.themePropertyies],
   themePropertyies => themePropertyies
 );
-export const getSkills = createSelector(
-  [(state: RootStoreType) => state.app.skills],
-  skills => skills
-);
-
+export const getSkills = createSelector([(state: RootStoreType) => state.app.skills], skills => skills);
 
 export const getCursorColor = createSelector(
   [(state: RootStoreType) => state.app.cursorColor],
@@ -22,11 +18,18 @@ export const getIsMain3dSceneHidden = createSelector(
   isMain3dSceneHidden => isMain3dSceneHidden
 );
 
-
-
+export const getLoadingProperyies = createSelector(
+  [(state: RootStoreType) => ({ isLoading: state.app.statuses.isLoading, percent: state.app.loadingPercent })],
+  loadingProperyies => loadingProperyies
+);
 
 export const getIsRandomColorChangingDisabled = createSelector(
   [(state: RootStoreType) => state.app.statuses.isRandomColorChangingDisabled],
   isRandomColorChangingDisabled => isRandomColorChangingDisabled
 );
 
+
+export const getAvatarMap = createSelector(
+  [(state: RootStoreType) => state.app.textureMaps.avatar],
+  avatarMap => avatarMap
+);
