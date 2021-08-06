@@ -4,10 +4,10 @@ import { useSnackbar } from 'notistack';
 import Image from 'next/image';
 import { Grid, makeStyles, Typography, ButtonBase, TextField, withStyles } from '@material-ui/core';
 import SectionContainer from 'components/SectionContainer';
+import { sectionIds } from 'models/denotation';
 import VideoButton from 'components/VideoButton';
 import { useStyles } from '../Greeting';
 import locationSrc from '../../../../../public/location2.png';
-import { sectionIds } from 'models/denotation';
 
 const InputByPas = withStyles(({ palette: { background, secondary, primary, text } }) => ({
   root: {

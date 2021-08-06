@@ -7,6 +7,7 @@ import WhoIAm from './components/WhoIAm';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Greeting from './components/Greeting/index';
+import Inspired from './components/Inspired/index';
 
 const useStyles = makeStyles(({ palette: { background }, breakpoints }) => ({
   container: {
@@ -54,6 +55,7 @@ const Main: FC = () => {
         <MySkills />
         <Experience />
         <Contact />
+        <Inspired/>
       </Grid>
     </>
   );

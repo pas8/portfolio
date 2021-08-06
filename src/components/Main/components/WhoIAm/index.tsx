@@ -192,7 +192,7 @@ const WhoIAm: FC = () => {
         </Grid>
       </Grid>
       <Grid className={'readMoreButtonContainer'}>
-        <CursorButton onClick={handlePushToDetails} title={'Details'} />
+        <CursorButton  title={'Details'} href={RESUME_URL} />
       </Grid>
     </SectionContainer>
     </Grid>
