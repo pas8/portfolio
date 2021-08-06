@@ -1,4 +1,6 @@
 import { makeStyles } from '@material-ui/core';
+import { useScrollAnimation } from 'hooks/useScrollAnimation';
+import { sectionIds } from 'models/denotation';
 import { FC } from 'react';
 import { ParallaxProvider } from 'react-scroll-parallax';
 
@@ -7,7 +9,8 @@ const useLocalStyles = makeStyles(
     '@global': {
       '*': {
         scrollbarColor: `${secondary.main} #292731`,
-        cursor: 'none !important'
+        cursor: 'none !important',
+        scrollBehavior: 'smooth'
         // '&::-webkit-scrollbar-thumb':{
         // background:secondary.main
 
@@ -24,6 +27,8 @@ const useLocalStyles = makeStyles(
 
 const ScrollLayout: FC = ({ children }) => {
   useLocalStyles();
+
+  useScrollAnimation(Object.values(sectionIds).slice(1));
 
   return <ParallaxProvider>{children}</ParallaxProvider>;
 };

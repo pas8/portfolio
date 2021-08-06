@@ -225,7 +225,7 @@ const NavLayout: FC<WithWidthProps> = ({ children, width }) => {
             <Grid container>
               {hrefsArr.map(({ href, title }, idx) => {
                 return (
-                  <MenuItem onClick={() => push(href)} key={`hrefsArr_${idx}`} className={'item'}>
+                  <MenuItem onClick={() => push(`#${href}`)} key={`hrefsArr_${idx}`} className={'item'}>
                     <p> {title}</p>
                   </MenuItem>
                 );
