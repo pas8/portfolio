@@ -33,3 +33,8 @@ export const getAvatarMap = createSelector(
   [(state: RootStoreType) => state.app.textureMaps.avatar],
   avatarMap => avatarMap
 );
+
+export const getSkillsTextureArr = createSelector(
+  [(state: RootStoreType) => state.app.textureMaps.skillsTextureArr],
+  skillsTextureArr => skillsTextureArr
+);

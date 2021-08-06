@@ -1,6 +1,8 @@
 import { FC } from 'react';
 import { makeStyles, Grid, Typography, Dialog } from '@material-ui/core';
 import { colord } from 'colord';
+import { Parallax } from 'react-scroll-parallax';
+
 import clsx from 'clsx';
 
 const useLocalStyles = makeStyles(
@@ -19,7 +21,9 @@ const SectionContainer: FC<{className?:any}> = ({ children,className }) => {
   const { container } = useLocalStyles();
 
   return (
+
     <Grid component={'section'} className={clsx(container,className)}  container>
+
       {children}
     </Grid>
   );

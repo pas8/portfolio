@@ -9,6 +9,7 @@ import SectionContainer from 'components/SectionContainer';
 import CursorButton from 'components/CursorButton';
 import { useStyles } from '../Greeting';
 import MainSkillsGrafic from './components/MainSkillsGrafic';
+import { sectionIds } from 'models/denotation';
 
 const MoreSkillsDialog = dynamic(() => import('./components/MoreSkillsDialog/index'), { ssr: false });
 const Sphere = dynamic(() => import('../Sphere/index'), { ssr: false });
@@ -72,7 +73,7 @@ const MySkills: FC = () => {
   };
 
   return (
-    <>
+    <Grid id={sectionIds.SKILLS}>
       <SectionContainer className={container}>
         <Grid className={containerOfMYSKILLS} container id={'containerOfMYSKILLS'}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1208.5153 182.9396" className={'svgContainer'}>
@@ -134,7 +135,7 @@ const MySkills: FC = () => {
         </Grid>
       </SectionContainer>
       <MoreSkillsDialog open={isDialogOpen} onClose={handleCloseDialog} />
-    </>
+    </Grid>
   );
 };
 

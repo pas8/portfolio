@@ -7,6 +7,7 @@ import SectionContainer from 'components/SectionContainer';
 import VideoButton from 'components/VideoButton';
 import { useStyles } from '../Greeting';
 import locationSrc from '../../../../../public/location2.png';
+import { sectionIds } from 'models/denotation';
 
 const InputByPas = withStyles(({ palette: { background, secondary, primary, text } }) => ({
   root: {
@@ -165,7 +166,7 @@ const Contact: FC = () => {
   };
 
   return (
-    <Grid container className={container} alignItems={'center'}>
+    <Grid container className={container} alignItems={'center'} id={sectionIds.CONTACT}>
       <SectionContainer>
         <Grid container>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox={'0 0 190.0077 30.5847'} className={'svgContainer'}>
@@ -255,7 +256,7 @@ const Contact: FC = () => {
               <Typography>+380951194092 </Typography>
               <Typography>whyiampas@gmail.com </Typography>
             </Grid>
-            <Image src={locationSrc} alt={'Kyiv location'} layout={'responsive'} />
+            <Image src={locationSrc} alt={'Kyiv location'} layout={'responsive'} placeholder={'blur'} />
           </Grid>
         </Grid>
       </SectionContainer>

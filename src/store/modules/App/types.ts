@@ -59,6 +59,8 @@ export type StatusesType = {
 export type LoadingPropertyiesType = {};
 export type TextureMapsType = {
   [Property in 'avatar']: Texture | null;
+} & {
+  skillsTextureArr: (Texture | null)[];
 };
 
 export type AppInitialStateType = {
