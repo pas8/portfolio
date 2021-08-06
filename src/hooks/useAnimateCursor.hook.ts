@@ -86,8 +86,9 @@ export const useAnimateCursor = ({ dot, dotOutline }: { [Property in 'dot' | 'do
   const animateDotOutline = () => {
     _x.current += (endX.current - _x.current) / delay;
     _y.current += (endY.current - _y.current) / delay;
+    if(!  dotOutline.current) return;
     dotOutline.current.style.top = _y.current + 'px';
-    dotOutline.current.style.left = _x.current + 'px';
+ dotOutline.current.style.left = _x.current + 'px';
 
     requestRef.current = requestAnimationFrame(animateDotOutline);
   };
