@@ -51,6 +51,7 @@ export const initialState: AppInitialStateType = {
   ],
   loadingPercent: 0,
   textureMaps: {
+    skillsTextureArr: [],
     avatar: null
   }
 };

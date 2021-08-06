@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { Grid, makeStyles, Typography, ButtonBase } from '@material-ui/core';
 import SectionContainer from 'components/SectionContainer';
 import { useStyles } from '../Greeting';
+import { sectionIds } from 'models/denotation';
 
 const useLocalStyles = makeStyles(({ palette: { background, secondary, primary }, breakpoints }) => ({
   container: {
@@ -47,7 +48,7 @@ const Experience: FC = () => {
   } = useStyles();
   const { container } = useLocalStyles();
   return (
-    <Grid container className={container} alignItems={'center'}>
+    <Grid container className={container} alignItems={'center'}  id={sectionIds.PROJECTS}>
       <SectionContainer>
         <Grid container>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox={'0 0 1188 152'} className={'svgContainer'}>

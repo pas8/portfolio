@@ -10,6 +10,7 @@ import Greeting from './components/Greeting/index';
 
 const useStyles = makeStyles(({ palette: { background }, breakpoints }) => ({
   container: {
+    perspective:960,
     display:'flex',
     flexDirection:'column',
     [breakpoints.down('xl')]: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles(({ palette: { background }, breakpoints }) => ({
     [breakpoints.down('lg')]: {
       left: 240,
       right: 100,
-      gap: 108
+      gap: 100
     },
     [breakpoints.down('md')]: {
       left: 42,

@@ -7,6 +7,8 @@ import { useTexture } from '@react-three/drei';
 import { Texture } from 'three';
 
 import VideoButton from 'components/VideoButton';
+import { useSelector } from 'react-redux';
+import { getAvatarMap, getSkillsTextureArr } from 'store/modules/App/selectors';
 
 const Plane: FC<any> = ({ color, ...props }) => {
   const [ref] = usePlane(() => ({ ...props }));
@@ -18,14 +20,13 @@ const Plane: FC<any> = ({ color, ...props }) => {
   );
 };
 
-const Box = () => {
+const Box: FC<{ avaMap: any }> = ({ avaMap }) => {
   const [ref, api] = useBox(() => ({ mass: 0.42, args: [6, 6, 6], isKinematic: true }));
   useFrame(state => {
     const t = state.clock.getElapsedTime();
     api.position.set(Math.sin(t * 0.42) * 5, Math.cos(t * 0.42) * 5, 3);
     api.rotation.set(Math.sin(t * 1.6), Math.cos(t * 3), 0);
   });
-  const avaMap = useTexture('ava3.jpg');
 
   return (
     <mesh ref={ref} castShadow receiveShadow>
@@ -35,30 +36,13 @@ const Box = () => {
   );
 };
 
-const SkillBoxesContainer: FC = () => {
-  const textureArr = useTexture([
-    'next.png',
-    '_lodash.png',
-    'firebase.png',
-    'git.png',
-    'gitHub.png',
-    'html.png',
-    'js.png',
-    'materialUi.png',
-    'npm.png',
-    'redux.png',
-    'scss.png',
-    'ts.png'
-  ]);
-
-  return (
-    <>
-      {textureArr.map((map, idx) => (
-        <InstancedSpheres key={idx} map={map} />
-      ))}
-    </>
-  );
-};
+const SkillBoxesContainer: FC<{ textureArr: any[] }> = ({ textureArr }) => (
+  <>
+    {textureArr.map((map, idx) => (
+      <InstancedSpheres key={idx} map={map} />
+    ))}
+  </>
+);
 
 const InstancedSpheres: FC<{ map: Texture }> = ({ map }) => {
   const [ref] = useSphere(index => ({
@@ -66,7 +50,6 @@ const InstancedSpheres: FC<{ map: Texture }> = ({ map }) => {
     position: [Math.random() - 0.5, Math.random() - 0.5, index * 2],
     args: 1
   }));
-
   return (
     <>
       <mesh position={[1, -1, -1]} ref={ref}>
@@ -87,15 +70,15 @@ const useStyles = makeStyles(({ palette: { background, secondary, primary }, bre
       width: 42,
       height: 42
     }
-  },
-
+  }
 }));
 
 const MoreSkillsDialog: FC<DialogProps> = ({ open, onClose }) => {
   const { breakpoints } = useTheme();
   const fullScreen = useMediaQuery(breakpoints.down('md'));
-  const { closeButton,  } = useStyles();
-
+  const { closeButton } = useStyles();
+  const textureArr = useSelector(getSkillsTextureArr);
+  const avaMap = useSelector(getAvatarMap);
   return (
     <Dialog fullScreen={fullScreen} fullWidth maxWidth={'lg'} open={open} onClose={onClose}>
       <Grid className={closeButton}>
@@ -109,7 +92,11 @@ const MoreSkillsDialog: FC<DialogProps> = ({ open, onClose }) => {
           </SvgIcon>
         </VideoButton>
       </Grid>
-      <Canvas gl={{ alpha: false }} camera={{ position: [0, -8, 16] }}  style={{height:fullScreen ? '100vh' : '80vh'}}>
+      <Canvas
+        gl={{ alpha: false }}
+        camera={{ position: [0, -8, 16] }}
+        style={{ height: fullScreen ? '100vh' : '80vh' }}
+      >
         <Suspense fallback={null}>
           <hemisphereLight intensity={0.42} />
           <spotLight
@@ -129,9 +116,9 @@ const MoreSkillsDialog: FC<DialogProps> = ({ open, onClose }) => {
             <Plane color={'hsl(260,20%,16%)'} position={[6, 0, 0]} rotation={[0, -0.9, 0]} />
             <Plane color={'hsl(200,20%,16%)'} position={[0, 6, 0]} rotation={[0.9, 0, 0]} />
             <Plane color={'hsl(300,20%,16%)'} position={[0, -6, 0]} rotation={[-0.9, 0, 0]} />
-            <Box />
+            <Box avaMap={avaMap}/>
 
-            <SkillBoxesContainer />
+            <SkillBoxesContainer textureArr={textureArr} />
           </Physics>
         </Suspense>
       </Canvas>
