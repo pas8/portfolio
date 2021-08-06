@@ -154,6 +154,13 @@ export const useStyles = makeStyles(({ palette: { background, secondary, primary
   blueLightVioletColor: {
     stroke: 'rgb(164, 9, 259)'
   },
+  primaryMainColor: {
+    stroke: primary.main
+  },
+  secondaryMainColor: {
+    stroke: secondary.main
+  },
+
   red2VioletColor: {
     stroke: 'rgb(244, 17, 103)'
   },

@@ -23,7 +23,8 @@ export const initialState: AppInitialStateType = {
 
   statuses: {
     isRandomColorChangingDisabled: false,
-    isMain3dSceneHidden: false
+    isMain3dSceneHidden: false,
+    isLoading: true
   },
   cursorColor: '#ecaf25',
   skills: [
@@ -47,7 +48,11 @@ export const initialState: AppInitialStateType = {
     { href: '#Express_', title: 'Express' },
     { href: '#Three_js_', title: 'Three_js' },
     { href: '#Bem_', title: 'BEM' }
-  ]
+  ],
+  loadingPercent: 0,
+  textureMaps: {
+    avatar: null
+  }
 };
 
 export const AppReducer = (state = initialState, action: AppActionTypes): AppInitialStateType => {
@@ -57,11 +62,19 @@ export const AppReducer = (state = initialState, action: AppActionTypes): AppIni
     }
 
     case TypeNames.HANDLE_CHANGE_STATUSES: {
-      console.log(action.payload.newStatuses);
       return { ...state, statuses: { ...state.statuses, ...action.payload.newStatuses } };
     }
 
-    case TypeNames.HANDLE_CHANGE_CURSOR_COLOR: {
+    case TypeNames.HANDLE_CHANGE_LOADING_PROPERYIES: {
+      return {
+        ...state,
+        statuses: { ...state.statuses, isLoading: action.payload.loadingProperyies.isLoading },
+        loadingPercent: action.payload.loadingProperyies.percent
+      };
+    }
+
+    case TypeNames.HANDLE_CHANGE_CURSOR_COLOR:
+    case TypeNames.HANDLE_CHANGE_TEXTURE_MAPS: {
       return { ...state, ...action.payload };
     }
 

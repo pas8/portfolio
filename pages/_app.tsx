@@ -11,11 +11,21 @@ const SceneLayout = dynamic(() => import('../src/layouts/SceneLayout'));
 const SnackBarLayout = dynamic(() => import('../src/layouts/SnackBarLayout'));
 const NavLayout = dynamic(() => import('../src/layouts/NavLayout'));
 const CursorLayout = dynamic(() => import('../src/layouts/CursorLayout'), { ssr: false });
+const LoadingLayout = dynamic(() => import('../src/layouts/LoadingLayout'));
 
 const Index: FC<AppProps> = ({ Component, pageProps }) => {
   useUploadThemeSsr();
 
-  const layouts = [StoreLayout, ThemeLayout, ColorLayout, SnackBarLayout, CursorLayout,NavLayout];
+  const layouts = [
+    StoreLayout,
+    ThemeLayout,
+    ColorLayout,
+    SnackBarLayout,
+    SceneLayout,
+    CursorLayout,
+    NavLayout,
+    LoadingLayout
+  ];
 
   return (
     <ComposeLayouts layouts={layouts} pageProps={pageProps}>
