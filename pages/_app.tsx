@@ -8,13 +8,14 @@ const StoreLayout = dynamic(() => import('../src/layouts/StoreLayout'));
 const ColorLayout = dynamic(() => import('../src/layouts/ColorLayout'));
 const ThemeLayout = dynamic(() => import('../src/layouts/ThemeLayout'));
 const SceneLayout = dynamic(() => import('../src/layouts/SceneLayout'));
+const SnackBarLayout = dynamic(() => import('../src/layouts/SnackBarLayout'));
 const NavLayout = dynamic(() => import('../src/layouts/NavLayout'));
 const CursorLayout = dynamic(() => import('../src/layouts/CursorLayout'), { ssr: false });
 
 const Index: FC<AppProps> = ({ Component, pageProps }) => {
   useUploadThemeSsr();
 
-  const layouts = [StoreLayout, ThemeLayout, ColorLayout,  CursorLayout,NavLayout];
+  const layouts = [StoreLayout, ThemeLayout, ColorLayout, SnackBarLayout, CursorLayout,NavLayout];
 
   return (
     <ComposeLayouts layouts={layouts} pageProps={pageProps}>

@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { ChangeEventHandler, FC, useState } from 'react';
+import { useSnackbar } from 'notistack';
 import Image from 'next/image';
 import { Grid, makeStyles, Typography, ButtonBase, TextField, withStyles } from '@material-ui/core';
 import SectionContainer from 'components/SectionContainer';
@@ -13,8 +14,7 @@ const InputByPas = withStyles(({ palette: { background, secondary, primary, text
       '&:hover fieldset': {
         borderColor: secondary.main
       }
-    },
-
+    }
   }
 }))(TextField);
 
@@ -115,13 +115,15 @@ const Contact: FC = () => {
   } = useStyles();
   const { container, contentContainer } = useLocalStyles();
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const inputNames = {
     EMAIL: 'email',
     NAME: 'name',
     TITLE: 'title',
     MESSAGE: 'message'
   };
-  const [isEmailValid, setIsEmailValid] = useState(false)
+  const [isEmailValid, setIsEmailValid] = useState(false);
 
   const [formState, setFormState] = useState({
     [inputNames.EMAIL]: '',
@@ -134,33 +136,32 @@ const Contact: FC = () => {
     setFormState(state => ({ ...state, [name]: value }));
   };
 
-    const onEmailChange: ChangeEventHandler<HTMLInputElement> = ({ target: { name, value } }) => {
-
-const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
- const isEmailValid =  re.test(email)
-setIsEmailValid(isEmailValid)
+  const onEmailChange: ChangeEventHandler<HTMLInputElement> = ({ target: { name, value } }) => {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const isEmailValid = re.test(value);
+    setIsEmailValid(isEmailValid);
     setFormState(state => ({ ...state, [name]: value }));
   };
 
   const handleSubmit = () => {
-    
+    if (!isEmailValid) return enqueueSnackbar('Email is not valid', { variant: 'error' });
+
     fetch('/api/contact', {
       method: 'POST',
       headers: {
-        'Accept': 'application/json, text/plain, */*',
+        Accept: 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
-    }).then((res) => {
-        console.log('Response received')
-        if (res.status === 200) {
-            console.log('Response succeeded!')
-            setSubmitted(true) 
-            setName('')
-            setEmail('')
-            setMessage('')
-        }
+      body: JSON.stringify(formState)
     })
+      .then(res => {
+        if (res.status === 200) {
+          enqueueSnackbar('Email sended', { variant: 'success' });
+          return enqueueSnackbar('If u can`t find email, check spam please!', { variant: 'info' });
+        }
+      })
+      .catch(err => enqueueSnackbar(err, { variant: 'error' }));
   };
 
   return (
