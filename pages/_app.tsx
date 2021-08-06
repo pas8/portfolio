@@ -20,7 +20,7 @@ const Index: FC<AppProps> = ({ Component, pageProps }) => {
   const layouts = [
     StoreLayout,
     ThemeLayout,
-    // SceneLayout,
+    SceneLayout,
     LoadingLayout,
     ScrollLayout,
     ColorLayout,

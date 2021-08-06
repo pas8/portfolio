@@ -1,8 +1,6 @@
 import { FC } from 'react';
 import { makeStyles, Grid, Typography, Dialog } from '@material-ui/core';
 import { colord } from 'colord';
-import { Parallax } from 'react-scroll-parallax';
-
 import clsx from 'clsx';
 
 const useLocalStyles = makeStyles(

@@ -77,19 +77,19 @@ export const useStyles = makeStyles(({ palette: { background, secondary, primary
     },
 
     '@keyframes lines': {
-      // '0%': {
-      //   opacity: 0
-      // },
-      // '4%': {
-      //   opacity: 1
-      // },
-      // '96%': {
-      //   opacity: 1
-      // },
-      // '100%': {
-      //   opacity: 0,
-      //   strokeDashoffset: 3000
-      // }
+      '0%': {
+        opacity: 0
+      },
+      '4%': {
+        opacity: 1
+      },
+      '96%': {
+        opacity: 1
+      },
+      '100%': {
+        opacity: 0,
+        strokeDashoffset: 3000
+      }
     }
   },
   container: {

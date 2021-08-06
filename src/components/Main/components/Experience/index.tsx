@@ -1,18 +1,68 @@
+import { colord } from 'colord';
 import clsx from 'clsx';
+import Image from 'next/image';
 import { FC } from 'react';
 import { Grid, makeStyles, Typography, ButtonBase } from '@material-ui/core';
 import SectionContainer from 'components/SectionContainer';
-import { useStyles } from '../Greeting';
+import CursorButton from 'components/CursorButton';
 import { sectionIds } from 'models/denotation';
+import { useStyles } from '../Greeting';
+import stopWatchSrc from '../../../../../public/stopWatch.png';
+import pakeepsSrc from '../../../../../public/pakeeps.png';
 
-const useLocalStyles = makeStyles(({ palette: { background, secondary, primary }, breakpoints }) => ({
-  container: {
-    '& path': {
-      strokeWidth: '3px'
+const useLocalStyles = makeStyles(
+  ({ palette: { background, secondary, primary }, breakpoints, shape: { borderRadius } }) => ({
+    container: {
+      '& path': {
+        strokeWidth: '3px'
+      },
+      '& .projectsContainer': {
+        marginTop: 42,
+        // borderRadius,
+        gap: 10,
+        '& .projectItem': {
+          '& img': {
+            borderRadius
+          },
+
+          position: 'relative',
+          '& .wrapper': {
+            position: 'absolute',
+            inset: 0,
+            borderRadius,
+            bottom: 6,
+'& .contentContainer':{
+
+display:'none',
+},
+            '&:hover': {
+              '& .contentContainer':{
+padding:16,
+gap:8,
+
+                display:'flex',
+
+                },
+
+              backdropFilter: 'blur(4px)',
+              background: colord('#292730').alpha(0.8).toHex()
+            },
+            zIndex: 2
+          },
+          // overflow:'hidden',maxHeight:342,
+          width: '48%'
+          ,
+          [breakpoints.down('xs')]:{
+
+width:'100%'
+
+          }
+          // height:200
+        }
+      }
     }
-
-  }
-}));
+  })
+);
 
 const Experience: FC = () => {
   const {
@@ -47,8 +97,24 @@ const Experience: FC = () => {
     dashOffset1500Dasharray1500
   } = useStyles();
   const { container } = useLocalStyles();
+
+  const projectArr = [
+    {
+      src: pakeepsSrc,
+      title: 'Pakeeps',
+      gitHub: 'https://github.com/pas8/pakeeps',
+      site: 'https://pakeeps.vercel.app'
+    },
+    {
+      src: stopWatchSrc,
+      title: 'StopWatch',
+      gitHub: 'https://stopwatch-5ce7m2y2d-8pas.vercel.app/',
+      site: 'https://stopwatch-5ce7m2y2d-8pas.vercel.app/'
+    }
+  ];
+
   return (
-    <Grid container className={container} alignItems={'center'}  id={sectionIds.PROJECTS}>
+    <Grid container className={container} alignItems={'center'} id={sectionIds.PROJECTS}>
       <SectionContainer>
         <Grid container>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox={'0 0 1188 152'} className={'svgContainer'}>
@@ -82,6 +148,45 @@ const Experience: FC = () => {
               d="M687.46 69.68V52.53h100.62v34.29H687.47zM687.46 18.25V1.1h100.62v34.28H687.47zM687.46 121.82v-17.14h100.62v34.28H687.47zM116.74 69.22c0-65.96.06-68.96 1.27-68.31.7.37 12.67 7.31 26.6 15.42C167.87 29.86 170.1 31 171.73 30.25c.99-.45 13.26-7.21 27.27-15.04C213 7.4 224.66 1 224.9 1c.22 0 .41 30.86.41 68.57 0 37.72-.17 68.58-.38 68.58-.63 0-16.54-8.76-35.88-19.75-9.93-5.64-18.4-10.25-18.84-10.25-.58 0-35.48 19.63-52.93 29.77-.3.17-.54-30.74-.54-68.69zM0 120.71v-17.14h94.28v34.29H0zM0 68.57V51.43h94.28V85.7H0zM0 17.14V0h94.28v34.29H0zM244.6 99.92V61.71h21.15c18.15 0 21.09-.15 20.75-1.04-.34-.87-38.65-56.95-40.66-59.5-.56-.7 3.62-.9 20.4-.9h21.12l11 15.9c6.04 8.74 15.54 22.54 21.11 30.67l10.13 14.78v22.94h-38.57v53.58H244.6zM353.88 68.85V51.71h100.63v34.28H353.88zM353.88 17.42V.28h100.63v34.28H353.88zM353.88 121v-17.15h100.63v34.29H353.88zM481.14 101V63.84h26.98c17.78 0 26.99-.25 26.99-.73 0-.54-47.65-56.77-52.5-61.95-.66-.7 4.02-.9 22.87-.9h23.7l27 28.57 26.99 28.56V81h-14.34c-7.88 0-14.33.11-14.33.26 0 .23 29.87 44.98 35.94 53.84l2.08 3.04-23.86-.03-23.86-.02-13.49-24.76-13.49-24.76-.22 24.78-.22 24.79h-36.24zM615.59 90.64v-47.5h42.85v95H615.6zM615.59 17.42V.28h43.57v34.28h-43.57zM810.17 79.74V21.35l7.26 11.07c3.99 6.1 12.77 19.62 19.52 30.06l12.27 19v56.66h-39.06zM896.55 135.1c-14.42-20.9-51.82-79.2-85.68-133.58-.75-1.2.32-1.26 19.3-1.08l20.08.2 22.38 34.64a4002.63 4002.63 0 0023.21 35.71c.56.71.86-11.01.89-34.82l.05-35.9h41.04l-.56 23.7c-.31 13.03-.57 44.04-.57 68.93v45.24h-38.05zM1007.19 103.9c-31.03-18.76-56.4-34.4-56.39-34.76.02-.7 2.28-2.07 69.49-42.18 24.07-14.37 43.86-26.01 43.97-25.87.11.14.06 10.87-.13 23.83l-.33 23.57-17.97 10c-9.88 5.5-18 10.3-18.05 10.66-.05.36 8.08 5.96 18.05 12.44l18.14 11.8v16.48c0 9.06.23 19.13.5 22.37.28 3.36.2 5.87-.2 5.83-.37-.03-26.06-15.4-57.08-34.17zM1085.02 68.85V51.71H1187.79v34.28H1085.02zM1085.02 121v-17.15H1187.79v34.29H1085.02zM1085.02 17.42V.28H1187.79v34.28H1085.02z"
             />
           </svg>
+        </Grid>
+        <Grid container className={'projectsContainer'} justify={'space-between'}>
+          {projectArr.map(({ src, title, gitHub, site }, idx) => {
+            return (
+              <Grid component={'a'} key={`${idx}_${title}`} className={'projectItem'}>
+                <Grid className={'wrapper'}>
+                  <Grid container className={'contentContainer'}>
+                    <Grid container>
+                      <Typography color={'textSecondary'} variant={'h4'}>{title}</Typography>
+                    </Grid>
+
+                    <Grid container>
+                      <CursorButton
+                        title={'Git Hub'}
+                        href={gitHub}
+                        customIcon={
+                          <svg viewBox={'0 0 24 24'}>
+                            <path d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z" />
+                          </svg>
+                        }
+                      />
+                    </Grid>
+                    <Grid container>
+                      <CursorButton
+                        href={site}
+                        title={'Web site'}
+                        customIcon={
+                          <svg viewBox={'0 0 24 24'}>
+                            <path d="M17.9,17.39C17.64,16.59 16.89,16 16,16H15V13A1,1 0 0,0 14,12H8V10H10A1,1 0 0,0 11,9V7H13A2,2 0 0,0 15,5V4.59C17.93,5.77 20,8.64 20,12C20,14.08 19.2,15.97 17.9,17.39M11,19.93C7.05,19.44 4,16.08 4,12C4,11.38 4.08,10.78 4.21,10.21L9,15V16A2,2 0 0,0 11,18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                          </svg>
+                        }
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Image src={src} alt={title} placeholder={'blur'} />
+              </Grid>
+            );
+          })}
         </Grid>
       </SectionContainer>
     </Grid>

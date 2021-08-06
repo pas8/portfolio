@@ -158,7 +158,7 @@ const NavLayout: FC<WithWidthProps> = ({ children, width }) => {
     { title: 'Greeting', href: sectionIds.GREETING },
     { title: 'Who I Am', href: sectionIds.WHO_I_AM },
     { title: 'Skills', href: sectionIds.SKILLS },
-    { title: 'Projects', href: sectionIds.PROJECTS },
+    { title: 'Experience', href: sectionIds.PROJECTS },
     { title: 'Contact', href: sectionIds.CONTACT }
   ];
 
