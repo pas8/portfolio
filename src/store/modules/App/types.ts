@@ -27,11 +27,18 @@ export type PayloadTypes = {
   [TypeNames.HANDLE_CHANGE_SOUND_IDX]: {
     soundIdx: number;
   };
+
+  [TypeNames.HANDLE_CHANGE_SPHERE_CURSOR_TITLE]: {
+    soundIdx: number;
+  };
   
 };
 
 export type ActionsValueTypes = {
-  
+  toChangeSphereCursorTitle: {
+    type: typeof TypeNames.HANDLE_CHANGE_SPHERE_CURSOR_TITLE;
+    payload: PayloadTypes[TypeNames.HANDLE_CHANGE_SPHERE_CURSOR_TITLE];
+  };
   toChangeSoundIdx: {
     type: typeof TypeNames.HANDLE_CHANGE_SOUND_IDX;
     payload: PayloadTypes[TypeNames.HANDLE_CHANGE_SOUND_IDX];
@@ -86,6 +93,7 @@ export type AppInitialStateType = {
   skills: SkillsType;
   loadingPercent: number;
   currentSectionId:string ;
+  sphereCursorTitle:string ;
   soundIdx:number;
   textureMaps: TextureMapsType;
   statuses: StatusesType;

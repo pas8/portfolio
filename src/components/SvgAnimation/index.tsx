@@ -62,15 +62,12 @@ const useStyles = makeStyles(({ palette: { background, secondary, primary }, bre
     const styles = {
       '& path': {
         fill: 'none'
-        // strokeLinecap: 'round'
       },
       '& .NOT_ACTIVE': {
         opacity: 0.42
       },
       '&:hover': {
         animation: 'racket 1s '
-
-        // transform:'scaleY(0.4)'
       },
 
       [`& .${pathsClassName.FIRST}`]: {
@@ -102,12 +99,11 @@ const useStyles = makeStyles(({ palette: { background, secondary, primary }, bre
   }
 }));
 
-const SvgAnimation: FC<SvgAnimationPropsType> = ({ className, id, viewBox, pathsArr, children }) => {
+const SvgAnimation: FC<SvgAnimationPropsType> = ({ className, id, viewBox, pathsArr, onClick,children }) => {
   const { palette } = useTheme();
   const soundIdx = useSelector(getSoundIdx);
   const currentSectionId = useSelector(getCurrentSectionId);
   const isSoundPaused = useSelector(getIsSoundPaused);
-  // console.log(currentSectionId)
   const { svgContainer } = useStyles();
 
   const colorsArr = [
@@ -129,14 +125,9 @@ const SvgAnimation: FC<SvgAnimationPropsType> = ({ className, id, viewBox, paths
 
   const pathsClassNameArr = Object.values(pathsClassName);
 
-  //   const [sampledColorsArr,setSampledColorsArr] = useState(colorsArr)
-  // useEffect(()=>{
-
-  // },[])
-console.log(  currentSectionId )
   return (
     <Grid container className={className}>
-      <svg xmlns={'http://www.w3.org/2000/svg'} viewBox={viewBox} className={svgContainer}>
+      <svg xmlns={'http://www.w3.org/2000/svg'} viewBox={viewBox} className={svgContainer} onClick={onClick}>
         {pathsArr.map((arr, index) =>
           arr.map((d, dIdx) => {
             const idx = index + 1;

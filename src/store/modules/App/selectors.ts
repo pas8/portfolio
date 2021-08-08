@@ -46,3 +46,8 @@ export const getIsSoundPaused = createSelector(
   [(state: RootStoreType) => state.app.statuses.isSoundPaused],
   isSoundPaused => isSoundPaused
 );
+
+export const getSphereCursorTitle = createSelector(
+  [(state: RootStoreType) => state.app.sphereCursorTitle],
+  sphereCursorTitle => sphereCursorTitle
+);

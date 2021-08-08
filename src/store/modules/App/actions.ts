@@ -38,3 +38,8 @@ export const toChangeSoundIdx = (payload: PayloadTypes[TypeNames.HANDLE_CHANGE_S
   type: TypeNames.HANDLE_CHANGE_SOUND_IDX,
   payload
 });
+export const toChangeSphereCursorTitle = (payload: PayloadTypes[TypeNames.HANDLE_CHANGE_SPHERE_CURSOR_TITLE]): AppActionTypes => ({
+  type: TypeNames.HANDLE_CHANGE_SPHERE_CURSOR_TITLE,
+  payload
+});
+
