@@ -1,4 +1,3 @@
-import { find } from 'lodash';
 import { RootStoreType } from 'models/types';
 import { createSelector } from 'reselect';
 
@@ -28,7 +27,6 @@ export const getIsRandomColorChangingDisabled = createSelector(
   isRandomColorChangingDisabled => isRandomColorChangingDisabled
 );
 
-
 export const getAvatarMap = createSelector(
   [(state: RootStoreType) => state.app.textureMaps.avatar],
   avatarMap => avatarMap
@@ -37,4 +35,14 @@ export const getAvatarMap = createSelector(
 export const getSkillsTextureArr = createSelector(
   [(state: RootStoreType) => state.app.textureMaps.skillsTextureArr],
   skillsTextureArr => skillsTextureArr
+);
+
+export const getCurrentSectionId = createSelector(
+  [(state: RootStoreType) => state.app.currentSectionId],
+  currentSectionId => currentSectionId
+);
+export const getSoundIdx = createSelector([(state: RootStoreType) => state.app.soundIdx], soundIdx => soundIdx);
+export const getIsSoundPaused = createSelector(
+  [(state: RootStoreType) => state.app.statuses.isSoundPaused],
+  isSoundPaused => isSoundPaused
 );

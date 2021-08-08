@@ -1,5 +1,4 @@
 import { createTheme, ThemeProvider } from '@material-ui/core';
-import { mapValues } from 'lodash';
 import { useSelector } from 'react-redux';
 import { FC } from 'react';
 import { getThemePropertyies } from 'store/modules/App/selectors';

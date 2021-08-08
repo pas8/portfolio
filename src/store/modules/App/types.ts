@@ -21,9 +21,27 @@ export type PayloadTypes = {
   [TypeNames.HANDLE_CHANGE_TEXTURE_MAPS]: {
     textureMaps: TextureMapsType;
   };
+  [TypeNames.HANDLE_CHANGE_CURRENT_SECTION_ID]: {
+    currentSectionId: string;
+  };
+  [TypeNames.HANDLE_CHANGE_SOUND_IDX]: {
+    soundIdx: number;
+  };
+  
 };
 
 export type ActionsValueTypes = {
+  
+  toChangeSoundIdx: {
+    type: typeof TypeNames.HANDLE_CHANGE_SOUND_IDX;
+    payload: PayloadTypes[TypeNames.HANDLE_CHANGE_SOUND_IDX];
+  };
+
+  toChangeCurrentSectionId: {
+    type: typeof TypeNames.HANDLE_CHANGE_CURRENT_SECTION_ID;
+    payload: PayloadTypes[TypeNames.HANDLE_CHANGE_CURRENT_SECTION_ID];
+  };
+
   toChangeThemePropertyies: {
     type: typeof TypeNames.HANDLE_CHANGE_THEME_PROPERTYIES;
     payload: PayloadTypes[TypeNames.HANDLE_CHANGE_THEME_PROPERTYIES];
@@ -52,7 +70,7 @@ export type AppActionTypes = $Values<ActionsValueTypes>;
 export type SkillsType = { title: string; href: string }[];
 export type CursorColortype = string;
 
-export type StatusesNamesType = 'isRandomColorChangingDisabled' | 'isMain3dSceneHidden' | 'isLoading';
+export type StatusesNamesType = 'isRandomColorChangingDisabled' | 'isMain3dSceneHidden' | 'isLoading' | 'isSoundPaused';
 export type StatusesType = {
   [Property in StatusesNamesType]: boolean;
 };
@@ -67,6 +85,8 @@ export type AppInitialStateType = {
   themePropertyies: ThemeOptions;
   skills: SkillsType;
   loadingPercent: number;
+  currentSectionId:string ;
+  soundIdx:number;
   textureMaps: TextureMapsType;
   statuses: StatusesType;
   cursorColor: CursorColortype;

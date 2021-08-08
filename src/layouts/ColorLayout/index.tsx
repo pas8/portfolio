@@ -1,7 +1,6 @@
 import { makeStyles } from '@material-ui/core';
-import { FC, useEffect } from 'react';
-import { colord, extend } from 'colord';
-import { random } from 'lodash';
+import { FC } from 'react';
+import {  extend } from 'colord';
 import lchPlugin from 'colord/plugins/lch';
 import { useSelector, useDispatch } from 'react-redux';
 import { getCursorColor, getIsRandomColorChangingDisabled } from 'store/modules/App/selectors';

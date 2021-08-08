@@ -8,7 +8,7 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <meta name="theme-color" content={'#303030'} />
-          <script type="text/javascript" src="http://www.goat1000.com/tagcanvas.js?1.18"></script>
+          <script type="text/javascript" src="https://www.goat1000.com/tagcanvas.js?1.18"></script>
 
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
         </Head>

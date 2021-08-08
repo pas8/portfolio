@@ -8,3 +8,13 @@ export const sectionIds = {
   PROJECTS: 'projects',
   CONTACT: 'contact'
 };
+export const ANIMATE  = 'animate'
+
+export const pathsClassName  = {
+
+FIRST:'FIRST',
+SECONDARY:'SECONDARY',
+THIRD:'THIRD',
+FOUR:'FOUR',
+
+}

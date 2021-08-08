@@ -28,7 +28,7 @@ const useLocalStyles = makeStyles(
 const ScrollLayout: FC = ({ children }) => {
   useLocalStyles();
 
-  useScrollAnimation(Object.values(sectionIds).slice(1));
+  useScrollAnimation(Object.values(sectionIds));
 
   return <ParallaxProvider>{children}</ParallaxProvider>;
 };
