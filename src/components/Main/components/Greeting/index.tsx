@@ -50,7 +50,8 @@ export const useStyles = makeStyles(({ palette: { background, secondary, primary
 
     [breakpoints.down('lg')]: {
       marginBottom: -36,
-      width: 308
+      width: 342,
+      marginRight:100,
     },
 
     [breakpoints.down('md')]: {

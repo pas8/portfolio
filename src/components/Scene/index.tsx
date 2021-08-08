@@ -25,9 +25,10 @@ import * as THREE from 'three';
 import { useWindowScroll } from 'react-use';
 import { usePermission, useWindowSize } from 'react-use';
 import { Vector3 } from '@react-three/fiber';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toChangeLoadingProperyies, toChangeTextureMaps } from 'store/modules/App/actions';
 import { FC } from 'react';
+import { getIsSoundPaused, getSoundIdx } from 'store/modules/App/selectors';
 
 const useStyles = makeStyles(({ palette: { background } }) => ({
   '@global': {
@@ -54,8 +55,10 @@ const useStyles = makeStyles(({ palette: { background } }) => ({
 
 const Scene: FC = () => {
   const classes = useStyles();
-  const { active, progress,  ...props} = useProgress();
+  const { active, progress, ...props } = useProgress();
   const dispatch = useDispatch();
+  const soundIdx = useSelector(getSoundIdx);
+  const isSoundPaused = useSelector(getIsSoundPaused);
 
   useEffect(() => {
     dispatch(toChangeLoadingProperyies({ loadingProperyies: { isLoading: active, percent: progress } }));
@@ -68,13 +71,17 @@ const Scene: FC = () => {
       <Suspense fallback={null}>
         <Stars />
 
-        <Container dispatch={dispatch} />
+        <Container dispatch={dispatch} soundIdx={soundIdx**Math.cbrt(soundIdx)} isSoundPaused={isSoundPaused} />
       </Suspense>
     </Canvas>
   );
 };
 
-const Container: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
+const Container: FC<{ dispatch: Dispatch<any>; isSoundPaused: boolean; soundIdx: number }> = ({
+  dispatch,
+  isSoundPaused,
+  soundIdx
+}) => {
   const { size, camera } = useThree();
 
   const handleMoveCameraOnMouseMove = (e: any) => {
@@ -94,6 +101,7 @@ const Container: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
   const sunRef: any = useRef();
   const mercuryRef: any = useRef();
   const venusRef: any = useRef();
+  const moonRef: any = useRef();
   const darkMateriaRef: any = useRef();
   const neptunRef: any = useRef();
   const jupiterRef: any = useRef();
@@ -120,6 +128,8 @@ const Container: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
     uranusMap,
     neptunNormalMap,
     neptunMap,
+    moonMap,
+    moonNormalMap,
     avaMap,
     ...skillsTextureArr
   ] = useTexture([
@@ -141,6 +151,8 @@ const Container: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
     'uranusMap.jpeg',
     'neptunNormalMap.png',
     'neptunMap.jpeg',
+    'moonMap.jpg',
+    'moonNormalMap.png',
     'ava3.jpg',
     'next.png',
     '_lodash.png',
@@ -159,36 +171,7 @@ const Container: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
     dispatch(toChangeTextureMaps({ textureMaps: { avatar: avaMap, skillsTextureArr } }));
   }, [avaMap]);
 
-  // const planetsArr = [
-  //   {
-  //     map: sunMap,
-  //     normalMap: sunNormalMap,
-  //     size:0.2,
-  //     ref:sunRef,
-  //     position: [ 35,0,0]
-  //   },
-
-  //   {
-  //     map: mercuryMap,
-  //     ref:mercuryRef,
-  //     normalMap: mercuryNormalMap,
-  //     size:0.1,
-  //     position: [ 35,0,0]
-  //   },
-
-  // ] as {
-  //   size:number;
-  //   ref:any;
-  //   map: Texture;
-  //   position: Vector3;
-  //   normalMap: Texture;
-  // }[];
-
   const groupRef: any = useRef();
-
-  var r = 0.5;
-  var theta = 0;
-  var dTheta = (2 * Math.PI) / 1000;
 
   const orbitSpeed = {
     MERCURY: 0.622,
@@ -202,38 +185,43 @@ const Container: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
   };
 
   useFrame(() => {
-    theta += dTheta;
-    mercuryRef.current.rotation.x += 0.008;
-    mercuryRef.current.rotation.y += 0.008;
+    if (isSoundPaused) return;
+    mercuryRef.current.rotation.x += 0.0042 * soundIdx;
+    mercuryRef.current.rotation.y += 0.0042 * soundIdx;
 
-    venusRef.current.rotation.x += 0.01;
-    venusRef.current.rotation.y += 0.01;
+    venusRef.current.rotation.x += 0.0042 * soundIdx;
+    venusRef.current.rotation.y += 0.0042 * soundIdx;
 
-    sunRef.current.rotation.x += 0.004;
-    sunRef.current.rotation.y += 0.004;
+    sunRef.current.rotation.x += 0.0032 * soundIdx;
+    sunRef.current.rotation.y += 0.0032 * soundIdx;
 
-    earthRef.current.rotation.x += 0.004;
-    earthRef.current.rotation.y += 0.004;
+    earthRef.current.rotation.x += 0.0036 * soundIdx;
+    earthRef.current.rotation.y += 0.0036 * soundIdx;
 
-    marsRef.current.rotation.x += 0.004;
-    marsRef.current.rotation.y += 0.004;
-    marsRef.current.rotation.z += 0.004;
+    marsRef.current.rotation.x += 0.002 * soundIdx;
+    marsRef.current.rotation.y += 0.002 * soundIdx;
+    marsRef.current.rotation.z += 0.002 * soundIdx;
 
-    neptunRef.current.rotation.x += 0.02;
-    neptunRef.current.rotation.y += 0.02;
-    neptunRef.current.rotation.z += 0.02;
+    neptunRef.current.rotation.x += 0.012 * soundIdx;
+    neptunRef.current.rotation.y += 0.012 * soundIdx;
+    neptunRef.current.rotation.z += 0.012 * soundIdx;
 
-    jupiterRef.current.rotation.x += 0.003;
-    jupiterRef.current.rotation.y += 0.003;
-    jupiterRef.current.rotation.z += 0.003;
+    jupiterRef.current.rotation.x += 0.0016 * soundIdx;
+    jupiterRef.current.rotation.y += 0.0016 * soundIdx;
+    jupiterRef.current.rotation.z += 0.0016 * soundIdx;
 
-    saturnRef.current.rotation.x += 0.005;
-    saturnRef.current.rotation.y += 0.005;
-    saturnRef.current.rotation.z += 0.005;
+    saturnRef.current.rotation.x += 0.002 * soundIdx;
+    saturnRef.current.rotation.y += 0.002 * soundIdx;
+    saturnRef.current.rotation.z += 0.002 * soundIdx;
 
-    uranusRef.current.rotation.x += 0.01;
-    uranusRef.current.rotation.y += 0.01;
-    uranusRef.current.rotation.z += 0.01;
+    uranusRef.current.rotation.x += 0.06 * soundIdx;
+    uranusRef.current.rotation.y += 0.06 * soundIdx;
+    uranusRef.current.rotation.z += 0.06 * soundIdx;
+
+    moonRef.current.rotation.x += 0.008 * soundIdx;
+    moonRef.current.rotation.y += 0.008 * soundIdx;
+    moonRef.current.rotation.z += 0.008 * soundIdx;
+
     // mercuryRef.current.position.x = orbitSpeed.MERCURY * Math.cos(theta);
     // mercuryRef.current.position.z = -1.07 + r * Math.sin(theta);
 
@@ -287,6 +275,10 @@ const Container: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
     neptun: {
       X: 0.6,
       Y: 0.2
+    },
+    moon: {
+      X: -0.5,
+      Y: -0.2
     }
   };
 
@@ -316,19 +308,22 @@ const Container: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
     jupiterRef.current.position.y = (-1800 > t ? -5 : positions.jupiter.Y) - t * 0.0016;
     jupiterRef.current.position.z = (-1800 > t ? -2 : -1) - t * 0.0004;
 
-    saturnRef.current.position.x = positions.saturn.X - t * 0.001;
-    saturnRef.current.position.y = positions.saturn.Y - t * 0.0016;
-    saturnRef.current.position.z = -1 - t * 0.0004;
+    saturnRef.current.position.x = -3000 > t ?4 + t * 0.0012 : positions.saturn.X - t * 0.001;
+    saturnRef.current.position.y = -3000 > t ? -1.6 - t * 0.0004 : positions.saturn.Y - t * 0.0016;
+    saturnRef.current.position.z = -3000 > t ? -4 - t * 0.0008 : -1 - t * 0.0004;
 
     uranusRef.current.position.x = positions.uranus.X + t * 0.0006;
     uranusRef.current.position.y = positions.uranus.Y - t * 0.0014;
-    uranusRef.current.position.z = -1 - t * 0.0004;
+    uranusRef.current.position.z = -1.4 - t * 0.0002;
 
     neptunRef.current.position.y = positions.neptun.Y + t * 0.0006;
     neptunRef.current.position.z = -1 - t * 0.0004;
-
     // sunRef.current.rotation.x += 0.004;
     // sunRef.current.rotation.y += 0.004;
+
+    moonRef.current.position.x = -3200 > t ?3 + t * 0.0008 : positions.moon.X +  t * 0.0004
+    moonRef.current.position.y = -3200 > t ? 4.4 + t * 0.0012 : positions.moon.Y +  t * 0.0004
+    moonRef.current.position.z = -3200 > t ? -2 - t * 0.0004 : -1;
 
     // marsRef.current.position.y = 1 + t * 0.004;
   };
@@ -360,7 +355,7 @@ const Container: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
 
       <pointLight args={[0xcf3626, 0.2]} position={[0, 0.4, -2]} />
 
-      <mesh ref={sunRef} position={[positions.sun.X, positions.sun.Y, - 1]}>
+      <mesh ref={sunRef} position={[positions.sun.X, positions.sun.Y, -1]}>
         <sphereGeometry args={[0.16, 32, 16]} />
         <meshStandardMaterial map={sunMap} normalMap={sunNormalMap} />
       </mesh>
@@ -403,6 +398,10 @@ const Container: FC<{ dispatch: Dispatch<any> }> = ({ dispatch }) => {
       <mesh position={[positions.neptun.X, positions.neptun.Y, -1]} ref={neptunRef}>
         <sphereGeometry args={[0.036, 32, 16]} />
         <meshStandardMaterial map={neptunMap} normalMap={neptunNormalMap} />
+      </mesh>
+      <mesh position={[positions.moon.X, positions.moon.Y, -1]} ref={moonRef}>
+        <sphereGeometry args={[0.08, 32, 16]} />
+        <meshStandardMaterial map={moonMap} normalMap={moonNormalMap} />
       </mesh>
     </>
   );
