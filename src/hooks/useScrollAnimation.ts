@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useWindowScroll, useWindowSize } from 'react-use';
 import { toChangeCurrentSectionId } from 'store/modules/App/actions';
+import { sectionIds } from 'models/denotation';
 
 export const useScrollAnimation = (sectionArr: string[]) => {
   const [sectionRefs, setSectionRefs] = useState<HTMLDivElement[]>([]);
@@ -22,14 +23,15 @@ export const useScrollAnimation = (sectionArr: string[]) => {
   const { height } = useWindowSize();
 
   const elementToAnimate =
-    sectionRefs[0].getBoundingClientRect().top === 0
-      ? sectionRefs[0]
-      : sectionRefs.find(
+    // y === 0
+      // ? sectionRefs[0]
+      // :
+       sectionRefs.find(
           el => el.getBoundingClientRect().top < height - height / 4 && el.getBoundingClientRect().top > 0
         );
 
   useEffect(() => {
-    dispatch(toChangeCurrentSectionId({ currentSectionId: elementToAnimate?.id || '' }));
+    dispatch(toChangeCurrentSectionId({ currentSectionId:( elementToAnimate?.id) || (height > y ?  sectionIds.GREETING : '') }));
   }, [elementToAnimate]);
 
   useEffect(() => {
