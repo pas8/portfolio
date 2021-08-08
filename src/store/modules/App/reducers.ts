@@ -24,7 +24,8 @@ export const initialState: AppInitialStateType = {
   statuses: {
     isRandomColorChangingDisabled: false,
     isMain3dSceneHidden: false,
-    isLoading: !true
+    isLoading: !true,
+    isSoundPaused: false
   },
   currentSectionId: '',
   cursorColor: '#ecaf25',

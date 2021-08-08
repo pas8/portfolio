@@ -21,9 +21,12 @@ export const useScrollAnimation = (sectionArr: string[]) => {
   const { y } = useWindowScroll();
   const { height } = useWindowSize();
 
-  const elementToAnimate = sectionRefs.find(
-    el => el.getBoundingClientRect().top < height - height / 4 && el.getBoundingClientRect().top > 0
-  );
+  const elementToAnimate =
+    sectionRefs[0].getBoundingClientRect().top === 0
+      ? sectionRefs[0]
+      : sectionRefs.find(
+          el => el.getBoundingClientRect().top < height - height / 4 && el.getBoundingClientRect().top > 0
+        );
 
   useEffect(() => {
     dispatch(toChangeCurrentSectionId({ currentSectionId: elementToAnimate?.id || '' }));
@@ -31,6 +34,7 @@ export const useScrollAnimation = (sectionArr: string[]) => {
 
   useEffect(() => {
     if (!elementToAnimate) return;
+
     const n = elementToAnimate?.getBoundingClientRect()?.top;
     if (n < 0) return;
 

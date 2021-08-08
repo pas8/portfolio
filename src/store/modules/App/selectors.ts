@@ -41,7 +41,8 @@ export const getCurrentSectionId = createSelector(
   [(state: RootStoreType) => state.app.currentSectionId],
   currentSectionId => currentSectionId
 );
-export const getSoundIdx = createSelector(
-  [(state: RootStoreType) => state.app.soundIdx],
-  soundIdx => soundIdx
+export const getSoundIdx = createSelector([(state: RootStoreType) => state.app.soundIdx], soundIdx => soundIdx);
+export const getIsSoundPaused = createSelector(
+  [(state: RootStoreType) => state.app.statuses.isSoundPaused],
+  isSoundPaused => isSoundPaused
 );
