@@ -17,7 +17,7 @@ export default (req: any, res: any) => {
     subject: `Message From ${ req.body.name || req.body.email } `,
     text: req.body.title + req.body.message + ' | Sent from: ' + req.body.email,
   };
-console.log(mailData)
+console.log(mailData,PASSWORD)
   transporter.sendMail(mailData, (err: any) => {
     if (err) res.send('error',err);
   });
