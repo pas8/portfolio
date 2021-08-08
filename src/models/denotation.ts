@@ -8,13 +8,12 @@ export const sectionIds = {
   PROJECTS: 'projects',
   CONTACT: 'contact'
 };
-export const ANIMATE  = 'animate'
+export const ANIMATE = 'animate';
 
-export const pathsClassName  = {
-
-FIRST:'FIRST',
-SECONDARY:'SECONDARY',
-THIRD:'THIRD',
-FOUR:'FOUR',
-
-}
+export const pathsClassName = {
+  FIRST: 'FIRST',
+  SECOND: 'SECOND',
+  THIRD: 'THIRD',
+  FOUR: 'FOUR'
+};
+export const KEY_FRAMES_OF = 'keyFramesOf'

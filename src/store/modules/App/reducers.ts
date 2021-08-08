@@ -52,7 +52,7 @@ export const initialState: AppInitialStateType = {
     { href: '#Bem_', title: 'BEM' }
   ],
   loadingPercent: 0,
-  soundIdx: 2,
+  soundIdx: 1,
   textureMaps: {
     skillsTextureArr: [],
     avatar: null

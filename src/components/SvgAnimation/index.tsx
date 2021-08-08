@@ -1,52 +1,59 @@
-import clsx from 'clsx';
 import { FC } from 'react';
 import { Grid, makeStyles, Typography, ButtonBase, useTheme } from '@material-ui/core';
 import { SvgAnimationPropsType } from './types';
 import { useSelector } from 'react-redux';
 import { getCurrentSectionId, getIsSoundPaused, getSoundIdx } from 'store/modules/App/selectors';
 import { useSample } from 'hooks/useSample';
-import { ANIMATE } from 'models/denotation';
+import { ANIMATE, pathsClassName, KEY_FRAMES_OF } from 'models/denotation';
+import { useMapValues } from 'hooks/useMapValues';
 
 const useStyles = makeStyles(({ palette: { background, secondary, primary }, breakpoints }) => ({
   '@global': {
-    '@keyframes 1PathAnimation': {
+    [`@keyframes ${KEY_FRAMES_OF}_${pathsClassName.FIRST}_${ANIMATE}`]: {
       '0%': {
+        opacity: 0,
+        strokeDashoffset: 0
+      },
+      '4%': {
+        opacity: 1
+      },
+      '96%': {
+        opacity: 1
+      },
+      '100%': {
+        opacity: 0,
+        strokeDashoffset: 4000
+      }
+    },
+    [`@keyframes ${KEY_FRAMES_OF}_${pathsClassName.SECOND}_${ANIMATE}`]: {
+      '0%': {
+        strokeDashoffset: 0,
+        opacity: 1
+      },
+      '100%': {
         opacity: 1,
-        strokeDashoffset: 0
+        strokeDashoffset: 2000
+      }
+    },
+    [`@keyframes ${KEY_FRAMES_OF}_${pathsClassName.THIRD}_${ANIMATE}`]: {
+      '0%': {
+        strokeDashoffset: 0,
+        opacity: 1
       },
-      // '4%': {
-      //   opacity: 1
-      // },
-      // '96%': {
-      //   opacity: 1
-      // },
       '100%': {
         opacity: 1,
-        strokeDashoffset: 420
+        strokeDashoffset: 3200
       }
     },
-    '@keyframes 2PathAnimation': {
+
+    [`@keyframes ${KEY_FRAMES_OF}_${pathsClassName.FOUR}_${ANIMATE}`]: {
       '0%': {
-        strokeDashoffset: 0
+        strokeDashoffset: 0,
+        opacity: 1
       },
       '100%': {
-        strokeDashoffset: 800
-      }
-    },
-    '@keyframes 3PathAnimation': {
-      '0%': {
-        strokeDashoffset: 0
-      },
-      '100%': {
-        strokeDashoffset: 1600
-      }
-    },
-    '@keyframes 4PathAnimation': {
-      '0%': {
-        strokeDashoffset: 0
-      },
-      '100%': {
-        strokeDashoffset: 2400
+        opacity: 1,
+        strokeDashoffset: 3000
       }
     }
   },
@@ -55,52 +62,52 @@ const useStyles = makeStyles(({ palette: { background, secondary, primary }, bre
     const styles = {
       '& path': {
         fill: 'none'
+        // strokeLinecap: 'round'
+      },
+      '& .NOT_ACTIVE': {
+        opacity: 0.42
       },
       '&:hover': {
         animation: 'racket 1s '
 
         // transform:'scaleY(0.4)'
       },
-      '& .red': {
-        strokeDasharray: 420
-      },
-      '& .1animate': {
-        fill: 'red',
-        animation: '1PathAnimation 8s infinite'
-      },
-      '& .2': {
-        strokeDasharray: 800
-      },
 
-      [`& .2${ANIMATE}`]: {
-        animation: '2PathAnimation 8s infinite'
+      [`& .${pathsClassName.FIRST}`]: {
+        strokeDasharray: 4000
       },
-
-      '& .3': {
-        strokeDasharray: 1600
+      [`& .${pathsClassName.FIRST}_${ANIMATE}`]: {
+        animation: `${KEY_FRAMES_OF}_${pathsClassName.FIRST}_${ANIMATE} 8s infinite`
       },
-
-      [`& .3${ANIMATE}`]: {
-        animation: '3PathAnimation 8s infinite'
+      [`& .${pathsClassName.SECOND}`]: {
+        strokeDasharray: 2000
       },
-
-      '& .4': {
-        strokeDasharray: 2400
+      [`& .${pathsClassName.SECOND}_${ANIMATE}`]: {
+        animation: `${KEY_FRAMES_OF}_${pathsClassName.SECOND}_${ANIMATE} 8s infinite 4s `
       },
-      [`& .4${ANIMATE}`]: {
-        animation: '4PathAnimation 8s infinite'
+      [`& .${pathsClassName.THIRD}`]: {
+        strokeDasharray: 1800
+      },
+      [`& .${pathsClassName.THIRD}_${ANIMATE}`]: {
+        animation: `${KEY_FRAMES_OF}_${pathsClassName.THIRD}_${ANIMATE} 8s infinite 6s `
+      },
+      [`& .${pathsClassName.FOUR}`]: {
+        strokeDasharray: 1500
+      },
+      [`& .${pathsClassName.THIRD}_${ANIMATE}`]: {
+        animation: `${KEY_FRAMES_OF}_${pathsClassName.FOUR}_${ANIMATE} 8s infinite 8s `
       }
     };
     return styles;
   }
 }));
 
-const SvgAnimation: FC<SvgAnimationPropsType> = ({ className, id, viewBox, pathsArr }) => {
+const SvgAnimation: FC<SvgAnimationPropsType> = ({ className, id, viewBox, pathsArr, children }) => {
   const { palette } = useTheme();
   const soundIdx = useSelector(getSoundIdx);
   const currentSectionId = useSelector(getCurrentSectionId);
   const isSoundPaused = useSelector(getIsSoundPaused);
-
+  // console.log(currentSectionId)
   const { svgContainer } = useStyles();
 
   const colorsArr = [
@@ -120,6 +127,13 @@ const SvgAnimation: FC<SvgAnimationPropsType> = ({ className, id, viewBox, paths
     palette.primary.main
   ];
 
+  const pathsClassNameArr = Object.values(pathsClassName);
+
+  //   const [sampledColorsArr,setSampledColorsArr] = useState(colorsArr)
+  // useEffect(()=>{
+
+  // },[])
+
   return (
     <Grid container className={className}>
       <svg xmlns={'http://www.w3.org/2000/svg'} viewBox={viewBox} className={svgContainer}>
@@ -128,16 +142,18 @@ const SvgAnimation: FC<SvgAnimationPropsType> = ({ className, id, viewBox, paths
             const idx = index + 1;
             const key = `${id}-${idx}-${dIdx}`;
             const stroke = useSample(colorsArr);
-            const className = `red ${
-              idx > soundIdx || id !== currentSectionId || isSoundPaused ? '' : idx + ANIMATE
+            const className = `${pathsClassNameArr[index]} ${
+              idx > soundIdx || id !== currentSectionId || isSoundPaused
+                ? 'NOT_ACTIVE'
+                : `${pathsClassNameArr[index]}_${ANIMATE}`
             }`;
 
             const pathProps = { key, d, stroke, className };
-            console.log(pathProps, idx, soundIdx, id, currentSectionId, isSoundPaused);
             return <path {...pathProps}> </path>;
           })
         )}
       </svg>
+      {children}
     </Grid>
   );
 };
