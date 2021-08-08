@@ -86,7 +86,7 @@ const WhoIAm: FC = () => {
     'https://www.canva.com/design/DAElBAtPJsU/e1h5ij6rvoMIkN4dNWIrkA/view?utm_content=DAElBAtPJsU&utm_campaign=designshare&utm_medium=link&utm_source=sharebutton';
 
   const text =
-    'I am Anatolii Ponocheniuk,self educated by realizing studying projects and also acquire new info by reading  official documentations. And about my soft skills, I improved them in mba school and gdansk business week of course all communication was an english. Exactly want evolve as react-ts developer and of course be fond of coding and right react with typescript. So, I have default hobbies. Certainly motivated enough to work in new company.';
+    'I am Anatolii Ponocheniuk, self-educated by realizing studying projects and also acquire new info by reading the official documentation. And about my soft skills, I improved them in MBA school and Gdansk business week of course all communication was English. Exactly want to evolve as a react-ts developer and of course be fond of coding and right react with typescript. So, I have default hobbies. Certainly motivated enough to work in a new company.';
   const id = sectionIds.WHO_I_AM;
 
   return (

@@ -29,7 +29,7 @@ export type PayloadTypes = {
   };
 
   [TypeNames.HANDLE_CHANGE_SPHERE_CURSOR_TITLE]: {
-    soundIdx: number;
+    sphereCursorTitle: string;
   };
   
 };

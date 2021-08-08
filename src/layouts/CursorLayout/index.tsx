@@ -2,11 +2,11 @@ import { makeStyles, Grid, Typography } from '@material-ui/core';
 import { createContext, FC, useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';
-import { getCursorColor ,getSphereCursorTitle} from 'store/modules/App/selectors';
 import { useWindowSize } from 'react-use';
 import { useState } from 'react';
 import { MouseEventHandler } from 'react';
 import { useAnimateCursor } from 'hooks/useAnimateCursor.hook';
+import { getCursorColor ,getSphereCursorTitle} from 'store/modules/App/selectors';
 import { HIDDEN, ACTIVE_CURSOR } from 'models/denotation';
 import { useMapKeys } from 'hooks/useMapKeys.hook';
 
@@ -24,24 +24,6 @@ const useStyles = makeStyles(({ palette: { background, primary, secondary } }) =
         transform: 'rotate(1turn)'
       }
     },
-
-    // '@keyframes cursorActiveAnimation': {
-    //   ...Object.entries(Array(8).fill('%')).reduce((acc, [key, value]: any) => {
-    //     const DEFAULR_VALUE = (key * (100 / 8));
-
-    //     const PERCENT = DEFAULR_VALUE + value;
-    //     const PERCENT_NEXT = DEFAULR_VALUE * 2 + value;
-    //     return {
-    //       ...acc,
-    //       [PERCENT]: {
-    //         backgroundPosition: `${PERCENT} 0`
-    //       },
-    //       [`${PERCENT + 0.01}%`]: {
-    //         backgroundPosition: `${PERCENT_NEXT} 0`
-    //       }
-    //     };
-    //   }, {})
-    // },
 
     [`.${HIDDEN}`]: {
       display: 'none !important'
