@@ -26,6 +26,7 @@ export const initialState: AppInitialStateType = {
     isMain3dSceneHidden: false,
     isLoading: !true
   },
+  currentSectionId: '',
   cursorColor: '#ecaf25',
   skills: [
     { href: '#git_', title: 'Git' },
@@ -50,6 +51,7 @@ export const initialState: AppInitialStateType = {
     { href: '#Bem_', title: 'BEM' }
   ],
   loadingPercent: 0,
+  soundIdx: 2,
   textureMaps: {
     skillsTextureArr: [],
     avatar: null
@@ -75,6 +77,8 @@ export const AppReducer = (state = initialState, action: AppActionTypes): AppIni
     }
 
     case TypeNames.HANDLE_CHANGE_CURSOR_COLOR:
+    case TypeNames.HANDLE_CHANGE_CURRENT_SECTION_ID:
+    case TypeNames.HANDLE_CHANGE_SOUND_IDX:
     case TypeNames.HANDLE_CHANGE_TEXTURE_MAPS: {
       return { ...state, ...action.payload };
     }
