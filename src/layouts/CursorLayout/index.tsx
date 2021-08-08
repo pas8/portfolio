@@ -2,7 +2,7 @@ import { makeStyles, Grid, Typography } from '@material-ui/core';
 import { createContext, FC, useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';
-import { getCursorColor } from 'store/modules/App/selectors';
+import { getCursorColor ,getSphereCursorTitle} from 'store/modules/App/selectors';
 import { useWindowSize } from 'react-use';
 import { useState } from 'react';
 import { MouseEventHandler } from 'react';
@@ -57,7 +57,6 @@ const useStyles = makeStyles(({ palette: { background, primary, secondary } }) =
         marginTop: -40,
         marginLeft: -40,
         display: 'flex !important',
-        backgroundImage: 'url(https://about.mav.farm/sprites/cursor-sphere-sprite.png)',
         backgroundRepeat: 'no-repeat',
         backgroundSize: '6100% 100%'
         // animation: 'cursorActiveAnimation 10s infinite'
@@ -95,6 +94,8 @@ const CursorLayout: FC = ({ children }) => {
   const [number, setNumber] = useState(0);
 
   const cursorColor = useSelector(getCursorColor);
+  const sphereCursorTitle = useSelector(getSphereCursorTitle);
+  
   const { cursorDotOutlinedContainer, cursorDotContainer, dotContainer } = useStyles();
 
   const dot = useRef<HTMLDivElement>(null)!;
@@ -127,9 +128,9 @@ const CursorLayout: FC = ({ children }) => {
         </Grid>
       </Grid>
       <Grid ref={dot} className={clsx(cursorDotContainer, dotContainer)}>
-        <Grid className={'content'} style={{ backgroundPosition: `${number}% 0` }} justifyContent={'center'} alignItems={'center'} container>
+        <Grid className={'content sphereBackground'} style={{ backgroundPosition: `${number}% 0` }} justifyContent={'center'} alignItems={'center'} container>
           <Typography variant={'button'} color={'textPrimary'}>
-            Open
+            {sphereCursorTitle}
           </Typography>
         </Grid>
       </Grid>

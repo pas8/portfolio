@@ -46,7 +46,7 @@ const SkillBoxesContainer: FC<{ textureArr: any[] }> = ({ textureArr }) => (
 
 const InstancedSpheres: FC<{ map: Texture }> = ({ map }) => {
   const [ref] = useSphere(index => ({
-    mass: 1,
+    mass: 2,
     position: [Math.random() - 0.5, Math.random() - 0.5, index * 2],
     args: 1
   }));
