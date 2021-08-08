@@ -133,7 +133,7 @@ const SvgAnimation: FC<SvgAnimationPropsType> = ({ className, id, viewBox, paths
   // useEffect(()=>{
 
   // },[])
-
+console.log(  currentSectionId )
   return (
     <Grid container className={className}>
       <svg xmlns={'http://www.w3.org/2000/svg'} viewBox={viewBox} className={svgContainer}>
