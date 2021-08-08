@@ -14,9 +14,9 @@ const transporter = nodemailer.createTransport({
     secure: true,
 });
 
-await new Promise((resolve, reject) => {
+await new Promise((resolve:any, reject:any) => {
     // verify connection configuration
-    transporter.verify(function (error, success) {
+    transporter.verify(function (error:any, success:any) {
         if (error) {
             console.log(error);
             reject(error);
@@ -34,9 +34,9 @@ await new Promise((resolve, reject) => {
     text: req.body.title + req.body.message + ' | Sent from: ' + req.body.email,
   };
 
-await new Promise((resolve, reject) => {
+await new Promise((resolve:any, reject:any) => {
     // send mail
-    transporter.sendMail(mailData, (err, info) => {
+    transporter.sendMail(mailData, (err:any, info:any) => {
         if (err) {
             console.error(err);
             reject(err);
