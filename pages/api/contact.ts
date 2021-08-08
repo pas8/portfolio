@@ -19,7 +19,7 @@ export default (req: any, res: any) => {
   };
 
   transporter.sendMail(mailData, (err: any) => {
-    if (err) res.send('error');
+    if (err) res.send('error',err);
   });
   res.send('success');
 };

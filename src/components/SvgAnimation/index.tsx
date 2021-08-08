@@ -22,7 +22,7 @@ const useStyles = makeStyles(({ palette: { background, secondary, primary }, bre
       },
       '100%': {
         opacity: 0,
-        strokeDashoffset: 4000
+        strokeDashoffset: 2000
       }
     },
     [`@keyframes ${KEY_FRAMES_OF}_${pathsClassName.SECOND}_${ANIMATE}`]: {
@@ -32,33 +32,35 @@ const useStyles = makeStyles(({ palette: { background, secondary, primary }, bre
       },
       '100%': {
         opacity: 1,
-        strokeDashoffset: 2000
+        strokeDashoffset: 4000
       }
     },
     [`@keyframes ${KEY_FRAMES_OF}_${pathsClassName.THIRD}_${ANIMATE}`]: {
       '0%': {
-        strokeDashoffset: 0,
+        strokeDashoffset: 6000
+,
         opacity: 1
       },
       '100%': {
+        strokeDashoffset: 0,
         opacity: 1,
-        strokeDashoffset: 3200
       }
     },
 
     [`@keyframes ${KEY_FRAMES_OF}_${pathsClassName.FOUR}_${ANIMATE}`]: {
       '0%': {
-        strokeDashoffset: 0,
+        strokeDashoffset: 8000,
+
         opacity: 1
       },
       '100%': {
+        strokeDashoffset: 0,
         opacity: 1,
-        strokeDashoffset: 3000
       }
     }
   },
 
-  svgContainer: () => {
+  svgContainer: ({soundIdx}:{soundIdx:number}) => {
     const styles = {
       '& path': {
         fill: 'none'
@@ -71,28 +73,28 @@ const useStyles = makeStyles(({ palette: { background, secondary, primary }, bre
       },
 
       [`& .${pathsClassName.FIRST}`]: {
-        strokeDasharray: 4000
+          strokeDasharray: 2000
       },
       [`& .${pathsClassName.FIRST}_${ANIMATE}`]: {
-        animation: `${KEY_FRAMES_OF}_${pathsClassName.FIRST}_${ANIMATE} 8s infinite`
+        animation: `${KEY_FRAMES_OF}_${pathsClassName.FIRST}_${ANIMATE} ${8 / soundIdx}s infinite`
       },
       [`& .${pathsClassName.SECOND}`]: {
-        strokeDasharray: 2000
+        strokeDasharray: 4000
       },
       [`& .${pathsClassName.SECOND}_${ANIMATE}`]: {
-        animation: `${KEY_FRAMES_OF}_${pathsClassName.SECOND}_${ANIMATE} 8s infinite 4s `
+        animation: `${KEY_FRAMES_OF}_${pathsClassName.SECOND}_${ANIMATE} ${8 / soundIdx}s infinite `
       },
       [`& .${pathsClassName.THIRD}`]: {
-        strokeDasharray: 1800
+        strokeDasharray: 3200
       },
       [`& .${pathsClassName.THIRD}_${ANIMATE}`]: {
-        animation: `${KEY_FRAMES_OF}_${pathsClassName.THIRD}_${ANIMATE} 8s infinite 6s `
+        animation: `${KEY_FRAMES_OF}_${pathsClassName.THIRD}_${ANIMATE} ${8 / soundIdx}s infinite  `
       },
       [`& .${pathsClassName.FOUR}`]: {
-        strokeDasharray: 1500
+        strokeDasharray: 1600
       },
-      [`& .${pathsClassName.THIRD}_${ANIMATE}`]: {
-        animation: `${KEY_FRAMES_OF}_${pathsClassName.FOUR}_${ANIMATE} 8s infinite 8s `
+      [`& .${pathsClassName.FOUR}_${ANIMATE}`]: {
+        animation: `${KEY_FRAMES_OF}_${pathsClassName.FOUR}_${ANIMATE} ${8 / soundIdx}s infinite  `
       }
     };
     return styles;
@@ -104,7 +106,7 @@ const SvgAnimation: FC<SvgAnimationPropsType> = ({ className, id, viewBox, paths
   const soundIdx = useSelector(getSoundIdx);
   const currentSectionId = useSelector(getCurrentSectionId);
   const isSoundPaused = useSelector(getIsSoundPaused);
-  const { svgContainer } = useStyles();
+  const { svgContainer } = useStyles({soundIdx});
 
   const colorsArr = [
     'rgb(49, 191, 186)',

@@ -18,11 +18,10 @@ import { FC, useState, Fragment } from 'react';
 import { useRouter } from 'next/dist/client/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentSectionId, getIsSoundPaused, getSoundIdx } from 'store/modules/App/selectors';
-import { useStyles } from 'components/Main/components/Greeting';
-import CursorButton from 'components/CursorButton';
+import { CursorContext } from 'layouts/CursorLayout';
 import VideoButton from 'components/VideoButton';
 import { sectionIds } from 'models/denotation';
-import { toChangeSoundIdx, toChangeStatuses } from 'store/modules/App/actions';
+import { toChangeSoundIdx, toChangeSphereCursorTitle, toChangeStatuses } from 'store/modules/App/actions';
 
 const useLocalStyles = makeStyles(
   ({ palette: { background, secondary, text, primary }, breakpoints, shape: { borderRadius } }) => ({
@@ -59,9 +58,25 @@ const useLocalStyles = makeStyles(
         paddingBottom: 42
       },
       '& .logoContainer': {
+        useSelect: 'none',
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
+        '& .logoContentContainer':{
+position:'relative',
+'& .cursorWrapper':{
+  position:'absolute',
+  inset:0
+
+
+
+}
+
+        },
+        '& h6':{
+
+marginTop:-8,
+        },
         '& h6,p': {
           width: '100%'
         },
@@ -152,6 +167,8 @@ const NavLayout: FC<WithWidthProps> = ({ children, width }) => {
   };
 
   const handleChangeSoundPauseStatus = () => {
+    dispatch(toChangeSphereCursorTitle({sphereCursorTitle:!isSoundPased ? 'Play' : 'Pause'}))
+
     dispatch(toChangeStatuses({ newStatuses: { isSoundPaused: !isSoundPased } }));
   };
 
@@ -181,26 +198,51 @@ const NavLayout: FC<WithWidthProps> = ({ children, width }) => {
           alignItems={'center'}
         >
           <Grid container className={'logoContainer'}>
-            <SvgAnimation
-              id={id}
-              pathsArr={Array(4).fill(path)}
-              viewBox={'0 0 600 800'}
-              className={'svgContainer'}
-              onClick={handleChangeSoundPauseStatus}
-            >
-              <Grid container>
-                <Typography className={'pasCaption'} variant={'h6'}>
-                  PAS
-                </Typography>
-                <Typography className={'webDevelopSmallCaption'} variant={'body2'}>
-                  Web Developer
-                </Typography>
-              </Grid>
-             
-            </SvgAnimation>
-            <Box  my={1} width={96}>
-                <Slider value={soundIdx} onChange={handleChangeSoundIdx} step={1} min={1} max={4} />{' '}
-              </Box>
+           
+                <Grid container alignItems={'center'} justifyContent={'center'} className={'logoContentContainer'}
+               
+              
+                >
+                  <>
+                    <CursorContext.Consumer>
+                 {({ mouseOutEvent, mouseOverEvent }) => (
+                   <Grid
+                   className={'cursorWrapper'}
+                   onClick={handleChangeSoundPauseStatus}
+
+                     onMouseOver={() => {
+                  dispatch(toChangeSphereCursorTitle({sphereCursorTitle:isSoundPased ? 'Play' : 'Pause'}))
+                  mouseOverEvent();
+                }}
+                onMouseOut={() => {
+                  dispatch(toChangeSphereCursorTitle({sphereCursorTitle:'Open'}))
+                  mouseOutEvent();
+                }}
+                   />
+                )}
+                </CursorContext.Consumer>
+                  <SvgAnimation
+                    id={id}
+                    pathsArr={Array(4).fill(path)}
+                    viewBox={'0 0 600 800'}
+                    className={'svgContainer'}
+                   
+                  >
+                    <Grid container>
+                      <Typography className={'pasCaption'} variant={'h6'}>
+                        PAS
+                      </Typography>
+                      <Typography className={'webDevelopSmallCaption'} variant={'body2'}>
+                        Web Developer
+                      </Typography>
+                    </Grid>
+                  </SvgAnimation>
+                  </>
+                </Grid>
+           
+            <Box my={1} width={96}>
+              <Slider value={soundIdx} onChange={handleChangeSoundIdx} step={1} min={1} max={4} />{' '}
+            </Box>
           </Grid>
           <Grid className={'hrefsContainer'} container justifyContent={'center'} alignItems={'center'}>
             <Grid container>
