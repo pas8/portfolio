@@ -1,3 +1,4 @@
+import { colord } from 'colord';
 import { TypeNames } from './enums';
 import { AppActionTypes, AppInitialStateType } from './types';
 
@@ -5,6 +6,9 @@ export const initialState: AppInitialStateType = {
   themePropertyies: {
     shape: { borderRadius: 8 },
     palette: {
+      common: {
+        black: colord('#252429').alpha(0.8).toHex()
+      },
       success: { main: '#4caf50' },
       type: 'dark',
 

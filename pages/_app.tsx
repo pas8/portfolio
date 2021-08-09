@@ -9,7 +9,7 @@ const ColorLayout = dynamic(() => import('../src/layouts/ColorLayout'));
 const ThemeLayout = dynamic(() => import('../src/layouts/ThemeLayout'));
 const SoundLayout = dynamic(() => import('../src/layouts/SoundLayout'), { ssr: false });
 const SceneLayout = dynamic(() => import('../src/layouts/SceneLayout'));
-const TipsLayout = dynamic(() => import('../src/layouts/TipsLayout'));
+const TipsLayout = dynamic(() => import('../src/layouts/TipsLayout'), { ssr: false });
 
 const SnackBarLayout = dynamic(() => import('../src/layouts/SnackBarLayout'));
 const NavLayout = dynamic(() => import('../src/layouts/NavLayout'));
@@ -30,6 +30,8 @@ const Index: FC<AppProps> = ({ Component, pageProps }) => {
     ScrollLayout,
     ColorLayout,
     SnackBarLayout,
+    TipsLayout,
+
     NavLayout
   ];
 

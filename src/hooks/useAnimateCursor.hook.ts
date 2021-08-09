@@ -44,7 +44,7 @@ export const useAnimateCursor = ({ dot, dotOutline }: { [Property in 'dot' | 'do
       return cursorVisible.current = false
     }
    
-    dot.current.style.transform ='scale(2.42)'
+    dot.current.style.transform ='scale(1.42)'
     dotOutline.current.style.opacity = 0;
     return cursorVisible.current = true
 

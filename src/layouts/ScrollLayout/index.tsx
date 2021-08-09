@@ -2,7 +2,6 @@ import { makeStyles } from '@material-ui/core';
 import { useScrollAnimation } from 'hooks/useScrollAnimation';
 import { sectionIds } from 'models/denotation';
 import { FC } from 'react';
-import { isMobile } from 'react-device-detect';
 
 const useLocalStyles = makeStyles(
   ({ palette: { background, secondary, primary, text }, breakpoints, shape: { borderRadius } }) => ({
@@ -27,8 +26,6 @@ const useLocalStyles = makeStyles(
 
 const ScrollLayout: FC = ({ children }) => {
   useLocalStyles();
-  if (isMobile) return <>{children}</>;
-
   useScrollAnimation(Object.values(sectionIds));
 
   return <>{children}</>;
