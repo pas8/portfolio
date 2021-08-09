@@ -197,7 +197,7 @@ const {width:windowWidth} = useWindowSize()
   useEffect(() => {
     if (isLastStep)
       setTimeout(() => {
-        // onClose();
+        onClose();
       }, 8000);
   }, [isLastStep]);
   if (!tipsElementArr.length || isMobile) {
