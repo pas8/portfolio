@@ -6,6 +6,7 @@ import { getCurrentSectionId, getIsSoundPaused, getSoundIdx } from 'store/module
 import { useSample } from 'hooks/useSample';
 import { ANIMATE, pathsClassName, KEY_FRAMES_OF } from 'models/denotation';
 import { useMapValues } from 'hooks/useMapValues';
+import { useGetColorsArr } from 'hooks/useGetColorsArr.hook';
 
 const useStyles = makeStyles(({ palette: { background, secondary, primary }, breakpoints }) => ({
   '@global': {
@@ -62,13 +63,12 @@ const useStyles = makeStyles(({ palette: { background, secondary, primary }, bre
     },
     [`@keyframes ${KEY_FRAMES_OF}_${pathsClassName.THIRD}_${ANIMATE}`]: {
       '0%': {
-        strokeDashoffset: 6000
-,
+        strokeDashoffset: 6000,
         opacity: 1
       },
       '100%': {
         strokeDashoffset: 0,
-        opacity: 1,
+        opacity: 1
       }
     },
 
@@ -80,12 +80,12 @@ const useStyles = makeStyles(({ palette: { background, secondary, primary }, bre
       },
       '100%': {
         strokeDashoffset: 0,
-        opacity: 1,
+        opacity: 1
       }
     }
   },
 
-  svgContainer: ({soundIdx}:{soundIdx:number}) => {
+  svgContainer: ({ soundIdx }: { soundIdx: number }) => {
     const styles = {
       '& path': {
         fill: 'none'
@@ -98,7 +98,7 @@ const useStyles = makeStyles(({ palette: { background, secondary, primary }, bre
       // },
 
       [`& .${pathsClassName.FIRST}`]: {
-          strokeDasharray: 2000
+        strokeDasharray: 2000
       },
       [`& .${pathsClassName.FIRST}_${ANIMATE}`]: {
         animation: `${KEY_FRAMES_OF}_${pathsClassName.FIRST}_${ANIMATE} ${8 / soundIdx}s infinite`
@@ -126,29 +126,12 @@ const useStyles = makeStyles(({ palette: { background, secondary, primary }, bre
   }
 }));
 
-const SvgAnimation: FC<SvgAnimationPropsType> = ({ className, id, viewBox, pathsArr, onClick,children ,svgId}) => {
-  const { palette } = useTheme();
+const SvgAnimation: FC<SvgAnimationPropsType> = ({ className, id, viewBox, pathsArr, onClick, children, svgId }) => {
   const soundIdx = useSelector(getSoundIdx);
   const currentSectionId = useSelector(getCurrentSectionId);
   const isSoundPaused = useSelector(getIsSoundPaused);
-  const { svgContainer } = useStyles({soundIdx});
-
-  const colorsArr = [
-    'rgb(49, 191, 186)',
-    'rgb( 246, 9, 149)',
-    'rgb(88, 40, 215)',
-    'rgb(254, 219, 59)',
-    'rgb(202, 02, 02)',
-    'rgb(64, 179, 199)',
-    'rgb(6, 220, 69)',
-    'rgb(164, 9, 259)',
-    'rgb(244, 17, 103)',
-    'rgb(106, 9, 249)',
-    'rgb(54, 229, 159)',
-    'rgb(26, 149, 219)',
-    palette.secondary.main,
-    palette.primary.main
-  ];
+  const { svgContainer } = useStyles({ soundIdx });
+  const colorsArr  = useGetColorsArr();
 
   const pathsClassNameArr = Object.values(pathsClassName);
 

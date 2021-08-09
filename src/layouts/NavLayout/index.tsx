@@ -94,9 +94,7 @@ const useLocalStyles = makeStyles(
           textAlign: 'center',
           color: text.secondary
         },
-        '& path': {
-          strokeWidth: '6px'
-        }
+      
       },
 
       '& .hrefsContainer': {
@@ -161,7 +159,6 @@ const NavLayout: FC<WithWidthProps> = ({ children, width }) => {
     dispatch(toChangeStatuses({ newStatuses: { isSoundPaused: !isSoundPaused } }));
   };
 
-  console.log();
   return (
     <Grid className={container}>
       <Grid className={menuButton}>
@@ -253,6 +250,17 @@ const NavLayout: FC<WithWidthProps> = ({ children, width }) => {
                   onMouseOver={() => handleToggleCursorVisibility(true)}
                   onMouseOut={() => handleToggleCursorVisibility(false)}
                 >
+ <MenuItem
+                        onClick={() => {
+                          setMenuOpen(false)
+    dispatch(toChangeStatuses({ newStatuses: { isTipsLayoutHidden: false } }));
+                       
+                        }}
+                        className={'item'}
+                      >
+                        <p> {'Instruction'}</p>
+                      </MenuItem>
+
                   {hrefsArr.map(({ href, title }, idx) => {
                     return (
                       <MenuItem
@@ -266,6 +274,7 @@ const NavLayout: FC<WithWidthProps> = ({ children, width }) => {
                         <p> {title}</p>
                       </MenuItem>
                     );
+
                   })}
                 </Grid>
               )}

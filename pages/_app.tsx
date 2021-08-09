@@ -25,7 +25,7 @@ const Index: FC<AppProps> = ({ Component, pageProps }) => {
     ThemeLayout,
     SceneLayout,
     CursorLayout,
-    // LoadingLayout,
+    LoadingLayout,
     SoundLayout,
     ScrollLayout,
     ColorLayout,
