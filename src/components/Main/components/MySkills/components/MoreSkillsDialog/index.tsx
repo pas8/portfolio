@@ -1,13 +1,12 @@
-import { Dialog, DialogProps, useMediaQuery, useTheme, SvgIcon, makeStyles, Grid } from '@material-ui/core';
+import { Dialog, DialogProps, useMediaQuery, useTheme } from '@material-ui/core';
 import * as THREE from 'three';
 import { Suspense, FC } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Physics, useBox, usePlane, useSphere } from '@react-three/cannon';
-import { useTexture } from '@react-three/drei';
 import { Texture } from 'three';
-
-import VideoButton from 'components/VideoButton';
 import { useSelector } from 'react-redux';
+
+import CloseVideoButton from 'components/CloseVideoButton';
 import { getAvatarMap, getSkillsTextureArr } from 'store/modules/App/selectors';
 
 const Plane: FC<any> = ({ color, ...props }) => {
@@ -60,38 +59,14 @@ const InstancedSpheres: FC<{ map: Texture }> = ({ map }) => {
   );
 };
 
-const useStyles = makeStyles(({ palette: { background, secondary, primary }, breakpoints }) => ({
-  closeButton: {
-    position: 'absolute',
-    top: 8,
-    right: 8,
-    zIndex: 1000000000000000,
-    '& button': {
-      width: 42,
-      height: 42
-    }
-  }
-}));
-
 const MoreSkillsDialog: FC<DialogProps> = ({ open, onClose }) => {
   const { breakpoints } = useTheme();
   const fullScreen = useMediaQuery(breakpoints.down('md'));
-  const { closeButton } = useStyles();
   const textureArr = useSelector(getSkillsTextureArr);
   const avaMap = useSelector(getAvatarMap);
   return (
     <Dialog fullScreen={fullScreen} fullWidth maxWidth={'lg'} open={open} onClose={onClose}>
-      <Grid className={closeButton}>
-        <VideoButton onClick={onClose}>
-          <SvgIcon viewBox={'0 0 24 24'}>
-            <path
-              d={
-                'M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z'
-              }
-            />
-          </SvgIcon>
-        </VideoButton>
-      </Grid>
+      <CloseVideoButton onClose={onClose} />
       <Canvas
         gl={{ alpha: false }}
         camera={{ position: [0, -8, 16] }}
@@ -116,7 +91,7 @@ const MoreSkillsDialog: FC<DialogProps> = ({ open, onClose }) => {
             <Plane color={'hsl(260,20%,16%)'} position={[6, 0, 0]} rotation={[0, -0.9, 0]} />
             <Plane color={'hsl(200,20%,16%)'} position={[0, 6, 0]} rotation={[0.9, 0, 0]} />
             <Plane color={'hsl(300,20%,16%)'} position={[0, -6, 0]} rotation={[-0.9, 0, 0]} />
-            <Box avaMap={avaMap}/>
+            <Box avaMap={avaMap} />
 
             <SkillBoxesContainer textureArr={textureArr} />
           </Physics>
