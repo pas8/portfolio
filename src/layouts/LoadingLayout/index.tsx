@@ -67,7 +67,6 @@ const useLocalStyles = makeStyles(
 );
 const LoadingLayout: FC = ({ children }) => {
   extend([mixPlugin]);
-
   const { container } = useLocalStyles();
   const [isAllWasLoaded, setIsAllWasLoaded] = useState(false);
   const [isAwaited, setIsAwaited] = useState(false);
@@ -88,6 +87,7 @@ const LoadingLayout: FC = ({ children }) => {
 
   useEffect(() => {
     if (!isAwaited) return;
+    
     setTimeout(() => {
       setIsLoadingLayoutShoulBeHidden(true);
       setTimeout(() => {
