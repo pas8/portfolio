@@ -9,3 +9,5 @@ export type RootStoreType = {
 export type HandleAddTipElementType = (param: { title: string; element: any; id: string }) => void;
 
 export type FCCloseVideoButtonType = FC<{ onClose: DialogProps['onClose'] | any }>;
+
+export type AngleType = 'left' | 'bottom';
