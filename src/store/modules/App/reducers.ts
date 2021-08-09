@@ -1,3 +1,4 @@
+import { colord } from 'colord';
 import { TypeNames } from './enums';
 import { AppActionTypes, AppInitialStateType } from './types';
 
@@ -5,6 +6,9 @@ export const initialState: AppInitialStateType = {
   themePropertyies: {
     shape: { borderRadius: 8 },
     palette: {
+      common: {
+        black: colord('#252429').alpha(0.8).toHex()
+      },
       success: { main: '#4caf50' },
       type: 'dark',
 
@@ -25,6 +29,7 @@ export const initialState: AppInitialStateType = {
     isRandomColorChangingDisabled: false,
     isMain3dSceneHidden: false,
     isLoading: false,
+    isTipsLayoutHidden: false,
     isSoundPaused: !false
   },
   currentSectionId: '',
@@ -51,7 +56,7 @@ export const initialState: AppInitialStateType = {
     { href: '#Three_js_', title: 'Three_js' },
     { href: '#Bem_', title: 'BEM' }
   ],
-  sphereCursorTitle:'Open',
+  sphereCursorTitle: 'Open',
   loadingPercent: 0,
   soundIdx: 1,
   textureMaps: {
@@ -87,8 +92,6 @@ export const AppReducer = (state = initialState, action: AppActionTypes): AppIni
     }
 
     default:
-      //@ts-ignore
-      const x: never = action;
+      return state;
   }
-  return state;
 };

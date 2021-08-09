@@ -6,9 +6,35 @@ import { getCurrentSectionId, getIsSoundPaused, getSoundIdx } from 'store/module
 import { useSample } from 'hooks/useSample';
 import { ANIMATE, pathsClassName, KEY_FRAMES_OF } from 'models/denotation';
 import { useMapValues } from 'hooks/useMapValues';
+import { useGetColorsArr } from 'hooks/useGetColorsArr.hook';
 
 const useStyles = makeStyles(({ palette: { background, secondary, primary }, breakpoints }) => ({
   '@global': {
+    '@keyframes racket': {
+      '0%': {
+        transform: 'scale3d(1,1,1)'
+      },
+
+      '30%': {
+        transform: 'scale3d(0.75,1.25,1)'
+      },
+      '40%': {
+        transform: 'scale3d(1.15,0.85,1)'
+      },
+      '50%': {
+        transform: 'scale3d(0.95,1.05,1)'
+      },
+      '65%': {
+        transform: 'scale3d(1.1,0.8,1)'
+      },
+      '75%': {
+        transform: 'scale3d(1.05,0.95,1)'
+      },
+
+      '100%': {
+        transform: 'scaleY(1)'
+      }
+    },
     [`@keyframes ${KEY_FRAMES_OF}_${pathsClassName.FIRST}_${ANIMATE}`]: {
       '0%': {
         opacity: 0,
@@ -37,13 +63,12 @@ const useStyles = makeStyles(({ palette: { background, secondary, primary }, bre
     },
     [`@keyframes ${KEY_FRAMES_OF}_${pathsClassName.THIRD}_${ANIMATE}`]: {
       '0%': {
-        strokeDashoffset: 6000
-,
+        strokeDashoffset: 6000,
         opacity: 1
       },
       '100%': {
         strokeDashoffset: 0,
-        opacity: 1,
+        opacity: 1
       }
     },
 
@@ -55,12 +80,12 @@ const useStyles = makeStyles(({ palette: { background, secondary, primary }, bre
       },
       '100%': {
         strokeDashoffset: 0,
-        opacity: 1,
+        opacity: 1
       }
     }
   },
 
-  svgContainer: ({soundIdx}:{soundIdx:number}) => {
+  svgContainer: ({ soundIdx }: { soundIdx: number }) => {
     const styles = {
       '& path': {
         fill: 'none'
@@ -68,12 +93,12 @@ const useStyles = makeStyles(({ palette: { background, secondary, primary }, bre
       '& .NOT_ACTIVE': {
         opacity: 0.42
       },
-      '&:hover': {
-        animation: 'racket 1s '
-      },
+      // '&:hover': {
+      //   animation: 'racket 1s '
+      // },
 
       [`& .${pathsClassName.FIRST}`]: {
-          strokeDasharray: 2000
+        strokeDasharray: 2000
       },
       [`& .${pathsClassName.FIRST}_${ANIMATE}`]: {
         animation: `${KEY_FRAMES_OF}_${pathsClassName.FIRST}_${ANIMATE} ${8 / soundIdx}s infinite`
@@ -101,35 +126,18 @@ const useStyles = makeStyles(({ palette: { background, secondary, primary }, bre
   }
 }));
 
-const SvgAnimation: FC<SvgAnimationPropsType> = ({ className, id, viewBox, pathsArr, onClick,children }) => {
-  const { palette } = useTheme();
+const SvgAnimation: FC<SvgAnimationPropsType> = ({ className, id, viewBox, pathsArr, onClick, children, svgId }) => {
   const soundIdx = useSelector(getSoundIdx);
   const currentSectionId = useSelector(getCurrentSectionId);
   const isSoundPaused = useSelector(getIsSoundPaused);
-  const { svgContainer } = useStyles({soundIdx});
-
-  const colorsArr = [
-    'rgb(49, 191, 186)',
-    'rgb( 246, 9, 149)',
-    'rgb(88, 40, 215)',
-    'rgb(254, 219, 59)',
-    'rgb(202, 02, 02)',
-    'rgb(64, 179, 199)',
-    'rgb(6, 220, 69)',
-    'rgb(164, 9, 259)',
-    'rgb(244, 17, 103)',
-    'rgb(106, 9, 249)',
-    'rgb(54, 229, 159)',
-    'rgb(26, 149, 219)',
-    palette.secondary.main,
-    palette.primary.main
-  ];
+  const { svgContainer } = useStyles({ soundIdx });
+  const colorsArr  = useGetColorsArr();
 
   const pathsClassNameArr = Object.values(pathsClassName);
 
   return (
     <Grid container className={className}>
-      <svg xmlns={'http://www.w3.org/2000/svg'} viewBox={viewBox} className={svgContainer} onClick={onClick}>
+      <svg xmlns={'http://www.w3.org/2000/svg'} viewBox={viewBox} className={svgContainer} onClick={onClick} id={svgId}>
         {pathsArr.map((arr, index) =>
           arr.map((d, dIdx) => {
             const idx = index + 1;

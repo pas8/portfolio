@@ -1,7 +1,9 @@
 import { MouseEventHandler, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { ACTIVE_CURSOR, HIDDEN } from 'models/denotation';
 
-export const useAnimateCursor = ({ dot, dotOutline }: { [Property in 'dot' | 'dotOutline']: any }) => {
+export const useAnimateCursor = ({ dot, dotOutline }: { [Property in 'dot' | 'dotOutline' ]: any }):any => {
+
   const cursorVisible = useRef(true);
   const cursorEnlarged = useRef(false);
   const delay = 10;
@@ -17,8 +19,7 @@ export const useAnimateCursor = ({ dot, dotOutline }: { [Property in 'dot' | 'do
     // document.addEventListener('mousedown', mouseOverEvent);
     // document.addEventListener('mouseup', mouseOutEvent);
     document.addEventListener('mousemove', mouseMoveEvent);
-    document.addEventListener('mouseenter', mouseEnterEvent);
-    document.addEventListener('mouseleave', mouseLeaveEvent);
+    // document.addEventListener('mouseenter', mouseEnterEvent);
 
     animateDotOutline();
 
@@ -26,20 +27,27 @@ export const useAnimateCursor = ({ dot, dotOutline }: { [Property in 'dot' | 'do
       // document.removeEventListener('mousedown', mouseOverEvent);
       // document.removeEventListener('mouseup', mouseOutEvent);
       document.removeEventListener('mousemove', mouseMoveEvent);
-      document.removeEventListener('mouseenter', mouseEnterEvent);
-      document.removeEventListener('mouseleave', mouseLeaveEvent);
+      // document.removeEventListener('mouseleave', mouseLeaveEvent);
 
       cancelAnimationFrame(requestRef.current);
     };
   }, []);
 
-  const toggleCursorVisibility = () => {
-    if (cursorVisible.current) {
-      dot.current.style.opacity = 1;
-      return (dotOutline.current.style.opacity = 1);
+  const handleToggleCursorVisibility = (status:boolean) => {
+
+
+
+
+    if (!status) {
+      dot.current.style.transform ='scale(1)'
+      dotOutline.current.style.opacity = 1;
+      return cursorVisible.current = false
     }
-    dot.current.style.opacity = 0;
+   
+    dot.current.style.transform ='scale(1.42)'
     dotOutline.current.style.opacity = 0;
+    return cursorVisible.current = true
+
   };
 
   const toggleCursorSize = () => {
@@ -62,24 +70,29 @@ export const useAnimateCursor = ({ dot, dotOutline }: { [Property in 'dot' | 'do
     toggleCursorSize();
   };
 
-  const mouseEnterEvent = () => {
-    cursorVisible.current = true;
-    toggleCursorVisibility();
-  };
+  // const mouseEnterEvent = () => {
+  //   cursorVisible.current = true;
+  //   toggleCursorVisibility();
+  // };
 
-  const mouseLeaveEvent = () => {
-    cursorVisible.current = false;
-    toggleCursorVisibility();
-  };
+  // const mouseLeaveEvent = () => {
+  //   cursorVisible.current = false;
+  //   toggleCursorVisibility();
+  // };
+
+
 
   const mouseMoveEvent = (e: any) => {
+
     cursorVisible.current = true;
-    toggleCursorVisibility();
     endX.current = e.pageX;
     endY.current = e.pageY;
 
     dot.current.style.top = endY.current + 'px';
     dot.current.style.left = endX.current + 'px';
+    
+ 
+
   };
 
   const animateDotOutline = () => {
@@ -92,5 +105,5 @@ export const useAnimateCursor = ({ dot, dotOutline }: { [Property in 'dot' | 'do
     requestRef.current = requestAnimationFrame(animateDotOutline);
   };
 
-  return { mouseOverEvent, mouseOutEvent };
+  return { mouseOverEvent, mouseOutEvent ,handleToggleCursorVisibility};
 };

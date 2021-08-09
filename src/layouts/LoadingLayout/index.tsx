@@ -4,11 +4,11 @@ import { usePrevious } from 'react-use';
 import { colord, extend } from 'colord';
 import mixPlugin from 'colord/plugins/mix';
 import { useSelector } from 'react-redux';
-import { Grid, makeStyles, Typography,  useTheme, Zoom ,Box} from '@material-ui/core';
+import { Grid, makeStyles, Typography, useTheme, Zoom, Box } from '@material-ui/core';
 import { getLoadingProperyies } from 'store/modules/App/selectors';
-import CursorButton from 'components/CursorButton/index'
+import CursorButton from 'components/CursorButton/index';
 const useLocalStyles = makeStyles(
-  ({ palette: { background, secondary, primary, text }, breakpoints, shape: { borderRadius } }) => ({
+  ({ palette: { background, secondary, primary, text, common }, breakpoints, shape: { borderRadius } }) => ({
     '@global': {
       // '@keyframes gradientFillAnimation': {
       //   '0%': {
@@ -27,7 +27,7 @@ const useLocalStyles = makeStyles(
       position: 'fixed',
       zIndex: 20000,
 
-      background: colord('#252429').alpha(0.8).toHex(),
+      background: common.black,
 
       backdropFilter: 'blur(10px)',
       inset: 0,
@@ -35,7 +35,7 @@ const useLocalStyles = makeStyles(
       '& .topPart': {
         '& svg': {
           marginTop: 20,
-         
+
           '& path': {
             strokeWidth: '2px'
           }
@@ -77,7 +77,6 @@ const LoadingLayout: FC = ({ children }) => {
   const { percent, isLoading } = useSelector(getLoadingProperyies);
   const previuosIsLoading = usePrevious(isLoading);
 
-
   useEffect(() => {
     if (!!previuosIsLoading && !isLoading) {
       setIsAllWasLoaded(true);
@@ -88,15 +87,13 @@ const LoadingLayout: FC = ({ children }) => {
   }, [previuosIsLoading, isLoading]);
 
   useEffect(() => {
-    if(!isAwaited) return;
+    if (!isAwaited) return;
     setTimeout(() => {
-      setIsLoadingLayoutShoulBeHidden(true); 
+      setIsLoadingLayoutShoulBeHidden(true);
       setTimeout(() => {
         setIsLoadingLayoutHidden(true);
       }, 1200);
     }, 2000);
-
- 
   }, [isAwaited]);
 
   const { palette } = useTheme();
@@ -105,7 +102,7 @@ const LoadingLayout: FC = ({ children }) => {
     .mix(palette.secondary.main, percent / 100)
     .toHex();
 
-    return (
+  return (
     <>
       {!isLoadingLayoutHidden && (
         <Zoom in={!isLoadingLayoutShoulBeHidden}>
@@ -126,7 +123,7 @@ const LoadingLayout: FC = ({ children }) => {
                   />
                 </svg>
               ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.3 65"  width={360}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.3 65" width={360}>
                   <path
                     fill="none"
                     stroke={color}
@@ -167,13 +164,12 @@ const LoadingLayout: FC = ({ children }) => {
                     d="M171 177c0-13 0-16 1-15l24 31h-25zm24 2l-4-3 3-3 7-8 6-5 3 3 4 4-14 14-2 2zm8 10l-3-4a178 178 0 0116-15l3 3 4 4-3 2-13 14zm23-5a869 869 0 0110-22 1515 1515 0 0010 22zm-3 7l2-3v-2h21l2 3 2 4h-27zm31-6v-24a2105 2105 0 0125 16l-2 1a4173 4173 0 00-23 15zm31-3v-11h10v22h-10zm0-17v-4h10v8h-10zm16 14v-13l1 2 5 7 3 5v13h-9zm15 6l-15-24h9l6 9 5 7v-16h9v32h-9zm37-24h12a548 548 0 01-18 30l-1 2h-12zm-4 32l9-14 9 14z"
                   />
                 ) : (
-                <g  transform=" translate(10 -8)" >
-
-                  <path fill={color}>
-                    <animate
-                      attributeName="d"
-                      dur="10500ms"
-                      values="
+                  <g transform=" translate(10 -8)">
+                    <path fill={color}>
+                      <animate
+                        attributeName="d"
+                        dur="10500ms"
+                        values="
                       
                     M214 144l-14-30 29-1h30l-2 2a6267 6267 0 00-28 59l-15-30zM216 249l-15-1 16-31 33-67 18-37h39a10516 10516 0 01-68 135l-4 2-19-1z;
                     M211 157l-9-11 22-23 22-23 10 10 10 11c0 1-44 46-45 45l-10-9zM210 208l-9-11 32-33 35-36 3-3 11 11 10 12-66 65-6 5zM234 234l-10-10 22-22 23-23 11 10 9 10-4 4c-10 12-40 41-41 41l-10-10z;
@@ -185,11 +181,8 @@ const LoadingLayout: FC = ({ children }) => {
                     M201 200l32-25 30-24h28v23l-17 14-18 14h-29c-28 0-28 0-26-2zM199 226v-18h92v36h-92zM199 127v-18h92v37h-92z;
                     M206 143l-1-18 1-16h67v35h-34c-26 1-33 0-33-1zM230 199v-48h43v95h-43z;
                     M214 210l-34-34 35-34 34-35 34 34c18 18 33 35 33 36l-35 35-33 32z;"
-
-
-
-                    />
-                  </path>
+                      />
+                    </path>
                   </g>
                 )}
                 <animateMotion
@@ -216,7 +209,7 @@ const LoadingLayout: FC = ({ children }) => {
                   >{`${~~percent}%`}</Typography>
                 ) : (
                   <Box mb={2}>
-                   <CursorButton onClick={() => setIsLoadingLayoutShoulBeHidden(true)} title={'Open!'} />
+                    <CursorButton onClick={() => setIsLoadingLayoutShoulBeHidden(true)} title={'Open!'} />
                   </Box>
                 )}
               </Grid>

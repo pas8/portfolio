@@ -1,16 +1,21 @@
 import { makeStyles, Grid, Typography } from '@material-ui/core';
 import { createContext, FC, useEffect, useRef } from 'react';
 import clsx from 'clsx';
+import { isMobile } from 'react-device-detect';
 import { useSelector } from 'react-redux';
 import { useWindowSize } from 'react-use';
 import { useState } from 'react';
 import { MouseEventHandler } from 'react';
 import { useAnimateCursor } from 'hooks/useAnimateCursor.hook';
-import { getCursorColor ,getSphereCursorTitle} from 'store/modules/App/selectors';
+import { getCursorColor, getSphereCursorTitle } from 'store/modules/App/selectors';
 import { HIDDEN, ACTIVE_CURSOR } from 'models/denotation';
 import { useMapKeys } from 'hooks/useMapKeys.hook';
 
-export const CursorContext = createContext({ mouseOverEvent: () => {}, mouseOutEvent: () => {} });
+export const CursorContext = createContext({
+  mouseOverEvent: () => {},
+  mouseOutEvent: () => {},
+  handleToggleCursorVisibility: (__: boolean) => {}
+});
 
 const useStyles = makeStyles(({ palette: { background, primary, secondary } }) => ({
   '@global': {
@@ -70,6 +75,8 @@ const useStyles = makeStyles(({ palette: { background, primary, secondary } }) =
 }));
 
 const CursorLayout: FC = ({ children }) => {
+  if (isMobile) return <>{children}</>;
+
   const { height, width } = useWindowSize();
 
   const VALUE_TO_ADD = 100 / 60;
@@ -77,7 +84,7 @@ const CursorLayout: FC = ({ children }) => {
 
   const cursorColor = useSelector(getCursorColor);
   const sphereCursorTitle = useSelector(getSphereCursorTitle);
-  
+
   const { cursorDotOutlinedContainer, cursorDotContainer, dotContainer } = useStyles();
 
   const dot = useRef<HTMLDivElement>(null)!;
@@ -91,7 +98,6 @@ const CursorLayout: FC = ({ children }) => {
     }, 42);
     return () => clearInterval(interval);
   }, []);
-
   return (
     <CursorContext.Provider value={cursorContextValue}>
       <Grid ref={dotOutline} className={clsx(cursorDotOutlinedContainer, dotContainer)}>
@@ -110,7 +116,13 @@ const CursorLayout: FC = ({ children }) => {
         </Grid>
       </Grid>
       <Grid ref={dot} className={clsx(cursorDotContainer, dotContainer)}>
-        <Grid className={'content sphereBackground'} style={{ backgroundPosition: `${number}% 0` }} justifyContent={'center'} alignItems={'center'} container>
+        <Grid
+          className={'content sphereBackground'}
+          style={{ backgroundPosition: `${number}% 0` }}
+          justifyContent={'center'}
+          alignItems={'center'}
+          container
+        >
           <Typography variant={'button'} color={'textPrimary'}>
             {sphereCursorTitle}
           </Typography>
