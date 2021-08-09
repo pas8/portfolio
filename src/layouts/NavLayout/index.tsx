@@ -143,7 +143,7 @@ const NavLayout: FC<WithWidthProps> = ({ children, width }) => {
   ];
 
   const isMenuHaveDialogView = width === 'sm' || width === 'xs' || width === 'md';
-  const [isMenuOpen, setMenuOpen] = useState(false);
+  const [isMenuOpen, setMenuOpen] = useState(true);
 
   const handleChangeMenuOpenStatus = () => {
     setMenuOpen(prev => !prev);
@@ -203,7 +203,7 @@ const NavLayout: FC<WithWidthProps> = ({ children, width }) => {
                 )}
               </CursorContext.Consumer>
               <TipElementWrapper
-                title={'CLick to button to start animation or to pause.'}
+                title={'Click to button to start animation or to pause.'}
                 id={tipsElementIds.PLAY_OR_PAUSE_SOUND_BUTTON}
               >
                 <PasLogoSvg onClick={handleChangeSoundPauseStatus} />
@@ -228,7 +228,7 @@ const NavLayout: FC<WithWidthProps> = ({ children, width }) => {
               {({ handleToggleCursorVisibility }) => (
                 <TipElementWrapper
                   id={tipsElementIds.SLIDER_OF_SOUND_IDX}
-                  title={'U can easyly change spped and voice from this changing value of this slider.'}
+                  title={'You can easily change speed and voice from this changing value of this slider.'}
                 >
                   <Box
                     my={1}

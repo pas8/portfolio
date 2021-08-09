@@ -16,14 +16,9 @@ export const pathsClassName = {
   THIRD: 'THIRD',
   FOUR: 'FOUR'
 };
-export const KEY_FRAMES_OF = 'keyFramesOf'
-
-
+export const KEY_FRAMES_OF = 'keyFramesOf';
 
 export const tipsElementIds = {
-
-PLAY_OR_PAUSE_SOUND_BUTTON:'PLAY_OR_PAUSE_SOUND_BUTTON',
-SLIDER_OF_SOUND_IDX:'SLIDER_OF_SOUND_IDX',
-
-
-}
+  PLAY_OR_PAUSE_SOUND_BUTTON: 'PLAY_OR_PAUSE_SOUND_BUTTON',
+  SLIDER_OF_SOUND_IDX: 'SLIDER_OF_SOUND_IDX'
+};
