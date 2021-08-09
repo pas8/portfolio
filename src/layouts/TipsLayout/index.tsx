@@ -200,7 +200,7 @@ const {width:windowWidth} = useWindowSize()
         onClose();
       }, 8000);
   }, [isLastStep]);
-  if (!tipsElementArr.length || isMobile) {
+  if (!tipsElementArr.length ) {
     return <TipsContext.Provider value={{ handleAddTipElement }}> {children}</TipsContext.Provider>;
   }
 
