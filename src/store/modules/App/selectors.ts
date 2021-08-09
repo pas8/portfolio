@@ -51,3 +51,14 @@ export const getSphereCursorTitle = createSelector(
   [(state: RootStoreType) => state.app.sphereCursorTitle],
   sphereCursorTitle => sphereCursorTitle
 );
+
+
+export const getIsTipsLayoutHidden = createSelector(
+  [(state: RootStoreType) => state.app.statuses.isTipsLayoutHidden],
+  isTipsLayoutHidden => isTipsLayoutHidden
+);
+
+
+
+
+

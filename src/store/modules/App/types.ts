@@ -77,7 +77,7 @@ export type AppActionTypes = $Values<ActionsValueTypes>;
 export type SkillsType = { title: string; href: string }[];
 export type CursorColortype = string;
 
-export type StatusesNamesType = 'isRandomColorChangingDisabled' | 'isMain3dSceneHidden' | 'isLoading' | 'isSoundPaused';
+export type StatusesNamesType = 'isRandomColorChangingDisabled' | 'isMain3dSceneHidden' | 'isLoading' | 'isSoundPaused' | 'isTipsLayoutHidden' 
 export type StatusesType = {
   [Property in StatusesNamesType]: boolean;
 };

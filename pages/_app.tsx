@@ -9,6 +9,8 @@ const ColorLayout = dynamic(() => import('../src/layouts/ColorLayout'));
 const ThemeLayout = dynamic(() => import('../src/layouts/ThemeLayout'));
 const SoundLayout = dynamic(() => import('../src/layouts/SoundLayout'), { ssr: false });
 const SceneLayout = dynamic(() => import('../src/layouts/SceneLayout'));
+const TipsLayout = dynamic(() => import('../src/layouts/TipsLayout'));
+
 const SnackBarLayout = dynamic(() => import('../src/layouts/SnackBarLayout'));
 const NavLayout = dynamic(() => import('../src/layouts/NavLayout'));
 const CursorLayout = dynamic(() => import('../src/layouts/CursorLayout'), { ssr: false });
@@ -23,7 +25,7 @@ const Index: FC<AppProps> = ({ Component, pageProps }) => {
     ThemeLayout,
     SceneLayout,
     CursorLayout,
-    LoadingLayout,
+    // LoadingLayout,
     SoundLayout,
     ScrollLayout,
     ColorLayout,

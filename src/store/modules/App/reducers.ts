@@ -25,6 +25,7 @@ export const initialState: AppInitialStateType = {
     isRandomColorChangingDisabled: false,
     isMain3dSceneHidden: false,
     isLoading: false,
+    isTipsLayoutHidden: false,
     isSoundPaused: !false
   },
   currentSectionId: '',
@@ -51,7 +52,7 @@ export const initialState: AppInitialStateType = {
     { href: '#Three_js_', title: 'Three_js' },
     { href: '#Bem_', title: 'BEM' }
   ],
-  sphereCursorTitle:'Open',
+  sphereCursorTitle: 'Open',
   loadingPercent: 0,
   soundIdx: 1,
   textureMaps: {
@@ -87,8 +88,6 @@ export const AppReducer = (state = initialState, action: AppActionTypes): AppIni
     }
 
     default:
-      //@ts-ignore
-      const x: never = action;
+      return state;
   }
-  return state;
 };

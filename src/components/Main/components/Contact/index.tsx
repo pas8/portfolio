@@ -66,6 +66,7 @@ const useLocalStyles = makeStyles(
         width: '48%',
         position: 'relative',
         '& img': {
+          opacity:.8,
           borderRadius
         },
         '& .caption': {
@@ -171,7 +172,7 @@ const Contact: FC = () => {
               />
               <InputByPas
                 name={inputNames.EMAIL}
-                error={!isEmailValid}
+                error={!isEmailValid && formState[inputNames.EMAIL].length > 0 }
                 onChange={onEmailChange}
                 value={formState[inputNames.EMAIL]}
                 label={inputNames.EMAIL.toUpperCase()}

@@ -10,7 +10,7 @@ import { getCursorColor ,getSphereCursorTitle} from 'store/modules/App/selectors
 import { HIDDEN, ACTIVE_CURSOR } from 'models/denotation';
 import { useMapKeys } from 'hooks/useMapKeys.hook';
 
-export const CursorContext = createContext({ mouseOverEvent: () => {}, mouseOutEvent: () => {} });
+export const CursorContext = createContext({ mouseOverEvent: () => {}, mouseOutEvent: () => {},handleToggleCursorVisibility:(__:bolean)=> {} });
 
 const useStyles = makeStyles(({ palette: { background, primary, secondary } }) => ({
   '@global': {
@@ -91,10 +91,9 @@ const CursorLayout: FC = ({ children }) => {
     }, 42);
     return () => clearInterval(interval);
   }, []);
-
   return (
     <CursorContext.Provider value={cursorContextValue}>
-      <Grid ref={dotOutline} className={clsx(cursorDotOutlinedContainer, dotContainer)}>
+      <Grid ref={dotOutline} className={clsx(cursorDotOutlinedContainer, dotContainer,)} >
         <Grid>
           <svg width={'42'} height={'42'} viewBox={'0 0 37 36'} xmlns={'http://www.w3.org/2000/svg'}>
             <path
@@ -109,7 +108,7 @@ const CursorLayout: FC = ({ children }) => {
           </svg>
         </Grid>
       </Grid>
-      <Grid ref={dot} className={clsx(cursorDotContainer, dotContainer)}>
+      <Grid ref={dot} className={clsx(cursorDotContainer, dotContainer)} >
         <Grid className={'content sphereBackground'} style={{ backgroundPosition: `${number}% 0` }} justifyContent={'center'} alignItems={'center'} container>
           <Typography variant={'button'} color={'textPrimary'}>
             {sphereCursorTitle}
