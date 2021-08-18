@@ -92,8 +92,8 @@ const CursorLayout: FC = ({ children }) => {
   const cursorContextValue = useAnimateCursor({ dot, dotOutline });
 
   useEffect(() => {
+    if(!dot?.current?.className?.search(ACTIVE_CURSOR))return;
     const interval = setInterval(() => {
-      !!dot?.current?.className?.search(ACTIVE_CURSOR) &&
         setNumber(prev => (prev + VALUE_TO_ADD > 100 ? 0 : prev + VALUE_TO_ADD));
     }, 42);
     return () => clearInterval(interval);

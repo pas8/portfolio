@@ -1,34 +1,74 @@
-import { makeStyles, Grid } from '@material-ui/core';
+import { makeStyles, Grid, Typography } from '@material-ui/core';
+import { colord } from 'colord';
 import { FC, useEffect } from 'react';
 import SectionContainer from 'components/SectionContainer';
 import SvgAnimation from 'components/SvgAnimation/index';
 import { sectionIds } from 'models/denotation';
+import { CursorContext } from 'layouts/CursorLayout';
 import { BlogDataType } from 'models/types';
-import {colord} from 'colord'
-const useStyles = makeStyles(({ palette: { background,primary }, breakpoints, shape: { borderRadius } }) => ({
+
+const useStyles = makeStyles(({ palette: { background, primary,secondary }, breakpoints, shape: { borderRadius } }) => ({
   container: {
-
-'& path':{
-
-  strokeWidth:4
-}
+    '& path': {
+      strokeWidth: 4
+    }
   },
   contentContainer: {
-    marginTop:42,
+    marginTop: 42,
 
     '& .item': {
-      marginBottom:20,
-      padding:'20px 4px',
-    border:`2px solid ${colord(primary.main).alpha(0.42).toHex()}`,
-    borderRadius,
-      
-      display:'flex',
-      justifyContent:'center',  
-      '& img':{
-        borderRadius,
-maxWidth:'96%'
+      marginBottom: 20,
+      textDecoration:'none',
+      // background:colord(secondary.main).alpha(1).toHex(),
+
+      padding: '8px 0px',
+      flexDirection: 'column',
+      border: `2px solid ${colord(primary.main).alpha(0.42).toHex()}`,
+      borderRadius,
+'&:hover':{
+'& .titleContainer h6':{
+
+color:background.default,
+},
+background:'linear-gradient(90deg, #ffe6ad 0%, rgba(255,175,249,1) 100%)',
+'& .tagsContainer p':{
+
+filter:'invert(1) contrast(142%)'
+
+},
+'& img':{
+  // border: `2px solid ${colord(background.default).alpha(1).toHex()}`,
+
+  // filter:'invert(0.92) contrast(120%) hue-rotate(180deg) blur(5px)'
+
+
+}
+},
+      display: 'flex',
+      alignItems: 'center',
+      '& .titleContainer': {
+        height: '28%',
+        width: '96%',
+        marginBottom: 10
       },
-      width: '46%'
+      '& img': {
+        border: `2px solid ${colord(primary.main).alpha(0.16).toHex()}`,
+        width: '100%',
+
+        borderRadius
+      },
+      '& .content': {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        maxWidth: '96%',
+
+        '& .tagsContainer': {
+          marginTop: 8,
+          gap: 10
+        }
+      },
+      width: '48.8%'
     }
   }
 }));
@@ -37,7 +77,18 @@ const Blog: FC<{ blogArr: BlogDataType }> = ({ blogArr }) => {
   const { container, contentContainer } = useStyles();
   const id = sectionIds.BLOG;
 
+  const colorsObj = {
+    javascript: '#ddaf35',
+    typescript: '#9680f8',
+    react: '#5a82ea',
+    nextjs: '#88af5d',
+    redux: '#d04f8a'
+  } as { [key: string]: string };
+
+// const blodArrToMap = blogArr.length & 1 === 0 &&   ?   :  
+
   return (
+
     <Grid container className={container} alignItems={'center'} id={id}>
       <SectionContainer>
         <SvgAnimation
@@ -62,10 +113,32 @@ const Blog: FC<{ blogArr: BlogDataType }> = ({ blogArr }) => {
         <Grid className={contentContainer} container justifyContent={'space-between'}>
           {blogArr.map(({ canonical_url, cover_image, id, published_at, tag_list, title }) => {
             return (
-              <Grid className={'item'} >
-                <img src={cover_image} alt={title}  />
+              <CursorContext.Consumer>
+      {({ mouseOutEvent, mouseOverEvent }) => (
+              <Grid className={'item'} component={'a'}
+              href={canonical_url}
+                onMouseOver={mouseOverEvent}
+          onMouseOut={mouseOutEvent}
+              >
+                <Grid className={'titleContainer'}>
+                  <Typography variant={'h6'} color={'textSecondary'}>
+                    {title}
+                  </Typography>
+                </Grid>
+                <Grid className={'content'}>
+                  <img src={cover_image} alt={title} />
+                  <Grid container className={'tagsContainer'}>
+                    {tag_list.map(name => (
+                      <Typography variant={'body1'} style={{ color: colorsObj[name] }}>
+                        #{name}
+                      </Typography>
+                    ))}
+                  </Grid>
+                </Grid>
               </Grid>
-            );
+             )}
+    </CursorContext.Consumer>
+  );
           })}
         </Grid>
       </SectionContainer>
