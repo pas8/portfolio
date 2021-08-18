@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import { ChangeEventHandler, FC, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import Image from 'next/image';
@@ -6,7 +5,6 @@ import { Grid, makeStyles, Typography, ButtonBase, TextField, withStyles } from 
 import SectionContainer from 'components/SectionContainer';
 import { sectionIds } from 'models/denotation';
 import VideoButton from 'components/VideoButton';
-import { useStyles } from '../Greeting';
 import SvgAnimation from 'components/SvgAnimation/index';
 import locationSrc from '../../../../../public/location2.png';
 

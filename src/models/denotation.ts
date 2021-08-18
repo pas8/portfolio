@@ -5,6 +5,7 @@ export const sectionIds = {
   GREETING: 'greeting',
   WHO_I_AM: 'whoIAm',
   SKILLS: 'skills',
+  BLOG:'blog',
   PROJECTS: 'projects',
   CONTACT: 'contact'
 };
