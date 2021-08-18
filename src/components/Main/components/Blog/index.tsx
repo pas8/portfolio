@@ -4,7 +4,7 @@ import { FC, useEffect } from 'react';
 import SectionContainer from 'components/SectionContainer';
 import SvgAnimation from 'components/SvgAnimation/index';
 import { sectionIds } from 'models/denotation';
-import { useBreakpointNames } from 'hooks/useBreakpointNames.hook.ts';
+import { useBreakpointNames } from 'hooks/useBreakpointNames.hook';
 import { CursorContext } from 'layouts/CursorLayout';
 import { BlogDataType } from 'models/types';
 
