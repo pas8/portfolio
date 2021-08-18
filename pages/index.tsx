@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import Main from 'components/Main';
 import { BlogDataType } from 'models/types';
+
 const Index: FC<{ blogArr: any }> = ({ blogArr }) => {
   return (
     <>
