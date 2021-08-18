@@ -139,7 +139,8 @@ const NavLayout: FC<WithWidthProps> = ({ children, width }) => {
     { title: 'Who I Am', href: sectionIds.WHO_I_AM },
     { title: 'Skills', href: sectionIds.SKILLS },
     { title: 'Experience', href: sectionIds.PROJECTS },
-    { title: 'Contact', href: sectionIds.CONTACT }
+    { title: 'Contact', href: sectionIds.CONTACT },
+    { title: 'Blog', href: sectionIds.BLOG },
   ];
 
   const isMenuHaveDialogView = width === 'sm' || width === 'xs' || width === 'md';
