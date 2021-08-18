@@ -52,10 +52,14 @@ filter:'invert(1) contrast(142%)'
         width: '96%',
         marginBottom: 10
       },
-      '& img': {
-        border: `2px solid ${colord(secondary.main).alpha(0.08).toHex()}`,
-        width: '100%',
+      '& .imgContainer': {
+        '& img':{
+          width: '100%',
+          // border: `2px solid ${colord(secondary.main).alpha(0.08).toHex()}`,
+          borderRadius
 
+        },
+position:'relative',
         borderRadius
       },
       '& .content': {
@@ -63,7 +67,16 @@ filter:'invert(1) contrast(142%)'
         display: 'flex',
         flexDirection: 'column',
         maxWidth: '96%',
-
+'& .dateCaption':{
+  borderRadius,
+  bottom:6,
+  padding:'1px 10px',
+  borderTopLeftRadius:0,
+  borderBottomRightRadius:0,
+  background:colord(background.default).alpha(0.42).toHex(),
+  left:0,
+position:'absolute',
+},
         '& .tagsContainer': {
           marginTop: 8,
           gap: 10
@@ -103,8 +116,8 @@ const Blog: FC<{ blogArr: BlogDataType }> = ({ blogArr }) => {
   } as { [key: string]: string };
 const {isSizeSmall} = useBreakpointNames()
 const isComingSoonPlaceholderVisible = (blogArr.length & 1) !== 0 && !isSizeSmall  
-console.log(isComingSoonPlaceholderVisible)
-  return (
+
+return (
 
     <Grid container className={container} alignItems={'center'} id={id}>
       <SectionContainer>
@@ -143,10 +156,21 @@ console.log(isComingSoonPlaceholderVisible)
                   </Typography>
                 </Grid>
                 <Grid className={'content'}>
+               
+<Grid className={'imgContainer'}>
+   
+<Grid className={'dateCaption'}>
+                  <Typography variant={'body1'} color={'textSecondary'}>
+                    {published_at.replace('T',' | ').replace('Z','')}
+                        
+                      </Typography>
+                  </Grid>
                   <img src={cover_image} alt={title} />
+            </Grid>  
+
                   <Grid container className={'tagsContainer'}>
                     {tag_list.map(name => (
-                      <Typography variant={'body1'} style={{ color: colorsObj[name] }}>
+                      <Typography variant={'body2'} style={{ color: colorsObj[name] || '#b175fb' }}>
                         #{name}
                       </Typography>
                     ))}
