@@ -49,7 +49,7 @@ const useLocalStyles = makeStyles(
           },
           // overflow:'hidden',maxHeight:342,
           width: '48%',
-          [breakpoints.down('xs')]: {
+          [breakpoints.down('sm')]: {
             width: '100%'
           }
           // height:200

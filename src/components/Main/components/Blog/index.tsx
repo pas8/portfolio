@@ -4,6 +4,7 @@ import { FC, useEffect } from 'react';
 import SectionContainer from 'components/SectionContainer';
 import SvgAnimation from 'components/SvgAnimation/index';
 import { sectionIds } from 'models/denotation';
+import { useBreakpointNames } from 'hooks/useBreakpointNames.hook.ts';
 import { CursorContext } from 'layouts/CursorLayout';
 import { BlogDataType } from 'models/types';
 
@@ -23,7 +24,7 @@ const useStyles = makeStyles(({ palette: { background, primary,secondary }, brea
 
       padding: '8px 0px',
       flexDirection: 'column',
-      border: `2px solid ${colord(primary.main).alpha(0.42).toHex()}`,
+      border: `2px solid ${colord(secondary.main).alpha(0.42).toHex()}`,
       borderRadius,
 '&:hover':{
 '& .titleContainer h6':{
@@ -52,7 +53,7 @@ filter:'invert(1) contrast(142%)'
         marginBottom: 10
       },
       '& img': {
-        border: `2px solid ${colord(primary.main).alpha(0.16).toHex()}`,
+        border: `2px solid ${colord(secondary.main).alpha(0.08).toHex()}`,
         width: '100%',
 
         borderRadius
@@ -68,8 +69,24 @@ filter:'invert(1) contrast(142%)'
           gap: 10
         }
       },
-      width: '48.8%'
-    }
+      width: '48.8%',
+      [breakpoints.down('sm')]:{
+      width: '100%',
+
+        
+      }
+    },
+    '& .comingSoonPlaceholder':{
+ justifyContent:'center',
+ color:colord(primary.main).alpha(0.8).toHex(),
+      border: `2px solid ${colord(primary.main).alpha(0.42).toHex()}`,
+ 
+
+ '&:hover':{
+
+color:background.default,
+},
+},
   }
 }));
 
@@ -84,9 +101,9 @@ const Blog: FC<{ blogArr: BlogDataType }> = ({ blogArr }) => {
     nextjs: '#88af5d',
     redux: '#d04f8a'
   } as { [key: string]: string };
-
-// const blodArrToMap = blogArr.length & 1 === 0 &&   ?   :  
-
+const {isSizeSmall} = useBreakpointNames()
+const isComingSoonPlaceholderVisible = (blogArr.length & 1) !== 0 && !isSizeSmall  
+console.log(isComingSoonPlaceholderVisible)
   return (
 
     <Grid container className={container} alignItems={'center'} id={id}>
@@ -115,7 +132,7 @@ const Blog: FC<{ blogArr: BlogDataType }> = ({ blogArr }) => {
             return (
               <CursorContext.Consumer>
       {({ mouseOutEvent, mouseOverEvent }) => (
-              <Grid className={'item'} component={'a'}
+              <Grid className={'item'} component={'a'} key={id}
               href={canonical_url}
                 onMouseOver={mouseOverEvent}
           onMouseOut={mouseOutEvent}
@@ -140,6 +157,8 @@ const Blog: FC<{ blogArr: BlogDataType }> = ({ blogArr }) => {
     </CursorContext.Consumer>
   );
           })}
+  {isComingSoonPlaceholderVisible && <Grid className={'item comingSoonPlaceholder'} ><Typography variant={'h2'} component={'h6'}> Coming soon </Typography></Grid>}
+
         </Grid>
       </SectionContainer>
     </Grid>
