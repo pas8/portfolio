@@ -9,7 +9,7 @@ const useStyles = makeStyles(
     container: {
       marginBottom: 42,
       '& .contentContainer': { display: 'flex', gap: 42,[breakpoints.down('xs')]:{'& a':{width:'100%',},gap:16} },
-      '& .titleContainer': {[breakpoints.down('xs')]:{marginBottom: 16} }
+      '& .titleContainer': {[breakpoints.down('sm')]:{marginBottom: 16} }
     }
   })
 );

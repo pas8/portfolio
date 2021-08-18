@@ -8,12 +8,14 @@ import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Greeting from './components/Greeting/index';
 import Inspired from './components/Inspired/index';
+import Blog from './components/Blog/index';
+import { BlogDataType } from 'models/types';
 
 const useStyles = makeStyles(({ palette: { background }, breakpoints }) => ({
   container: {
-    perspective:960,
-    display:'flex',
-    flexDirection:'column',
+    perspective: 960,
+    display: 'flex',
+    flexDirection: 'column',
     [breakpoints.down('xl')]: {
       left: 280 + 142,
       right: 280,
@@ -44,18 +46,21 @@ const useStyles = makeStyles(({ palette: { background }, breakpoints }) => ({
   }
 }));
 
-const Main: FC = () => {
+const Main: FC<{
+  blogArr: BlogDataType;
+}> = ({ blogArr }) => {
   const classes = useStyles();
 
   return (
     <>
-      <Grid className={classes.container} >
+      <Grid className={classes.container}>
         <Greeting />
         <WhoIAm />
         <MySkills />
         <Experience />
         <Contact />
-        <Inspired/>
+        <Blog blogArr={blogArr} />
+        <Inspired />
       </Grid>
     </>
   );
