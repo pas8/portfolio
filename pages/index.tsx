@@ -1,16 +1,30 @@
-import { Grid } from '@material-ui/core';
 import { FC } from 'react';
-import dynamic from 'next/dynamic';
-import { useThree } from '@react-three/fiber';
+import Main from 'components/Main';
+import { BlogDataType } from 'models/types';
 
-const Main = dynamic(() => import('components/Main'));
-
-const Index: FC = () => {
+const Index: FC<{ blogArr: any }> = ({ blogArr }) => {
   return (
     <>
-      <Main />
+      <Main blogArr={blogArr} />
     </>
   );
 };
 
+export const getStaticProps = async () => {
+  const res = await fetch('https://dev.to/api/articles?username=pas8');
+  const data: BlogDataType = await res.json();
+
+  const blogArr = data.map(({ cover_image, canonical_url, tag_list, title, published_at, id }) => ({
+    cover_image,
+    canonical_url,
+    tag_list,
+    title,
+    published_at,
+    id
+  }));
+
+  return {
+    props: { blogArr }
+  };
+};
 export default Index;

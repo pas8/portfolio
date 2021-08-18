@@ -11,3 +11,10 @@ export type HandleAddTipElementType = (param: { title: string; element: any; id:
 export type FCCloseVideoButtonType = FC<{ onClose: DialogProps['onClose'] | any }>;
 
 export type AngleType = 'left' | 'bottom';
+
+export type BlogDataType = ({
+  [Property in 'cover_image' | 'canonical_url' | 'tag_list' | 'title' | 'published_at']: string;
+} &
+  {
+    [Property in 'id']: number;
+  })[];
