@@ -10,7 +10,7 @@ const Index: FC<{ blogArr: any }> = ({ blogArr }) => {
   );
 };
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const res = await fetch('https://dev.to/api/articles?username=pas8');
   const data: BlogDataType = await res.json();
 
@@ -28,3 +28,6 @@ export const getStaticProps = async () => {
   };
 };
 export default Index;
+
+
+
