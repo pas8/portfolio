@@ -1,6 +1,7 @@
 import { colord } from 'colord';
 import clsx from 'clsx';
 import Image from 'next/image';
+import { useBreakpointNames } from 'hooks/useBreakpointNames.hook';
 import { FC } from 'react';
 import { Grid, makeStyles, Typography, ButtonBase } from '@material-ui/core';
 import SectionContainer from 'components/SectionContainer';
@@ -9,10 +10,14 @@ import SvgAnimation from 'components/SvgAnimation/index';
 import { sectionIds } from 'models/denotation';
 import stopWatchSrc from '../../../../../public/stopWatch.png';
 import pakeepsSrc from '../../../../../public/pakeeps.png';
+import simpleBlogSrc from '../../../../../public/simple_blog.png';
 
 const useLocalStyles = makeStyles(
   ({ palette: { background, secondary, primary }, breakpoints, shape: { borderRadius } }) => ({
     container: {
+
+    
+
       '& path': {
         strokeWidth: '3px'
       },
@@ -24,7 +29,12 @@ const useLocalStyles = makeStyles(
           '& img': {
             borderRadius
           },
+'& > div ' :{
 
+
+  width: '100%',
+  height: '100%'
+},
           position: 'relative',
           '& .wrapper': {
             position: 'absolute',
@@ -48,13 +58,29 @@ const useLocalStyles = makeStyles(
             zIndex: 2
           },
           // overflow:'hidden',maxHeight:342,
-          width: '48%',
+          width: 'calc(50% - 8px)',
+          marginBottom:'8px',
           [breakpoints.down('sm')]: {
             width: '100%'
           }
           // height:200
         }
-      }
+      },
+      '& .comingSoonPlaceholder':{
+        justifyContent:'center',
+        borderRadius,
+display:'grid',
+placeItems:'center',
+        color:`${colord(primary.main).alpha(0.8).toHex()}`,
+             border: `2px solid ${colord(primary.main).alpha(0.42).toHex()}`,
+        
+       
+        '&:hover':{
+background:'linear-gradient(90deg, #ffe6ad 0%, rgba(255,175,249,1) 100%)',
+       
+       color:background.default,
+       },
+       },
     }
   })
 );
@@ -63,6 +89,12 @@ const Experience: FC = () => {
   const { container } = useLocalStyles();
 
   const projectArr = [
+    {
+      src: simpleBlogSrc,
+      title: 'Simple blog',
+      gitHub: 'https://github.com/pas8/simple_blog_by_pas',
+      site: 'https://simple-blog-by-pas.vercel.app/'
+    },
     {
       src: pakeepsSrc,
       title: 'Pakeeps',
@@ -74,9 +106,15 @@ const Experience: FC = () => {
       title: 'StopWatch',
       gitHub: 'https://stopwatch-5ce7m2y2d-8pas.vercel.app/',
       site: 'https://stopwatch-5ce7m2y2d-8pas.vercel.app/'
-    }
+    },
+  
+
   ];
   const id = sectionIds.PROJECTS;
+const {isSizeSmall} = useBreakpointNames()
+
+const isComingSoonPlaceholderVisible = (projectArr.length & 1) !== 0 && !isSizeSmall  
+
   return (
     <Grid container className={container} alignItems={'center'} id={id}>
       <SectionContainer>
@@ -142,6 +180,8 @@ const Experience: FC = () => {
               </Grid>
             );
           })}
+  {isComingSoonPlaceholderVisible && <Grid className={'projectItem comingSoonPlaceholder'} ><Typography variant={'h2'} component={'h6'}> Coming soon </Typography></Grid>}
+
         </Grid>
       </SectionContainer>
     </Grid>

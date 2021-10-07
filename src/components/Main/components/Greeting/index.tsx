@@ -73,7 +73,15 @@ export const useStyles = makeStyles(({ palette: { background, secondary, primary
 
     '& path': {
       strokeWidth: '12px'
-    }
+    },
+    [breakpoints.up('xl')]: {
+      width:'100%',
+
+  ' & svg': {
+    width:420,
+
+  }
+      }
   },
 
   containerOfIAMPAS: {
