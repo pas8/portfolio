@@ -1,15 +1,14 @@
 import { Grid, makeStyles, Typography, ButtonBase } from '@material-ui/core';
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
-import { colord } from 'colord';
-import clsx from 'clsx';
 import VideoButton from 'components/VideoButton';
 import { CursorContext } from 'layouts/CursorLayout';
 import SectionContainer from 'components/SectionContainer';
 import { sectionIds } from 'models/denotation';
 import { useRouter } from 'next/router';
 import SvgAnimation from 'components/SvgAnimation/index';
-import { toChangeStatuses } from 'store/modules/App/actions';
+
+const BIO = 'full-stack_engineer'
 
 export const useStyles = makeStyles(({ palette: { background, secondary, primary }, breakpoints }) => ({
   '@global': {
@@ -283,7 +282,7 @@ const Greeting: FC = () => {
                   onMouseOver={() => handleToggleCursorVisibility(true)}
                   onMouseOut={() => handleToggleCursorVisibility(false)}
                 >
-                  {Array.from('react_typescript_web_developer').map((letter, idx) => {
+                  {Array.from(BIO).map((letter, idx) => {
                     return (
                       <div key={`text_${letter}_${idx}`} className={'racketTextAnimated'}>
                         {letter}

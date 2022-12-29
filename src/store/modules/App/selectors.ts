@@ -1,9 +1,9 @@
 import { RootStoreType } from 'models/types';
 import { createSelector } from 'reselect';
 
-export const getThemePropertyies = createSelector(
-  [(state: RootStoreType) => state.app.themePropertyies],
-  themePropertyies => themePropertyies
+export const getThemeProperties = createSelector(
+  [(state: RootStoreType) => state.app.themeProperties],
+  themeProperties => themeProperties
 );
 export const getSkills = createSelector([(state: RootStoreType) => state.app.skills], skills => skills);
 
@@ -17,9 +17,9 @@ export const getIsMain3dSceneHidden = createSelector(
   isMain3dSceneHidden => isMain3dSceneHidden
 );
 
-export const getLoadingProperyies = createSelector(
+export const getLoadingProperties = createSelector(
   [(state: RootStoreType) => ({ isLoading: state.app.statuses.isLoading, percent: state.app.loadingPercent })],
-  loadingProperyies => loadingProperyies
+  loadingProperties => loadingProperties
 );
 
 export const getIsRandomColorChangingDisabled = createSelector(

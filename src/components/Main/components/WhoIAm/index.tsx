@@ -10,6 +10,20 @@ import { useBreakpointNames } from 'hooks/useBreakpointNames.hook';
 import SvgAnimation from 'components/SvgAnimation';
 import { sectionIds } from 'models/denotation';
 
+const RESUME_URL =
+  'https://www.canva.com/design/DAElBAtPJsU/e1h5ij6rvoMIkN4dNWIrkA/view?utm_content=DAElBAtPJsU&utm_campaign=designshare&utm_medium=link&utm_source=sharebutton';
+
+const text =
+  `
+I am Anatolii Ponocheniuk, a full-stack engineer.
+
+My road to creating a part of the genius human invention called the internet starts with an adventure into a frontend ocean (html, css, js, react, ts).
+This frontend base gives anybody the unique opportunity to create anything you can even imagine, so I just took it (check "experience" section).
+Of course, every adventure should include some unique parts - in my case, it's  working as a part of https://www.thelevelgroup.com/ (sfcc, react, nodejs)
+
+To be continued...
+`
+
 const CanvasWithPas = dynamic(() => import('./components/Canvas'), { ssr: false });
 
 const useLocalStyles = makeStyles(
@@ -81,12 +95,6 @@ const WhoIAm: FC = () => {
   const { containerOfWHOIAM, contentContainer, container } = useLocalStyles();
   const cursorColor = useSelector(getCursorColor);
   const { isSizeIsXs } = useBreakpointNames();
-
-  const RESUME_URL =
-    'https://www.canva.com/design/DAElBAtPJsU/e1h5ij6rvoMIkN4dNWIrkA/view?utm_content=DAElBAtPJsU&utm_campaign=designshare&utm_medium=link&utm_source=sharebutton';
-
-  const text =
-    'I am Anatolii Ponocheniuk, self-educated by realizing studying projects and also acquire new info by reading the official documentation. And about my soft skills, I improved them in MBA school and Gdansk business week of course all communication was English. Exactly want to evolve as a react-ts developer and of course be fond of coding and right react with typescript. So, I have default hobbies. Certainly motivated enough to work in a new company.';
   const id = sectionIds.WHO_I_AM;
 
   return (
@@ -128,7 +136,7 @@ const WhoIAm: FC = () => {
             <CanvasWithPas />
           </Grid>
           <Grid>
-            <Typography color={'textSecondary'}>{text}</Typography>
+            <Typography color={'textSecondary'} style={{whiteSpace: 'pre-line'}}>{text}</Typography>
           </Grid>
         </Grid>
         <Grid className={'readMoreButtonContainer'}>

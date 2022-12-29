@@ -10,18 +10,18 @@ const useStyles = makeStyles(({ palette: { background, secondary }, shape: { bor
       width: '100%',
       marginBottom:16,
     },
-    '& .graficContentContainer': {
+    '& .graphicContentContainer': {
       height:'100%',
         [breakpoints.down('sm')]: {
       gap:20,
     },
     },
 
-    '& .graficItemContainer': {
+    '& .graphicItemContainer': {
       '& h6': {
         marginBottom: 4
       },
-      '& .graficContent': {
+      '& .graphicContent': {
         borderRadius,
         height: 4,
         background: colord(secondary.main).alpha(0.16).toHex()
@@ -30,19 +30,14 @@ const useStyles = makeStyles(({ palette: { background, secondary }, shape: { bor
   }
 }));
 
-const MainSkillsGrafic: FC = () => {
+const MainSkillsGraphic: FC = () => {
   const { container } = useStyles();
 
-  const graficsItemsArr = [
+  const graphicsItemsArr = [
     {
-      title: 'Html || Pug',
+      title: 'Html && Css',
       color: '#74af57',
-      percent: 68
-    },
-    {
-      title: 'Css || Scss || Jss',
-      color: '#de617b',
-      percent: 64
+      percent: 80
     },
     {
       title: 'ReactJs',
@@ -52,43 +47,40 @@ const MainSkillsGrafic: FC = () => {
     {
       title: 'TypeScript',
       color: '#4b88cf ',
-      percent: 58
+      percent: 80
     },
-
     {
-      title: 'JavaScript',
-      color: '#f6e568 ',
-      percent: 60
-    },
-
-    {
-      title: 'Express || NextApi',
+      title: 'NodeJs',
       color: '#d25350',
-      percent: 42
+      percent: 86
+    },
+    {
+      title: 'SFCC',
+      color: '#f6e568',
+      percent: 90
     }
   ];
 
   return (
     <Grid className={container}>
-      <Grid container className={'graficContentContainer'} direction={'column'} justifyContent={'space-around'}>
-        {graficsItemsArr.map(({ title, color, percent }, idx) => {
+      <Grid container className={'graphicContentContainer'} direction={'column'} justifyContent={'space-around'}>
+        {graphicsItemsArr.map(({ title, color, percent }, idx) => {
           return (
-            <Grid container key={`${title}_${idx}`} className={'graficItemContainer'}>
+            <Grid container key={`${title}_${idx}`} className={'graphicItemContainer'}>
               <Grid container>
                 <Typography color={'textSecondary'} variant={'h6'}>
                   {title}
                 </Typography>
               </Grid>
-              <Grid container className={'graficContent'}>
+              <Grid container className={'graphicContent'}>
                 <Grid style={{ background: color, height: '100%', width: `${percent}%` }} />
               </Grid>
             </Grid>
           );
         })}
-        {/* <Grid container></Grid> */}
       </Grid>
     </Grid>
   );
 };
 
-export default MainSkillsGrafic;
+export default MainSkillsGraphic;

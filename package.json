@@ -16,7 +16,7 @@
     "@react-three/postprocessing": "^2.0.5",
     "clsx": "^1.1.1",
     "colord": "^2.4.0",
-    "next": "11.0.1",
+    "next": "^11.0.1",
     "next-seo": "^4.26.0",
     "nodemailer": "^6.6.3",
     "notistack": "^1.0.10",
@@ -28,7 +28,8 @@
     "react-use": "^17.2.4",
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0",
-    "reselect": "^4.0.0"
+    "reselect": "^4.0.0",
+    "three": "^0.127.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.171",

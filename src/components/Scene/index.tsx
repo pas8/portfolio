@@ -26,7 +26,7 @@ import { useWindowScroll } from 'react-use';
 import { usePermission, useWindowSize } from 'react-use';
 import { Vector3 } from '@react-three/fiber';
 import { useDispatch, useSelector } from 'react-redux';
-import { toChangeLoadingProperyies, toChangeTextureMaps } from 'store/modules/App/actions';
+import { toChangeLoadingProperties, toChangeTextureMaps } from 'store/modules/App/actions';
 import { FC } from 'react';
 import { getIsSoundPaused, getSoundIdx } from 'store/modules/App/selectors';
 
@@ -55,13 +55,13 @@ const useStyles = makeStyles(({ palette: { background } }) => ({
 
 const Scene: FC = () => {
   const classes = useStyles();
-  const { active, progress, ...props } = useProgress();
+  const { active, progress, } = useProgress();
   const dispatch = useDispatch();
   const soundIdx = useSelector(getSoundIdx);
   const isSoundPaused = useSelector(getIsSoundPaused);
 
   useEffect(() => {
-    dispatch(toChangeLoadingProperyies({ loadingProperyies: { isLoading: active, percent: progress } }));
+    dispatch(toChangeLoadingProperties({ loadingProperties: { isLoading: active, percent: progress } }));
   }, [active, progress]);
 
   return (
@@ -82,7 +82,7 @@ const Container: FC<{ dispatch: Dispatch<any>; isSoundPaused: boolean; soundIdx:
   isSoundPaused,
   soundIdx
 }) => {
-  const { size, camera } = useThree();
+  const { camera } = useThree();
 
   const handleMoveCameraOnMouseMove = (e: any) => {
     camera.position.x = e.clientX * 0.0001;
@@ -130,7 +130,7 @@ const Container: FC<{ dispatch: Dispatch<any>; isSoundPaused: boolean; soundIdx:
     neptunMap,
     moonMap,
     moonNormalMap,
-    avaMap,
+    avatarMap,
     ...skillsTextureArr
   ] = useTexture([
     'sunNormalMap.png',
@@ -153,7 +153,7 @@ const Container: FC<{ dispatch: Dispatch<any>; isSoundPaused: boolean; soundIdx:
     'neptunMap.jpeg',
     'moonMap.jpg',
     'moonNormalMap.png',
-    'ava3.jpg',
+    'avatar.JPG',
     'next.png',
     '_lodash.png',
     'firebase.png',
@@ -167,22 +167,10 @@ const Container: FC<{ dispatch: Dispatch<any>; isSoundPaused: boolean; soundIdx:
     'scss.png',
     'ts.png'
   ]);
+
   useEffect(() => {
-    dispatch(toChangeTextureMaps({ textureMaps: { avatar: avaMap, skillsTextureArr } }));
-  }, [avaMap]);
-
-  const groupRef: any = useRef();
-
-  const orbitSpeed = {
-    MERCURY: 0.622,
-    VENUS: 0.85,
-    EARTH: 1,
-    MARS: 0.802,
-    JUPITER: 0.434,
-    SATURN: 0.323,
-    URANUS: 0.228,
-    NEPTUNE: 0.182
-  };
+    dispatch(toChangeTextureMaps({ textureMaps: { avatar: avatarMap, skillsTextureArr } }));
+  }, [avatarMap]);
 
   useFrame(() => {
     if (isSoundPaused) return;
@@ -318,14 +306,11 @@ const Container: FC<{ dispatch: Dispatch<any>; isSoundPaused: boolean; soundIdx:
 
     neptunRef.current.position.y = positions.neptun.Y + t * 0.0006;
     neptunRef.current.position.z = -1 - t * 0.0004;
-    // sunRef.current.rotation.x += 0.004;
-    // sunRef.current.rotation.y += 0.004;
 
     moonRef.current.position.x = -3200 > t ?3 + t * 0.0008 : positions.moon.X +  t * 0.0004
     moonRef.current.position.y = -3200 > t ? 4.4 + t * 0.0012 : positions.moon.Y +  t * 0.0004
     moonRef.current.position.z = -3200 > t ? -2 - t * 0.0004 : -1;
 
-    // marsRef.current.position.y = 1 + t * 0.004;
   };
 
   document.body.onscroll = handleMoveCamera;
@@ -337,21 +322,15 @@ const Container: FC<{ dispatch: Dispatch<any>; isSoundPaused: boolean; soundIdx:
       <Billboard
         position={[-20, -2, 0]}
         args={[3, 2]}
-        // material-color="red"
         follow={true}
         lockX={false}
         lockY={false}
         lockZ={false}
       >
-        {/* <meshStandardMaterial displacementScale={0.2} map={mars} /> */}
       </Billboard>
       <pointLight args={[0x6549b8, 2]} position={[2, 0.8, -4]} />
       <pointLight args={[0x30b47f, 2]} position={[2, 0.4, -2]} />
       <pointLight args={[0x401d2a, 4]} position={[0.2, 0.8, -4]} />
-      {/* <mesh position={[1, 0.6, -4]} ref={darkMateriaRef}>
-        <sphereGeometry args={[0.2, 32, 16]} />
-        <meshStandardMaterial normalMap={darkMateriaNormalMap} metalness={0.6} roughness={0.4} color={0x292929} />
-      </mesh> */}
 
       <pointLight args={[0xcf3626, 0.2]} position={[0, 0.4, -2]} />
 
@@ -406,25 +385,5 @@ const Container: FC<{ dispatch: Dispatch<any>; isSoundPaused: boolean; soundIdx:
     </>
   );
 };
-
-// var videoTexture= new THREEx.VideoTexture('videos/sintel.ogv')
-// updateFcts.push(function(delta, now){
-//     // to update the texture are every frame
-//     videoTexture.update(delta, now)
-// })
-
-// const videoRef = useRef<HTMLVideoElement>();
-
-// var video = document.createElement('video');
-// video.loop = true;
-// video.crossOrigin = 'anonymous';
-// video.preload = 'auto';
-// video.src = 'https://cdn.lost.show/mf/video/button-gradient.mp4';
-// video.play();
-
-// var texture = new THREE.VideoTexture(video);
-// texture.minFilter = THREE.NearestFilter;
-// texture.magFilter = THREE.LinearFilter;
-// texture.format = THREE.RGBFormat;
 
 export default Scene;

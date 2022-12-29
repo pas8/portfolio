@@ -1,10 +1,10 @@
 import { TypeNames } from './enums';
 import { AppActionTypes, PayloadTypes } from './types';
 
-export const toChangeThemePropertyies = (
-  payload: PayloadTypes[TypeNames.HANDLE_CHANGE_THEME_PROPERTYIES]
+export const toChangethemeProperties = (
+  payload: PayloadTypes[TypeNames.HANDLE_CHANGE_THEME_PROPERTIES]
 ): AppActionTypes => ({
-  type: TypeNames.HANDLE_CHANGE_THEME_PROPERTYIES,
+  type: TypeNames.HANDLE_CHANGE_THEME_PROPERTIES,
   payload
 });
 export const toChangeCursorColor = (payload: PayloadTypes[TypeNames.HANDLE_CHANGE_CURSOR_COLOR]): AppActionTypes => ({
@@ -16,10 +16,10 @@ export const toChangeStatuses = (payload: PayloadTypes[TypeNames.HANDLE_CHANGE_S
   type: TypeNames.HANDLE_CHANGE_STATUSES,
   payload
 });
-export const toChangeLoadingProperyies = (
-  payload: PayloadTypes[TypeNames.HANDLE_CHANGE_LOADING_PROPERYIES]
+export const toChangeLoadingProperties = (
+  payload: PayloadTypes[TypeNames.HANDLE_CHANGE_LOADING_PROPERTIES]
 ): AppActionTypes => ({
-  type: TypeNames.HANDLE_CHANGE_LOADING_PROPERYIES,
+  type: TypeNames.HANDLE_CHANGE_LOADING_PROPERTIES,
   payload
 });
 export const toChangeTextureMaps = (payload: PayloadTypes[TypeNames.HANDLE_CHANGE_TEXTURE_MAPS]): AppActionTypes => ({

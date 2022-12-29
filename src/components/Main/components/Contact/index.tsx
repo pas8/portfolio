@@ -6,7 +6,6 @@ import SectionContainer from 'components/SectionContainer';
 import { sectionIds } from 'models/denotation';
 import VideoButton from 'components/VideoButton';
 import SvgAnimation from 'components/SvgAnimation/index';
-import locationSrc from '../../../../../public/location2.png';
 
 const InputByPas = withStyles(({ palette: { background, secondary, primary, text } }) => ({
   root: {
@@ -63,8 +62,11 @@ const useLocalStyles = makeStyles(
         },
         width: '48%',
         position: 'relative',
-        '& img': {
+        '& .img': {
           opacity:.8,
+          aspectRatio:1,
+          height:'100%',
+          backgroundSize: 'cover',
           borderRadius
         },
         '& .caption': {
@@ -128,12 +130,12 @@ const Contact: FC = () => {
       .then(res => {
         if (res.status === 200) {
           enqueueSnackbar('Email sended', { variant: 'success' });
-          // return enqueueSnackbar('If u can`t find email, check spam please!', { variant: 'info' });
         }
       })
       .catch(err => enqueueSnackbar(err, { variant: 'error' }));
   };
   const id = sectionIds.CONTACT;
+
   return (
     <Grid container className={container} alignItems={'center'} id={id}>
       <SectionContainer>
@@ -221,7 +223,7 @@ const Contact: FC = () => {
               <Typography>+380951194092 </Typography>
               <Typography>whyiampas@gmail.com </Typography>
             </Grid>
-            <Image src={locationSrc} alt={'Kyiv location'} layout={'responsive'} placeholder={'blur'} />
+            <div style={{backgroundImage: `url(location2.png)`, }} className={'img'}></div>
           </Grid>
         </Grid>
       </SectionContainer>

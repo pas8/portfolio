@@ -1,21 +1,21 @@
 import { createTheme, ThemeProvider, makeStyles } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { FC } from 'react';
-import { getThemePropertyies } from 'store/modules/App/selectors';
+import { getThemeProperties } from 'store/modules/App/selectors';
 
 export type LayoutType = typeof ThemeLayout;
-const useStyles = makeStyles(({ palette: { background, primary, secondary } }) => ({
+const useStyles = makeStyles(() => ({
   '@global': {
     '.sphereBackground': {
-      backgroundImage: 'url(https://about.mav.farm/sprites/cursor-sphere-sprite.png)'
+      backgroundImage: `url('cursor_sphere_sprite.png')`
     }
   }
 }));
 
 const ThemeLayout: FC = ({ children }) => {
-  const themePropertyies = useSelector(getThemePropertyies);
+  const themeProperties = useSelector(getThemeProperties);
   useStyles();
-  const theme = createTheme(themePropertyies);
+  const theme = createTheme(themeProperties);
 
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };

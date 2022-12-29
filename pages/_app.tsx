@@ -1,11 +1,9 @@
 import { FC } from 'react';
 import { useUploadThemeSsr } from 'hooks/useUploadThemeSsr.hook';
-import { AppProps } from 'next/dist/next-server/lib/router/router';
 import dynamic from 'next/dynamic';
 import { ComposeLayouts } from 'layouts';
 
 const StoreLayout = dynamic(() => import('../src/layouts/StoreLayout'));
-const ColorLayout = dynamic(() => import('../src/layouts/ColorLayout'));
 const ThemeLayout = dynamic(() => import('../src/layouts/ThemeLayout'));
 const SoundLayout = dynamic(() => import('../src/layouts/SoundLayout'), { ssr: false });
 const SceneLayout = dynamic(() => import('../src/layouts/SceneLayout'));
@@ -17,7 +15,7 @@ const CursorLayout = dynamic(() => import('../src/layouts/CursorLayout'), { ssr:
 const LoadingLayout = dynamic(() => import('../src/layouts/LoadingLayout'));
 const ScrollLayout = dynamic(() => import('../src/layouts/ScrollLayout'), { ssr: false });
 
-const Index: FC<AppProps> = ({ Component, pageProps }) => {
+const Index: FC<any> = ({ Component, pageProps }) => {
   useUploadThemeSsr();
 
   const layouts = [
@@ -28,7 +26,6 @@ const Index: FC<AppProps> = ({ Component, pageProps }) => {
     LoadingLayout,
     SoundLayout,
     ScrollLayout,
-    ColorLayout,
     SnackBarLayout,
     TipsLayout,
     NavLayout

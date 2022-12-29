@@ -5,24 +5,11 @@ import { colord, extend } from 'colord';
 import mixPlugin from 'colord/plugins/mix';
 import { useSelector } from 'react-redux';
 import { Grid, makeStyles, Typography, useTheme, Zoom, Box } from '@material-ui/core';
-import { getLoadingProperyies } from 'store/modules/App/selectors';
+import { getLoadingProperties } from 'store/modules/App/selectors';
 import CursorButton from 'components/CursorButton/index';
+
 const useLocalStyles = makeStyles(
   ({ palette: { background, secondary, primary, text, common }, breakpoints, shape: { borderRadius } }) => ({
-    '@global': {
-      // '@keyframes gradientFillAnimation': {
-      //   '0%': {
-      //     fill: `linear-gradient(180deg, ${secondary.main} 0%, ${primary.main} 100%)`
-      //   },
-      //   '66%': {
-      //     fill: `linear-gradient(180deg, ${primary.main} 0%, ${secondary.main} 100%)`
-      //   },
-      //   '100%': {
-      //     fill: `linear-gradient(180deg, ${secondary.main} 0%, ${primary.main} 100%)`
-      //   },
-      // }
-    },
-
     container: {
       position: 'fixed',
       zIndex: 20000,
@@ -65,6 +52,9 @@ const useLocalStyles = makeStyles(
     }
   })
 );
+
+const isAdittionAnimationEnable = false;
+
 const LoadingLayout: FC = ({ children }) => {
   extend([mixPlugin]);
   const { container } = useLocalStyles();
@@ -73,11 +63,17 @@ const LoadingLayout: FC = ({ children }) => {
   const [isLoadingLayoutShoulBeHidden, setIsLoadingLayoutShoulBeHidden] = useState(false);
   const [isLoadingLayoutHidden, setIsLoadingLayoutHidden] = useState(false);
 
-  const { percent, isLoading } = useSelector(getLoadingProperyies);
+  const { percent, isLoading } = useSelector(getLoadingProperties);
   const previuosIsLoading = usePrevious(isLoading);
 
   useEffect(() => {
-    if (!!previuosIsLoading && !isLoading) {
+    if (!isAdittionAnimationEnable) {
+      setIsAwaited(true);
+      setTimeout(() => {
+        setIsAwaited(true);
+      }, 1000);
+
+    }     else if (!!previuosIsLoading && !isLoading) {
       setIsAllWasLoaded(true);
       setTimeout(() => {
         setIsAwaited(true);
@@ -87,7 +83,7 @@ const LoadingLayout: FC = ({ children }) => {
 
   useEffect(() => {
     if (!isAwaited) return;
-    
+
     setTimeout(() => {
       setIsLoadingLayoutShoulBeHidden(true);
       setTimeout(() => {
@@ -102,7 +98,7 @@ const LoadingLayout: FC = ({ children }) => {
     .mix(palette.secondary.main, percent / 100)
     .toHex();
 
-  return (
+    return (
     <>
       {!isLoadingLayoutHidden && (
         <Zoom in={!isLoadingLayoutShoulBeHidden}>

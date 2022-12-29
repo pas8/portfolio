@@ -4,8 +4,8 @@ import { $Values, Optional } from 'utility-types';
 import { TypeNames } from './enums';
 
 export type PayloadTypes = {
-  [TypeNames.HANDLE_CHANGE_THEME_PROPERTYIES]: {
-    themePropertyies: ThemeOptions;
+  [TypeNames.HANDLE_CHANGE_THEME_PROPERTIES]: {
+    themeProperties: ThemeOptions;
   };
   [TypeNames.HANDLE_CHANGE_CURSOR_COLOR]: {
     cursorColor: CursorColortype;
@@ -14,8 +14,8 @@ export type PayloadTypes = {
   [TypeNames.HANDLE_CHANGE_STATUSES]: {
     newStatuses: Optional<StatusesType>;
   };
-  [TypeNames.HANDLE_CHANGE_LOADING_PROPERYIES]: {
-    loadingProperyies: { percent: number; isLoading: boolean };
+  [TypeNames.HANDLE_CHANGE_LOADING_PROPERTIES]: {
+    loadingProperties: { percent: number; isLoading: boolean };
   };
 
   [TypeNames.HANDLE_CHANGE_TEXTURE_MAPS]: {
@@ -49,18 +49,18 @@ export type ActionsValueTypes = {
     payload: PayloadTypes[TypeNames.HANDLE_CHANGE_CURRENT_SECTION_ID];
   };
 
-  toChangeThemePropertyies: {
-    type: typeof TypeNames.HANDLE_CHANGE_THEME_PROPERTYIES;
-    payload: PayloadTypes[TypeNames.HANDLE_CHANGE_THEME_PROPERTYIES];
+  toChangethemeProperties: {
+    type: typeof TypeNames.HANDLE_CHANGE_THEME_PROPERTIES;
+    payload: PayloadTypes[TypeNames.HANDLE_CHANGE_THEME_PROPERTIES];
   };
   toChangeTextureMaps: {
     type: typeof TypeNames.HANDLE_CHANGE_TEXTURE_MAPS;
     payload: PayloadTypes[TypeNames.HANDLE_CHANGE_TEXTURE_MAPS];
   };
 
-  toChangeLoadingProperyies: {
-    type: typeof TypeNames.HANDLE_CHANGE_LOADING_PROPERYIES;
-    payload: PayloadTypes[TypeNames.HANDLE_CHANGE_LOADING_PROPERYIES];
+  toChangeLoadingProperties: {
+    type: typeof TypeNames.HANDLE_CHANGE_LOADING_PROPERTIES;
+    payload: PayloadTypes[TypeNames.HANDLE_CHANGE_LOADING_PROPERTIES];
   };
 
   toChangeStatuses: {
@@ -89,7 +89,7 @@ export type TextureMapsType = {
 };
 
 export type AppInitialStateType = {
-  themePropertyies: ThemeOptions;
+  themeProperties: ThemeOptions;
   skills: SkillsType;
   loadingPercent: number;
   currentSectionId:string ;

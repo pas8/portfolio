@@ -1,6 +1,5 @@
 import { FC, useRef, Suspense } from 'react';
-import { Icosahedron, useTexture } from '@react-three/drei';
-import { Canvas, extend, useFrame, useLoader, useThree } from '@react-three/fiber';
+import { Canvas, useFrame,  } from '@react-three/fiber';
 import { useBreakpointNames } from 'hooks/useBreakpointNames.hook';
 import { useSelector } from 'react-redux';
 import { getAvatarMap } from 'store/modules/App/selectors';
@@ -32,7 +31,7 @@ const CanvasWithPas: FC = () => {
           shadow-mapSize-width={256}
           shadow-mapSize-height={256}
         />
-        <Box avaMap={avaMap} />
+        {avaMap && <Box avaMap={avaMap} />}
       </Suspense>
     </Canvas>
   );
@@ -49,7 +48,7 @@ const Box: FC<{ avaMap: any }> = ({ avaMap }) => {
 
   return (
     <mesh ref={avaRef}>
-      <boxBufferGeometry attach="geometry" args={[3.7, 3.7, 3.7]} />
+      <boxBufferGeometry attach={'geometry'} args={[3.7, 3.7, 3.7]} />
       <meshLambertMaterial map={avaMap} />
     </mesh>
   );

@@ -16,16 +16,6 @@ const ColorLayout: FC = ({ children }) => {
   const isRandomColorChangingDisabled = useSelector(getIsRandomColorChangingDisabled);
   const {} = useStyles();
 
-  // useEffect(() => {
-
-  //     setInterval(() => {
-  //       const newCursorColor = colord({ l: 92, c: 132, h: random(0, 360) }).toHex();
-  //       console.log(isRandomColorChangingDisabled)
-
-  //       !isRandomColorChangingDisabled && dispatch(toChangeCursorColor({ cursorColor: newCursorColor }));
-  //     }, 4000);
-  // }, [isRandomColorChangingDisabled]);
-
   return <>{children}</>;
 };
 

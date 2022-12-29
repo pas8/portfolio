@@ -9,7 +9,7 @@ import SvgAnimation from 'components/SvgAnimation/index';
 import { sectionIds } from 'models/denotation';
 import SectionContainer from 'components/SectionContainer';
 import CursorButton from 'components/CursorButton';
-import MainSkillsGrafic from './components/MainSkillsGrafic';
+import MainSkillsGraphic from './components/MainSkillsGraphic';
 
 const MoreSkillsDialog = dynamic(() => import('./components/MoreSkillsDialog/index'), { ssr: false });
 const Sphere = dynamic(() => import('../Sphere/index'), { ssr: false });
@@ -82,7 +82,7 @@ const MySkills: FC = () => {
 
         <Grid container direction={'column'} className={contentContainer}>
           <Grid container justifyContent={'space-between'} className={'mainPart'}>
-            <MainSkillsGrafic />
+            <MainSkillsGraphic />
             <Sphere />
           </Grid>
           <Grid container>

@@ -4,7 +4,7 @@ import { sectionIds } from 'models/denotation';
 import { FC } from 'react';
 
 const useLocalStyles = makeStyles(
-  ({ palette: { background, secondary, primary, text }, breakpoints, shape: { borderRadius } }) => ({
+  ({ palette: { secondary }, shape: { borderRadius } }) => ({
     '@global': {
       body: {
         '&::-webkit-scrollbar-thumb': {
@@ -21,8 +21,6 @@ const useLocalStyles = makeStyles(
         scrollbarColor: `${secondary.main} #292731`,
         cursor: 'none !important',
         scrollBehavior: 'smooth'
-
-        // overflowY: 'hidden'
       }
     }
   })

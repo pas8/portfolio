@@ -93,9 +93,6 @@ const useStyles = makeStyles(({ palette: { background, secondary, primary }, bre
       '& .NOT_ACTIVE': {
         opacity: 0.42
       },
-      // '&:hover': {
-      //   animation: 'racket 1s '
-      // },
 
       [`& .${pathsClassName.FIRST}`]: {
         strokeDasharray: 2000

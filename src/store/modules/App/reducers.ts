@@ -3,7 +3,7 @@ import { TypeNames } from './enums';
 import { AppActionTypes, AppInitialStateType } from './types';
 
 export const initialState: AppInitialStateType = {
-  themePropertyies: {
+  themeProperties: {
     shape: { borderRadius: 8 },
     palette: {
       common: {
@@ -67,19 +67,19 @@ export const initialState: AppInitialStateType = {
 
 export const AppReducer = (state = initialState, action: AppActionTypes): AppInitialStateType => {
   switch (action.type) {
-    case TypeNames.HANDLE_CHANGE_THEME_PROPERTYIES: {
-      return { ...state, themePropertyies: { ...state.themePropertyies, ...action.payload.themePropertyies } };
+    case TypeNames.HANDLE_CHANGE_THEME_PROPERTIES: {
+      return { ...state, themeProperties: { ...state.themeProperties, ...action.payload.themeProperties } };
     }
 
     case TypeNames.HANDLE_CHANGE_STATUSES: {
       return { ...state, statuses: { ...state.statuses, ...action.payload.newStatuses } };
     }
 
-    case TypeNames.HANDLE_CHANGE_LOADING_PROPERYIES: {
+    case TypeNames.HANDLE_CHANGE_LOADING_PROPERTIES: {
       return {
         ...state,
-        statuses: { ...state.statuses, isLoading: action.payload.loadingProperyies.isLoading },
-        loadingPercent: action.payload.loadingProperyies.percent
+        statuses: { ...state.statuses, isLoading: action.payload.loadingProperties.isLoading },
+        loadingPercent: action.payload.loadingProperties.percent
       };
     }
 

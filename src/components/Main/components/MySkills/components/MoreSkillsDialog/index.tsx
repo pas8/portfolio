@@ -64,6 +64,7 @@ const MoreSkillsDialog: FC<DialogProps> = ({ open, onClose }) => {
   const fullScreen = useMediaQuery(breakpoints.down('md'));
   const textureArr = useSelector(getSkillsTextureArr);
   const avaMap = useSelector(getAvatarMap);
+
   return (
     <Dialog fullScreen={fullScreen} fullWidth maxWidth={'lg'} open={open} onClose={onClose}>
       <CloseVideoButton onClose={onClose} />

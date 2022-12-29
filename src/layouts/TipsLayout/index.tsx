@@ -3,10 +3,8 @@ import { colord } from 'colord';
 import { createContext, FC, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIsTipsLayoutHidden } from 'store/modules/App/selectors';
-import { isMobile } from 'react-device-detect';
-import { tipsElementIds } from 'models/denotation';
-import { useIsomorphicLayoutEffect, useWindowSize } from 'react-use';
-import { useRef, useEffect } from 'react';
+import { useWindowSize } from 'react-use';
+import { useEffect } from 'react';
 import Confetti from 'react-dom-confetti';
 import { useBreakpointNames } from 'hooks/useBreakpointNames.hook';
 
@@ -39,7 +37,7 @@ const useStyles = makeStyles(({ palette: { secondary, common, primary }, breakpo
     }
   },
 
-  container: ({angle}:{angle:AngleType}) => ({
+  container: ({ angle }: { angle: AngleType }) => ({
     position: 'fixed',
     inset: 0,
     zIndex: 10000,
@@ -128,8 +126,7 @@ const useStyles = makeStyles(({ palette: { secondary, common, primary }, breakpo
       padding: 20,
       // width:'100%',
       paddingRight: 60,
-      position: 'absolute',
-    
+      position: 'absolute'
     },
 
     '& .tipDenotationContainer': {
@@ -153,20 +150,19 @@ const useStyles = makeStyles(({ palette: { secondary, common, primary }, breakpo
         position: 'relative',
 
         '& .tringle': {
-          top:angle === 'left' ?  '50%' : 0,
-          left:angle === 'bottom' ?  '50%' : 0,
-          transform: angle === 'bottom' ? 'translateX(-50%)' :  'translateY(-50%)',
+          top: angle === 'left' ? '50%' : 0,
+          left: angle === 'bottom' ? '50%' : 0,
+          transform: angle === 'bottom' ? 'translateX(-50%)' : 'translateY(-50%)',
           position: 'absolute',
-          marginLeft: angle === 'left'  ? -20 : 0,
-          marginTop: angle === 'bottom'  ? -20 : 0,
-          borderTop:angle === 'left' ?  '20px solid transparent' : 0,
-          borderLeft:angle === 'bottom' ?  '20px solid transparent' : 0,
-          borderBottom: `20px solid ${angle === 'left'  ? 'transparent' : colord(secondary.main).alpha(0.16).toHex()}`,
+          marginLeft: angle === 'left' ? -20 : 0,
+          marginTop: angle === 'bottom' ? -20 : 0,
+          borderTop: angle === 'left' ? '20px solid transparent' : 0,
+          borderLeft: angle === 'bottom' ? '20px solid transparent' : 0,
+          borderBottom: `20px solid ${angle === 'left' ? 'transparent' : colord(secondary.main).alpha(0.16).toHex()}`,
           backdropFilter: 'blur(10px)',
-          borderRight: `20px solid ${angle === 'bottom'  ? 'transparent' : colord(secondary.main).alpha(0.16).toHex()}`
+          borderRight: `20px solid ${angle === 'bottom' ? 'transparent' : colord(secondary.main).alpha(0.16).toHex()}`
         }
       }
-      // clipPath: 'polygon(0 38%, 16% 38%, 16% 0, 100% 0, 100% 100%, 16% 100%, 16% 67%)'
     }
   })
 }));
@@ -175,24 +171,20 @@ const TipsLayout: FC = ({ children }) => {
   const isTipsLayoutHidden = useSelector(getIsTipsLayoutHidden);
   const [tipsElementArr, setTipsElementArr] = useState<any[]>([]);
 
-  const { isSizeSmall ,isSizeIsMd} = useBreakpointNames();
-const {width:windowWidth} = useWindowSize()
+  const { isSizeSmall, isSizeIsMd } = useBreakpointNames();
+  const { width: windowWidth } = useWindowSize();
   const [step, setStep] = useState(0);
-  const [isInAnimation, setIsInAnimation] = useState(true);
   const dispatch = useDispatch();
   const colorsArr = useGetColorsArr();
   const angle: AngleType = isSizeSmall || isSizeIsMd ? 'bottom' : 'left';
 
-
-  const { container } = useStyles({angle});
+  const { container } = useStyles({ angle });
 
   const currentStepElement = tipsElementArr[step - 1];
   const isLastStep = step !== 0 && step === tipsElementArr.length + 1;
-  // console.log(isLastStep)
   const handleAddTipElement: HandleAddTipElementType = newElement => {
     setTipsElementArr(state => [...state, newElement]);
   };
-
 
   useEffect(() => {
     if (isLastStep)
@@ -200,7 +192,8 @@ const {width:windowWidth} = useWindowSize()
         onClose();
       }, 8000);
   }, [isLastStep]);
-  if (!tipsElementArr.length ) {
+
+  if (!tipsElementArr.length) {
     return <TipsContext.Provider value={{ handleAddTipElement }}> {children}</TipsContext.Provider>;
   }
 
@@ -215,26 +208,18 @@ const {width:windowWidth} = useWindowSize()
     dispatch(toChangeStatuses({ newStatuses: { isTipsLayoutHidden: true } }));
   };
 
-  const toogleSlideAnimation = () => {
-    setIsInAnimation(false);
-    setTimeout(() => {
-      setIsInAnimation(true);
-    }, 800);
-  };
-  const toPreviuosStep = () => {
-    toogleSlideAnimation();
+  const toPreviousStep = () => {
     setStep(n => n - 1);
   };
 
   const toNextStep = () => {
-    toogleSlideAnimation();
     setStep(n => n + 1);
   };
 
   const height = H < 100 ? 100 : H;
   const top = y === 0 ? 10 : y;
 
-  const confityConfig = {
+  const confettiConfig = {
     angle: 0,
     spread: 360,
     startVelocity: 96,
@@ -252,7 +237,7 @@ const {width:windowWidth} = useWindowSize()
       <Zoom in={!isTipsLayoutHidden}>
         <Grid className={container}>
           <Grid className={'confitiContainer'}>
-            <Confetti active={isLastStep} config={confityConfig} />
+            <Confetti active={isLastStep} config={confettiConfig} />
           </Grid>
           <CloseVideoButton onClose={onClose} />
           {!isLastStep && (
@@ -286,11 +271,9 @@ const {width:windowWidth} = useWindowSize()
               </svg>
             </Grid>
           )}
-          {/* <Slide direction={'left'} in={isInAnimation} mountOnEnter unmountOnExit> */}
-
           {step !== 0 && (
             <Grid className={'backArrowButtonContainer'}>
-              <VideoButton onClick={toPreviuosStep}>
+              <VideoButton onClick={toPreviousStep}>
                 <SvgIcon viewBox={'0 0 24 24'}>
                   <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path>
                 </SvgIcon>
@@ -308,28 +291,34 @@ const {width:windowWidth} = useWindowSize()
               >
                 {currentStepElement?.element}
               </Grid>
-              <Grid container className={'tipDenotationContainer'} style={angle === 'left' ? { left: x + width + 42, top, height } : {left:windowWidth * .1,width:windowWidth * 0.8,top:height + 60 + y, height:100}}>
+              <Grid
+                container
+                className={'tipDenotationContainer'}
+                style={
+                  angle === 'left'
+                    ? { left: x + width + 42, top, height }
+                    : { left: windowWidth * 0.1, width: windowWidth * 0.8, top: height + 60 + y, height: 100 }
+                }
+              >
                 <Grid className={'tringleContainer'} container>
                   <Grid className={'contentContainer'}>
                     <Grid container>
-                    <Typography color={'textSecondary'} component={'i'}>
-                      {currentStepElement?.title}
-                    </Typography>
+                      <Typography color={'textSecondary'} component={'i'}>
+                        {currentStepElement?.title}
+                      </Typography>
                     </Grid>
-                   
                   </Grid>
                   <VideoButton onClick={toNextStep}>
-                      <SvgIcon viewBox={'0 0 24 24'}>
-                        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"></path>
-                      </SvgIcon>
-                    </VideoButton>
+                    <SvgIcon viewBox={'0 0 24 24'}>
+                      <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"></path>
+                    </SvgIcon>
+                  </VideoButton>
 
                   <Grid className={'tringle'} />
                 </Grid>
               </Grid>
             </>
           )}
-          {/* </Slide> */}
         </Grid>
       </Zoom>
       {children}

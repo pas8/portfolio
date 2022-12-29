@@ -1,5 +1,4 @@
-import { FC } from 'react';
-import { Dialog, DialogProps, useMediaQuery, useTheme, SvgIcon, makeStyles, Grid } from '@material-ui/core';
+import { SvgIcon, makeStyles, Grid } from '@material-ui/core';
 import VideoButton from 'components/VideoButton';
 import { FCCloseVideoButtonType } from 'models/types';
 

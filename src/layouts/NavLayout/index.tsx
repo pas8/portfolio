@@ -15,7 +15,7 @@ import { FC, useState, Fragment } from 'react';
 import { useRouter } from 'next/dist/client/router';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getCurrentSectionId, getIsSoundPaused, getSoundIdx } from 'store/modules/App/selectors';
+import { getIsSoundPaused, getSoundIdx } from 'store/modules/App/selectors';
 import { CursorContext } from 'layouts/CursorLayout';
 import VideoButton from 'components/VideoButton';
 import TipElementWrapper from 'components/TipElementWrapper';
@@ -93,8 +93,7 @@ const useLocalStyles = makeStyles(
         '& .webDevelopSmallCaption': {
           textAlign: 'center',
           color: text.secondary
-        },
-      
+        }
       },
 
       '& .hrefsContainer': {
@@ -119,8 +118,6 @@ const useLocalStyles = makeStyles(
           }
         }
       },
-
-      // width:200,
       backdropFilter: 'blur(10px)',
       background: colord(secondary.main).alpha(0.08).toHex()
     }
@@ -140,7 +137,7 @@ const NavLayout: FC<WithWidthProps> = ({ children, width }) => {
     { title: 'Skills', href: sectionIds.SKILLS },
     { title: 'Experience', href: sectionIds.PROJECTS },
     { title: 'Contact', href: sectionIds.CONTACT },
-    { title: 'Blog', href: sectionIds.BLOG },
+    { title: 'Blog', href: sectionIds.BLOG }
   ];
 
   const isMenuHaveDialogView = width === 'sm' || width === 'xs' || width === 'md';
@@ -251,16 +248,15 @@ const NavLayout: FC<WithWidthProps> = ({ children, width }) => {
                   onMouseOver={() => handleToggleCursorVisibility(true)}
                   onMouseOut={() => handleToggleCursorVisibility(false)}
                 >
- <MenuItem
-                        onClick={() => {
-                          setMenuOpen(false)
-    dispatch(toChangeStatuses({ newStatuses: { isTipsLayoutHidden: false } }));
-                       
-                        }}
-                        className={'item'}
-                      >
-                        <p> {'Instruction'}</p>
-                      </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      setMenuOpen(false);
+                      dispatch(toChangeStatuses({ newStatuses: { isTipsLayoutHidden: false } }));
+                    }}
+                    className={'item'}
+                  >
+                    <p> {'Instruction'}</p>
+                  </MenuItem>
 
                   {hrefsArr.map(({ href, title }, idx) => {
                     return (
@@ -275,7 +271,6 @@ const NavLayout: FC<WithWidthProps> = ({ children, width }) => {
                         <p> {title}</p>
                       </MenuItem>
                     );
-
                   })}
                 </Grid>
               )}

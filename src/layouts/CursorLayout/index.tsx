@@ -3,18 +3,15 @@ import { createContext, FC, useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import { isMobile } from 'react-device-detect';
 import { useSelector } from 'react-redux';
-import { useWindowSize } from 'react-use';
 import { useState } from 'react';
-import { MouseEventHandler } from 'react';
 import { useAnimateCursor } from 'hooks/useAnimateCursor.hook';
 import { getCursorColor, getSphereCursorTitle } from 'store/modules/App/selectors';
 import { HIDDEN, ACTIVE_CURSOR } from 'models/denotation';
-import { useMapKeys } from 'hooks/useMapKeys.hook';
 
 export const CursorContext = createContext({
-  mouseOverEvent: () => {},
-  mouseOutEvent: () => {},
-  handleToggleCursorVisibility: (__: boolean) => {}
+  mouseOverEvent: () => { },
+  mouseOutEvent: () => { },
+  handleToggleCursorVisibility: (__: boolean) => { }
 });
 
 const useStyles = makeStyles(({ palette: { background, primary, secondary } }) => ({
@@ -34,9 +31,7 @@ const useStyles = makeStyles(({ palette: { background, primary, secondary } }) =
       display: 'none !important'
     },
     [`.${ACTIVE_CURSOR}`]: {
-      // width: 48,
       borderRadius: '0',
-      // height: 48,
       padding: 12,
       '& .content': {
         height: 96,
@@ -46,7 +41,6 @@ const useStyles = makeStyles(({ palette: { background, primary, secondary } }) =
         display: 'flex !important',
         backgroundRepeat: 'no-repeat',
         backgroundSize: '6100% 100%'
-        // animation: 'cursorActiveAnimation 10s infinite'
       }
     }
   },
@@ -77,8 +71,6 @@ const useStyles = makeStyles(({ palette: { background, primary, secondary } }) =
 const CursorLayout: FC = ({ children }) => {
   if (isMobile) return <>{children}</>;
 
-  const { height, width } = useWindowSize();
-
   const VALUE_TO_ADD = 100 / 60;
   const [number, setNumber] = useState(0);
 
@@ -92,12 +84,13 @@ const CursorLayout: FC = ({ children }) => {
   const cursorContextValue = useAnimateCursor({ dot, dotOutline });
 
   useEffect(() => {
-    if(!dot?.current?.className?.search(ACTIVE_CURSOR))return;
+    if (!dot?.current?.className?.search(ACTIVE_CURSOR)) return;
     const interval = setInterval(() => {
-        setNumber(prev => (prev + VALUE_TO_ADD > 100 ? 0 : prev + VALUE_TO_ADD));
+      setNumber(prev => (prev + VALUE_TO_ADD > 100 ? 0 : prev + VALUE_TO_ADD));
     }, 42);
     return () => clearInterval(interval);
   }, []);
+
   return (
     <CursorContext.Provider value={cursorContextValue}>
       <Grid ref={dotOutline} className={clsx(cursorDotOutlinedContainer, dotContainer)}>
