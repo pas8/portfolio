@@ -5,7 +5,7 @@ import { colord, extend } from 'colord';
 import mixPlugin from 'colord/plugins/mix';
 import { useSelector } from 'react-redux';
 import { Grid, makeStyles, Typography, useTheme, Zoom, Box } from '@material-ui/core';
-import { getLoadingProperyies } from 'store/modules/App/selectors';
+import { getLoadingProperties } from 'store/modules/App/selectors';
 import CursorButton from 'components/CursorButton/index';
 const useLocalStyles = makeStyles(
   ({ palette: { background, secondary, primary, text, common }, breakpoints, shape: { borderRadius } }) => ({
@@ -73,7 +73,7 @@ const LoadingLayout: FC = ({ children }) => {
   const [isLoadingLayoutShoulBeHidden, setIsLoadingLayoutShoulBeHidden] = useState(false);
   const [isLoadingLayoutHidden, setIsLoadingLayoutHidden] = useState(false);
 
-  const { percent, isLoading } = useSelector(getLoadingProperyies);
+  const { percent, isLoading } = useSelector(getLoadingProperties);
   const previuosIsLoading = usePrevious(isLoading);
 
   useEffect(() => {
