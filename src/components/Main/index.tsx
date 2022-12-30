@@ -13,9 +13,9 @@ import { BlogDataType } from 'models/types';
 
 const useStyles = makeStyles(({ palette: { background }, breakpoints }) => ({
   container: {
-    // perspective: 960,
+    perspective: 960,
     display: 'flex',
-    height:100000,
+    // height:100000,
     flexDirection: 'column',
     [breakpoints.down('xl')]: {
       left: 280 + 142,
@@ -55,13 +55,13 @@ const Main: FC<{
   return (
     <>
       <Grid className={classes.container}>
-        {/* <Greeting />
+        <Greeting />
         <WhoIAm />
         <MySkills />
         <Experience />
         <Contact />
         <Blog blogArr={blogArr} />
-        <Inspired /> */}
+        <Inspired />
       </Grid>
     </>
   );
