@@ -23,11 +23,11 @@ const Index: FC<any> = ({ Component, pageProps }) => {
     ThemeLayout,
     SceneLayout,
     CursorLayout,
-    // LoadingLayout,
+    LoadingLayout,
     SoundLayout,
     ScrollLayout,
     SnackBarLayout,
-    // TipsLayout,
+    TipsLayout,
     NavLayout
   ];
 
